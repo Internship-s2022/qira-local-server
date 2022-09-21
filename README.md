@@ -1,11 +1,11 @@
-# Getting started with ${App Name}
+# Getting started with Qira Local Server
 
 ## Domains
 
-- https://{url}.radiumrocket.com Production (master)
-- https://{url}.radiumrocket.com UAT (uat)
-- https://{url}.radiumrocket.com Test (test)
-- https://{url}.radiumrocket.com Develop (develop)
+- https://qira-local.server.radiumrocket.com Production (master)
+- https://uat.qira-local.server.radiumrocket.com UAT (uat)
+- https://test.qira-local.server.radiumrocket.com Test (test)
+- https://dev.qira-local.server.radiumrocket.com Develop (develop)
 
 ## Features
 
