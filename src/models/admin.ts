@@ -1,6 +1,4 @@
-import mongoose from 'mongoose';
-
-const { Schema } = mongoose;
+import { InferSchemaType, model, Schema } from 'mongoose';
 
 const adminSchema = new Schema({
   firebaseUid: { type: String, required: true },
@@ -26,4 +24,6 @@ const adminSchema = new Schema({
   },
 });
 
-export default adminSchema;
+export type Admin = InferSchemaType<typeof adminSchema>;
+
+export default model('Admin', adminSchema);
