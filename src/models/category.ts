@@ -12,6 +12,16 @@ const categorySchema = new Schema({
     }),
     required: true,
   },
+  isActive: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
+  logicDelete: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 export type ICategory = InferSchemaType<typeof categorySchema>;
