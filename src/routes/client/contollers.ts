@@ -42,8 +42,35 @@ const getClientById = async (req: Request, res: Response) => {
     });
   }
 };
+const createClient = async (req: Request, res: Response) => {
+  try {
+    const client = new Client({
+      businessName: req.body.businessName,
+      cuit: req.body.cuit,
+      ivaCondition: req.body.ivaCondition,
+      address: req.body.address,
+      phoneNumber: req.body.phoneNumber,
+      email: req.body.email,
+      isActive: req.body.isActive,
+      logicDelete: req.body.logicDelete,
+    });
+    const result = await client.save();
+    return res.status(201).json({
+      message: 'Client created successfully',
+      data: result,
+      error: false,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: error.message,
+      data: undefined,
+      error: true,
+    });
+  }
+};
 
 export default {
   getAllClient,
   getClientById,
+  createClient,
 };

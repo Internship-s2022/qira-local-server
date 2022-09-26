@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', controllers.getAllClient);
 router.get('/:id', controllers.getClientById);
-// router.post('/', controllers.createClient);
+router.post('/', controllers.createClient);
 // router.patch('/:id', controllers.editClient);
 // router.put('/:id', controllers.deleteClient);
 
