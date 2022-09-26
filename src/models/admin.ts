@@ -1,7 +1,10 @@
 import { InferSchemaType, model, Schema } from 'mongoose';
 
 const adminSchema = new Schema({
-  firebaseUid: { type: String, required: true },
+  firebaseUid: {
+    type: String,
+    required: true,
+  },
   firstName: {
     type: String,
     required: true,
@@ -17,13 +20,15 @@ const adminSchema = new Schema({
   isActive: {
     type: Boolean,
     required: true,
+    default: true,
   },
   logicDelete: {
     type: Boolean,
     required: true,
+    default: false,
   },
 });
 
-export type Admin = InferSchemaType<typeof adminSchema>;
+export type IAdmin = InferSchemaType<typeof adminSchema>;
 
 export default model('Admin', adminSchema);
