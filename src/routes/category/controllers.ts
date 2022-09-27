@@ -116,10 +116,68 @@ const deleteCategory = async (req: Request, res: Response) => {
   }
 };
 
+const activeCategory = async (req: Request, res: Response) => {
+  try {
+    const categoryChange = await Category.findByIdAndUpdate(
+      req.params.id,
+      { isActive: true },
+      { new: true },
+    );
+    if (!categoryChange) {
+      return res.status(404).json({
+        message: `Id ${req.params.id} does not exist`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Category updated successfully',
+      data: categoryChange,
+      error: false,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: 'An error ocurred',
+      data: error.message,
+      error: true,
+    });
+  }
+};
+
+const inactiveCategory = async (req: Request, res: Response) => {
+  try {
+    const categoryChange = await Category.findByIdAndUpdate(
+      req.params.id,
+      { isActive: false },
+      { new: true },
+    );
+    if (!categoryChange) {
+      return res.status(404).json({
+        message: `Id ${req.params.id} does not exist`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Category updated successfully',
+      data: categoryChange,
+      error: false,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: 'An error ocurred',
+      data: error.message,
+      error: true,
+    });
+  }
+};
+
 export default {
   getAllCategories,
   getCategoryById,
   createCategory,
   updateCategory,
   deleteCategory,
+  activeCategory,
+  inactiveCategory,
 };

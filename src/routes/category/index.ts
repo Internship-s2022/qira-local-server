@@ -9,5 +9,7 @@ router.get('/:id', controllers.getCategoryById);
 router.post('/', controllers.createCategory);
 router.patch('/:id', controllers.updateCategory);
 router.delete('/:id', controllers.deleteCategory);
+router.patch('/activate/:id', controllers.activeCategory);
+router.patch('/inactivate/:id', controllers.inactiveCategory);
 
 export default router;
