@@ -91,10 +91,66 @@ const updateClient = async (req: Request, res: Response) => {
     });
   }
 };
+const activeClient = async (req: Request, res: Response) => {
+  try {
+    const clientToChange = await Client.findByIdAndUpdate(
+      req.params.id,
+      { isActive: true },
+      { new: true },
+    );
+    if (!clientToChange) {
+      return res.status(404).json({
+        message: `Id ${req.params.id} does not exist`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Client updated successfully',
+      data: clientToChange,
+      error: false,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: 'An error ocurred',
+      data: error.message,
+      error: true,
+    });
+  }
+};
+const inactiveClient = async (req: Request, res: Response) => {
+  try {
+    const clientToChange = await Client.findByIdAndUpdate(
+      req.params.id,
+      { isActive: false },
+      { new: true },
+    );
+    if (!clientToChange) {
+      return res.status(404).json({
+        message: `Id ${req.params.id} does not exist`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Client updated successfully',
+      data: clientToChange,
+      error: false,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: 'An error ocurred',
+      data: error.message,
+      error: true,
+    });
+  }
+};
 
 export default {
   getAllClient,
   getClientById,
   createClient,
   updateClient,
+  activeClient,
+  inactiveClient,
 };

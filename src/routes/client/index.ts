@@ -8,6 +8,7 @@ router.get('/', controllers.getAllClient);
 router.get('/:id', controllers.getClientById);
 router.post('/', controllers.createClient);
 router.patch('/:id', controllers.updateClient);
-// router.put('/:id', controllers.deleteClient);
+router.patch('/activate/:id', controllers.activeClient);
+router.patch('/inactivate/:id', controllers.inactiveClient);
 
 export default router;
