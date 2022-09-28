@@ -31,13 +31,13 @@ const getCategoryById = async (req: Request, res: Response) => {
       });
     }
     return res.status(200).json({
-      message: `Showing the specified category by the id of ${req.params.id}.`,
+      message: `Showing the category by the id of ${req.params.id}.`,
       data: category,
       error: false,
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Could not found a category by the id of ${req.params.id}.`,
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
@@ -59,8 +59,8 @@ const createCategory = async (req: Request, res: Response) => {
       error: false,
     });
   } catch (error: any) {
-    return res.status(400).json({
-      message: error.message,
+    return res.status(500).json({
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
@@ -84,7 +84,7 @@ const updateCategory = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: 'There was an error with the request',
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
@@ -93,8 +93,11 @@ const updateCategory = async (req: Request, res: Response) => {
 
 const deleteCategory = async (req: Request, res: Response) => {
   try {
-    const categoryDelete = await Category.findByIdAndRemove(req.params.id);
-
+    const categoryDelete = await Category.findByIdAndUpdate(
+      req.params.id,
+      { logicDelete: true },
+      { new: true },
+    );
     if (!categoryDelete) {
       return res.status(404).json({
         message: `Could not found a category by the id of ${req.params.id}.`,
@@ -107,9 +110,9 @@ const deleteCategory = async (req: Request, res: Response) => {
       data: categoryDelete,
       error: false,
     });
-  } catch (error) {
-    return res.json({
-      message: 'There was an error with the request',
+  } catch (error: any) {
+    return res.status(500).json({
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
@@ -125,7 +128,7 @@ const activeCategory = async (req: Request, res: Response) => {
     );
     if (!categoryChange) {
       return res.status(404).json({
-        message: `Id ${req.params.id} does not exist`,
+        message: `Could not found a category by the id of ${req.params.id}.`,
         data: undefined,
         error: true,
       });
@@ -136,9 +139,9 @@ const activeCategory = async (req: Request, res: Response) => {
       error: false,
     });
   } catch (error: any) {
-    return res.status(400).json({
-      message: 'An error ocurred',
-      data: error.message,
+    return res.status(500).json({
+      message: `Something went wrong: ${error.message}`,
+      data: undefined,
       error: true,
     });
   }
@@ -153,7 +156,7 @@ const inactiveCategory = async (req: Request, res: Response) => {
     );
     if (!categoryChange) {
       return res.status(404).json({
-        message: `Id ${req.params.id} does not exist`,
+        message: `Could not found a category by the id of ${req.params.id}.`,
         data: undefined,
         error: true,
       });
@@ -164,9 +167,9 @@ const inactiveCategory = async (req: Request, res: Response) => {
       error: false,
     });
   } catch (error: any) {
-    return res.status(400).json({
-      message: 'An error ocurred',
-      data: error.message,
+    return res.status(500).json({
+      message: `Something went wrong: ${error.message}`,
+      data: undefined,
       error: true,
     });
   }
