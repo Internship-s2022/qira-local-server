@@ -8,7 +8,7 @@ const clientSchema = new Schema({
     required: true,
   },
   cuit: {
-    type: Number,
+    type: String,
     required: true,
   },
   ivaCondition: {
@@ -18,11 +18,16 @@ const clientSchema = new Schema({
     required: true,
   },
   address: {
-    type: String,
+    type: new Schema({
+      province: { type: String, required: true },
+      city: { type: String, required: true },
+      zipCode: { type: String, required: true },
+      street: { type: String, required: true },
+    }),
     required: true,
   },
   phoneNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   email: {
@@ -41,6 +46,6 @@ const clientSchema = new Schema({
   },
 });
 
-export type IAdmin = InferSchemaType<typeof clientSchema>;
+export type IClient = InferSchemaType<typeof clientSchema>;
 
 export default model('Client', clientSchema);
