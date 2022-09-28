@@ -3,11 +3,17 @@ import Joi from 'joi';
 
 const validateCategory = (req: Request, res: Response, next: NextFunction) => {
   const categorySchema = Joi.object({
-    name: Joi.string().min(3).max(50).required().messages({
-      'string.min': 'Invalid name, it must contain at least 3 characters',
-      'string.max': 'Invalid name, it must not contain more than 50 characters',
-      'any.required': 'Category name is a required field',
-    }),
+    name: Joi.string()
+      .min(3)
+      .max(50)
+      .required()
+      .regex(/^([ \u00c0-\u01ffa-zA-Z'-])+$/)
+      .messages({
+        'string.min': 'Invalid name, it must contain at least 3 characters',
+        'string.max': 'Invalid name, it must not contain more than 50 characters',
+        'string.pattern.base': 'Invalid name, it must contain only letters',
+        'any.required': 'Category name is a required field',
+      }),
     image: Joi.object({
       key: Joi.string().required(),
       url: Joi.string().required(),
@@ -29,10 +35,15 @@ const validateCategory = (req: Request, res: Response, next: NextFunction) => {
 
 const validateCategoryUpdate = (req: Request, res: Response, next: NextFunction) => {
   const categorySchema = Joi.object({
-    name: Joi.string().min(3).max(50).messages({
-      'string.min': 'Invalid name, it must contain at least 3 characters',
-      'string.max': 'Invalid name, it must not contain more than 50 characters',
-    }),
+    name: Joi.string()
+      .min(3)
+      .max(50)
+      .regex(/^([ \u00c0-\u01ffa-zA-Z'-])+$/)
+      .messages({
+        'string.min': 'Invalid name, it must contain at least 3 characters',
+        'string.max': 'Invalid name, it must not contain more than 50 characters',
+        'string.pattern.base': 'Invalid name, it must contain only letters',
+      }),
     image: Joi.object({
       key: Joi.string(),
       url: Joi.string(),
