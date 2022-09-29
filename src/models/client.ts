@@ -13,7 +13,6 @@ const clientSchema = new Schema({
   },
   ivaCondition: {
     type: String,
-    default: IvaCondition.RESPONSABLE_INSCRIPTO,
     enum: Object.values(IvaCondition),
     required: true,
   },

@@ -3,7 +3,7 @@ import Joi from 'joi';
 
 import { IvaCondition } from 'src/models/types';
 
-const validateClient = (req: Request, res: Response, next: NextFunction) => {
+export const validateClient = (req: Request, res: Response, next: NextFunction) => {
   const clientSchema = Joi.object({
     businessName: Joi.string()
       .regex(/^([ \u00c0-\u01ffa-zA-Z'-])+$/)
@@ -26,10 +26,10 @@ const validateClient = (req: Request, res: Response, next: NextFunction) => {
       }),
     ivaCondition: Joi.string()
       .valid(
-        IvaCondition.CONSUMIDOR_FINAL,
-        IvaCondition.EXENTO,
-        IvaCondition.RESPONSABLE_INSCRIPTO,
-        IvaCondition.MONOTRIBUTO,
+        IvaCondition.REGISTERED_RESPONSIBLE,
+        IvaCondition.SELF_EMPLOYMENT,
+        IvaCondition.EXEMPT,
+        IvaCondition.FINAL_CONSUMER,
       )
       .required()
       .messages({
@@ -95,7 +95,7 @@ const validateClient = (req: Request, res: Response, next: NextFunction) => {
   return next();
 };
 
-const validateClientUpdate = (req: Request, res: Response, next: NextFunction) => {
+export const validateClientUpdate = (req: Request, res: Response, next: NextFunction) => {
   const clientSchema = Joi.object({
     businessName: Joi.string()
       .regex(/^([ \u00c0-\u01ffa-zA-Z'-])+$/)
@@ -118,10 +118,10 @@ const validateClientUpdate = (req: Request, res: Response, next: NextFunction) =
       }),
     ivaCondition: Joi.string()
       .valid(
-        IvaCondition.CONSUMIDOR_FINAL,
-        IvaCondition.EXENTO,
-        IvaCondition.RESPONSABLE_INSCRIPTO,
-        IvaCondition.MONOTRIBUTO,
+        IvaCondition.REGISTERED_RESPONSIBLE,
+        IvaCondition.SELF_EMPLOYMENT,
+        IvaCondition.EXEMPT,
+        IvaCondition.FINAL_CONSUMER,
       )
       .optional()
       .messages({
@@ -181,9 +181,4 @@ const validateClientUpdate = (req: Request, res: Response, next: NextFunction) =
     });
   }
   return next();
-};
-
-export default {
-  validateClient,
-  validateClientUpdate,
 };

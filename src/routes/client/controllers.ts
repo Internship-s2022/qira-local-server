@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import Client from 'src/models/client';
 
-const getAllClient = async (req: Request, res: Response) => {
+export const getAllClient = async (req: Request, res: Response) => {
   try {
     const allClients = await Client.find({ ...req.query, logicDelete: false });
     return res.status(200).json({
@@ -19,9 +19,9 @@ const getAllClient = async (req: Request, res: Response) => {
   }
 };
 
-const getClientById = async (req: Request, res: Response) => {
+export const getClientById = async (req: Request, res: Response) => {
   try {
-    const client = await Client.findById(req.params.id);
+    const client = await Client.findOne({ _id: req.params.id, logicDelete: false });
     if (!client) {
       return res.status(404).json({
         message: `Could not found an client by the id of ${req.params.id}.`,
@@ -42,7 +42,7 @@ const getClientById = async (req: Request, res: Response) => {
     });
   }
 };
-const createClient = async (req: Request, res: Response) => {
+export const createClient = async (req: Request, res: Response) => {
   try {
     const client = new Client({
       businessName: req.body.businessName,
@@ -51,8 +51,6 @@ const createClient = async (req: Request, res: Response) => {
       address: req.body.address,
       phoneNumber: req.body.phoneNumber,
       email: req.body.email,
-      isActive: req.body.isActive,
-      logicDelete: req.body.logicDelete,
     });
     const result = await client.save();
     return res.status(201).json({
@@ -68,9 +66,13 @@ const createClient = async (req: Request, res: Response) => {
     });
   }
 };
-const updateClient = async (req: Request, res: Response) => {
+export const updateClient = async (req: Request, res: Response) => {
   try {
-    const clientToUpdate = await Client.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const clientToUpdate = await Client.findOneAndUpdate(
+      { _id: req.params.id, logicDelete: false },
+      req.body,
+      { new: true },
+    );
     if (!clientToUpdate) {
       return res.status(404).json({
         message: `Id ${req.params.id} does not exist`,
@@ -91,16 +93,16 @@ const updateClient = async (req: Request, res: Response) => {
     });
   }
 };
-const activeClient = async (req: Request, res: Response) => {
+export const activeClient = async (req: Request, res: Response) => {
   try {
-    const clientToChange = await Client.findByIdAndUpdate(
-      req.params.id,
+    const clientToChange = await Client.findOneAndUpdate(
+      { _id: req.params.id, logicDelete: false, isActive: false },
       { isActive: true },
       { new: true },
     );
     if (!clientToChange) {
       return res.status(404).json({
-        message: `Id ${req.params.id} does not exist`,
+        message: `Id ${req.params.id} does not exist or is active already`,
         data: undefined,
         error: true,
       });
@@ -118,11 +120,38 @@ const activeClient = async (req: Request, res: Response) => {
     });
   }
 };
-const inactiveClient = async (req: Request, res: Response) => {
+export const inactiveClient = async (req: Request, res: Response) => {
   try {
-    const clientToChange = await Client.findByIdAndUpdate(
-      req.params.id,
+    const clientToChange = await Client.findOneAndUpdate(
+      { _id: req.params.id, logicDelete: false, isActive: true },
       { isActive: false },
+      { new: true },
+    );
+    if (!clientToChange) {
+      return res.status(404).json({
+        message: `Id ${req.params.id} does not exist or is inactive already `,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Client updated successfully',
+      data: clientToChange,
+      error: false,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: 'An error ocurred',
+      data: error.message,
+      error: true,
+    });
+  }
+};
+export const deleteClient = async (req: Request, res: Response) => {
+  try {
+    const clientToChange = await Client.findOneAndUpdate(
+      { _id: req.params.id, logicDelete: false },
+      { logicDelete: true },
       { new: true },
     );
     if (!clientToChange) {
@@ -133,7 +162,7 @@ const inactiveClient = async (req: Request, res: Response) => {
       });
     }
     return res.status(200).json({
-      message: 'Client updated successfully',
+      message: 'Client delete successfully',
       data: clientToChange,
       error: false,
     });
@@ -144,13 +173,4 @@ const inactiveClient = async (req: Request, res: Response) => {
       error: true,
     });
   }
-};
-
-export default {
-  getAllClient,
-  getClientById,
-  createClient,
-  updateClient,
-  activeClient,
-  inactiveClient,
 };
