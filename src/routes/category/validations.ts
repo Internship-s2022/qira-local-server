@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 
-const validateCategory = (req: Request, res: Response, next: NextFunction) => {
+export const validateCategory = (req: Request, res: Response, next: NextFunction) => {
   const categorySchema = Joi.object({
     name: Joi.string()
       .min(3)
       .max(50)
       .required()
-      .regex(/^([ \u00c0-\u01ffa-zA-Z'-])+$/)
+      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
       .messages({
         'string.min': 'Invalid name, it must contain at least 3 characters',
         'string.max': 'Invalid name, it must not contain more than 50 characters',
@@ -18,8 +18,6 @@ const validateCategory = (req: Request, res: Response, next: NextFunction) => {
       key: Joi.string().required(),
       url: Joi.string().required(),
     }).required(),
-    isActive: Joi.boolean().required(),
-    logicDelete: Joi.boolean().required(),
   });
 
   const validation = categorySchema.validate(req.body);
@@ -33,12 +31,12 @@ const validateCategory = (req: Request, res: Response, next: NextFunction) => {
   return next();
 };
 
-const validateCategoryUpdate = (req: Request, res: Response, next: NextFunction) => {
+export const validateCategoryUpdate = (req: Request, res: Response, next: NextFunction) => {
   const categorySchema = Joi.object({
     name: Joi.string()
       .min(3)
       .max(50)
-      .regex(/^([ \u00c0-\u01ffa-zA-Z'-])+$/)
+      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
       .messages({
         'string.min': 'Invalid name, it must contain at least 3 characters',
         'string.max': 'Invalid name, it must not contain more than 50 characters',
@@ -48,8 +46,6 @@ const validateCategoryUpdate = (req: Request, res: Response, next: NextFunction)
       key: Joi.string(),
       url: Joi.string(),
     }),
-    isActive: Joi.boolean(),
-    logicDelete: Joi.boolean(),
   });
 
   const validation = categorySchema.validate(req.body);
@@ -62,5 +58,3 @@ const validateCategoryUpdate = (req: Request, res: Response, next: NextFunction)
   }
   return next();
 };
-
-export default { validateCategory, validateCategoryUpdate };
