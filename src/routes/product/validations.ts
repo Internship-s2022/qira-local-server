@@ -9,7 +9,7 @@ export const validateProduct = (req: Request, res: Response, next: NextFunction)
       .min(3)
       .max(50)
       .required()
-      .regex(/[a-zA-Z0-9]+\s[a-zA-Z0-9]/)
+      .regex(/^[a-zA-Z0-9 ]*$/)
       .messages({
         'string.min': 'Invalid name, it must contain at least 3 characters',
         'string.max': 'Invalid name, it must not contain more than 50 characters',
@@ -18,7 +18,7 @@ export const validateProduct = (req: Request, res: Response, next: NextFunction)
       }),
     description: Joi.string()
       .min(3)
-      .regex(/[a-zA-Z0-9]+\s[a-zA-Z0-9]/)
+      .regex(/^[a-zA-Z0-9 ]*$/)
       .messages({
         'string.min': 'Invalid description, it must contain at least 3 characters',
         'string.pattern.base': 'Invalid description, it must contain only letters or numbers',
@@ -38,7 +38,7 @@ export const validateProduct = (req: Request, res: Response, next: NextFunction)
     }),
     brand: Joi.string()
       .min(2)
-      .regex(/[a-zA-Z0-9]+\s[a-zA-Z0-9]/)
+      .regex(/^[a-zA-Z0-9 ]*$/)
       .required()
       .messages({
         'string.min': 'Invalid brand, it must contain at least 2 characters',
@@ -73,7 +73,7 @@ export const validateProductUpdate = (req: Request, res: Response, next: NextFun
     name: Joi.string()
       .min(3)
       .max(50)
-      .regex(/[a-zA-Z0-9]+\s[a-zA-Z0-9]/)
+      .regex(/^[a-zA-Z0-9 ]*$/)
       .messages({
         'string.min': 'Invalid name, it must contain at least 3 characters',
         'string.max': 'Invalid name, it must not contain more than 50 characters',
@@ -82,7 +82,7 @@ export const validateProductUpdate = (req: Request, res: Response, next: NextFun
       }),
     description: Joi.string()
       .min(3)
-      .regex(/[a-zA-Z0-9]+\s[a-zA-Z0-9]/)
+      .regex(/^[a-zA-Z0-9 ]*$/)
       .messages({
         'string.min': 'Invalid description, it must contain at least 3 characters',
         'string.pattern.base': 'Invalid description, it must contain only letters or numbers',
@@ -102,7 +102,7 @@ export const validateProductUpdate = (req: Request, res: Response, next: NextFun
     }),
     brand: Joi.string()
       .min(2)
-      .regex(/[a-zA-Z0-9]+\s[a-zA-Z0-9]/)
+      .regex(/^[a-zA-Z0-9 ]*$/)
       .messages({
         'string.min': 'Invalid brand, it must contain at least 2 characters',
         'string.pattern.base': 'Invalid brand, it must contain only letters or numbers',
