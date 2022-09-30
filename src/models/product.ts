@@ -19,17 +19,17 @@ const productSchema = new Schema(
     },
     image: {
       type: new Schema({
-        key: { type: String, required: true },
-        url: { type: String, required: true },
+        key: { type: String, required: false },
+        url: { type: String, required: false },
       }),
-      required: true,
+      required: false,
     },
     technicalFile: {
       type: new Schema({
-        key: { type: String, required: true },
-        url: { type: String, required: true },
+        key: { type: String, required: false },
+        url: { type: String, required: false },
       }),
-      required: true,
+      required: false,
     },
     brand: {
       type: String,
