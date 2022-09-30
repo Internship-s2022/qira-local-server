@@ -1,4 +1,4 @@
-import { InferSchemaType, model, Schema } from 'mongoose';
+import mongoose, { InferSchemaType, model, Schema } from 'mongoose';
 
 import Category from './category';
 import { Currency } from './types';
@@ -36,7 +36,8 @@ const productSchema = new Schema(
       required: true,
     },
     category: {
-      type: new Category({}),
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
       required: true,
     },
     currency: {
@@ -55,10 +56,12 @@ const productSchema = new Schema(
     isActive: {
       type: Boolean,
       required: true,
+      default: true,
     },
     logicDelete: {
       type: Boolean,
       required: true,
+      default: false,
     },
   },
   { timestamps: true },
