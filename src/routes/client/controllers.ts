@@ -87,8 +87,8 @@ export const updateClient = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(400).json({
-      message: 'An error ocurred',
-      data: error.message,
+      message: error.message,
+      data: undefined,
       error: true,
     });
   }
@@ -114,8 +114,8 @@ export const activeClient = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(400).json({
-      message: 'An error ocurred',
-      data: error.message,
+      message: error.message,
+      data: undefined,
       error: true,
     });
   }
@@ -141,8 +141,8 @@ export const inactiveClient = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(400).json({
-      message: 'An error ocurred',
-      data: error.message,
+      message: error.message,
+      data: undefined,
       error: true,
     });
   }
@@ -168,8 +168,8 @@ export const deleteClient = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(400).json({
-      message: 'An error ocurred',
-      data: error.message,
+      message: error.message,
+      data: undefined,
       error: true,
     });
   }
