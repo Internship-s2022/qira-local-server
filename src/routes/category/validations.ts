@@ -9,10 +9,10 @@ export const validateCategory = (req: Request, res: Response, next: NextFunction
       .required()
       .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
       .messages({
-        'string.min': 'Invalid name, it must contain at least 3 characters',
-        'string.max': 'Invalid name, it must not contain more than 50 characters',
-        'string.pattern.base': 'Invalid name, it must contain only letters',
-        'any.required': 'Category name is a required field',
+        'string.min': 'Invalid name, it must contain at least 3 characters.',
+        'string.max': 'Invalid name, it must not contain more than 50 characters.',
+        'string.pattern.base': 'Invalid name, it must contain only letters.',
+        'any.required': 'Category name is a required field.',
       }),
     image: Joi.object({
       key: Joi.string().required(),
@@ -23,8 +23,8 @@ export const validateCategory = (req: Request, res: Response, next: NextFunction
   const validation = categorySchema.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      message: 'There has been an error in the validation',
-      data: validation.error.details[0].message,
+      message: validation.error.details[0].message,
+      data: undefined,
       error: true,
     });
   }
@@ -38,9 +38,9 @@ export const validateCategoryUpdate = (req: Request, res: Response, next: NextFu
       .max(50)
       .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
       .messages({
-        'string.min': 'Invalid name, it must contain at least 3 characters',
-        'string.max': 'Invalid name, it must not contain more than 50 characters',
-        'string.pattern.base': 'Invalid name, it must contain only letters',
+        'string.min': 'Invalid name, it must contain at least 3 characters.',
+        'string.max': 'Invalid name, it must not contain more than 50 characters.',
+        'string.pattern.base': 'Invalid name, it must contain only letters.',
       }),
     image: Joi.object({
       key: Joi.string(),
@@ -51,8 +51,8 @@ export const validateCategoryUpdate = (req: Request, res: Response, next: NextFu
   const validation = categorySchema.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      message: 'There has been an error in the validation',
-      data: validation.error.details[0].message,
+      message: validation.error.details[0].message,
+      data: undefined,
       error: true,
     });
   }

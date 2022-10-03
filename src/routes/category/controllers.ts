@@ -13,7 +13,7 @@ export const getAllCategories = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
+      message: `Something went wrong: ${error.message}.`,
       data: undefined,
       error: true,
     });
@@ -37,7 +37,7 @@ export const getCategoryById = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
+      message: `Something went wrong: ${error.message}.`,
       data: undefined,
       error: true,
     });
@@ -52,13 +52,13 @@ export const createCategory = async (req: Request, res: Response) => {
     });
     const result = await category.save();
     return res.status(201).json({
-      message: 'Category created successfully',
+      message: 'Category created successfully.',
       data: result,
       error: false,
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
+      message: `Something went wrong: ${error.message}.`,
       data: undefined,
       error: true,
     });
@@ -80,13 +80,13 @@ export const updateCategory = async (req: Request, res: Response) => {
       });
     }
     return res.status(200).json({
-      message: 'Category updated successfully',
+      message: 'Category updated successfully.',
       data: categoryUpdate,
       error: false,
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
+      message: `Something went wrong: ${error.message}.`,
       data: undefined,
       error: true,
     });
@@ -108,13 +108,13 @@ export const deleteCategory = async (req: Request, res: Response) => {
       });
     }
     return res.status(200).json({
-      message: 'Category deleted successfully',
+      message: 'Category deleted successfully.',
       data: categoryDelete,
       error: false,
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
+      message: `Something went wrong: ${error.message}.`,
       data: undefined,
       error: true,
     });
@@ -130,7 +130,7 @@ export const activeCategory = async (req: Request, res: Response) => {
     );
     if (!categoryChange) {
       return res.status(404).json({
-        message: `Id ${req.params.id} does not exist or is active already.`,
+        message: `Id ${req.params.id} does not exist or is already active.`,
         data: undefined,
         error: true,
       });
@@ -142,7 +142,7 @@ export const activeCategory = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
+      message: `Something went wrong: ${error.message}.`,
       data: undefined,
       error: true,
     });
@@ -158,19 +158,19 @@ export const inactiveCategory = async (req: Request, res: Response) => {
     );
     if (!categoryChange) {
       return res.status(404).json({
-        message: `Id ${req.params.id} does not exist or is inactive already.`,
+        message: `Id ${req.params.id} does not exist or is already inactive.`,
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: 'Category updated successfully',
+      message: 'Category updated successfully.',
       data: categoryChange,
       error: false,
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
+      message: `Something went wrong: ${error.message}.`,
       data: undefined,
       error: true,
     });
