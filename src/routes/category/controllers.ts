@@ -136,7 +136,7 @@ export const activeCategory = async (req: Request, res: Response) => {
       });
     }
     return res.status(200).json({
-      message: 'Category updated successfully',
+      message: 'Category updated successfully.',
       data: categoryChange,
       error: false,
     });
