@@ -6,7 +6,7 @@ import { IvaCondition } from 'src/models/types';
 export const validateClient = (req: Request, res: Response, next: NextFunction) => {
   const clientSchema = Joi.object({
     businessName: Joi.string()
-      .regex(/^([ \u00c0-\u01ffa-zA-Z'-])+$/)
+      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
       .min(3)
       .max(50)
       .required()
@@ -26,10 +26,10 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
       }),
     ivaCondition: Joi.string()
       .valid(
-        IvaCondition.REGISTERED_RESPONSIBLE,
-        IvaCondition.SELF_EMPLOYMENT,
-        IvaCondition.EXEMPT,
-        IvaCondition.FINAL_CONSUMER,
+        IvaCondition.registeredResponsible,
+        IvaCondition.selfEmployment,
+        IvaCondition.Exempt,
+        IvaCondition.finalConsumer,
       )
       .required()
       .messages({
@@ -38,7 +38,7 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
       }),
     address: Joi.object({
       province: Joi.string()
-        .regex(/^([ \u00c0-\u01ffa-zA-Z'-])+$/)
+        .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
         .min(3)
         .required()
         .messages({
@@ -98,7 +98,7 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
 export const validateClientUpdate = (req: Request, res: Response, next: NextFunction) => {
   const clientSchema = Joi.object({
     businessName: Joi.string()
-      .regex(/^([ \u00c0-\u01ffa-zA-Z'-])+$/)
+      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
       .min(3)
       .max(50)
       .optional()
@@ -118,10 +118,10 @@ export const validateClientUpdate = (req: Request, res: Response, next: NextFunc
       }),
     ivaCondition: Joi.string()
       .valid(
-        IvaCondition.REGISTERED_RESPONSIBLE,
-        IvaCondition.SELF_EMPLOYMENT,
-        IvaCondition.EXEMPT,
-        IvaCondition.FINAL_CONSUMER,
+        IvaCondition.registeredResponsible,
+        IvaCondition.selfEmployment,
+        IvaCondition.Exempt,
+        IvaCondition.finalConsumer,
       )
       .optional()
       .messages({
@@ -130,7 +130,7 @@ export const validateClientUpdate = (req: Request, res: Response, next: NextFunc
       }),
     address: Joi.object({
       province: Joi.string()
-        .regex(/^([ \u00c0-\u01ffa-zA-Z'-])+$/)
+        .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
         .min(3)
         .optional()
         .messages({

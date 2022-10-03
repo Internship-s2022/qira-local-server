@@ -1,6 +1,6 @@
 export enum IvaCondition {
-  REGISTERED_RESPONSIBLE = 'RESPONSABLE_INSCRIPTO',
-  SELF_EMPLOYMENT = 'MONOTRIBUTO',
-  EXEMPT = 'EXENTO',
-  FINAL_CONSUMER = 'CONSUMIDOR_FINAL',
+  registeredResponsible = 'RESPONSABLE_INSCRIPTO',
+  selfEmployment = 'MONOTRIBUTO',
+  Exempt = 'EXENTO',
+  finalConsumer = 'CONSUMIDOR_FINAL',
 }
