@@ -54,7 +54,7 @@ export const createClient = async (req: Request, res: Response) => {
     });
     const result = await client.save();
     return res.status(201).json({
-      message: 'Client created successfully',
+      message: 'Client created successfully.',
       data: result,
       error: false,
     });
@@ -75,13 +75,13 @@ export const updateClient = async (req: Request, res: Response) => {
     );
     if (!clientToUpdate) {
       return res.status(404).json({
-        message: `Id ${req.params.id} does not exist`,
+        message: `Id ${req.params.id} does not exist.`,
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: 'Client updated successfully',
+      message: 'Client updated successfully.',
       data: clientToUpdate,
       error: false,
     });
@@ -102,13 +102,13 @@ export const activeClient = async (req: Request, res: Response) => {
     );
     if (!clientToChange) {
       return res.status(404).json({
-        message: `Id ${req.params.id} does not exist or is active already`,
+        message: `Id ${req.params.id} does not exist or is already active.`,
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: 'Client updated successfully',
+      message: 'Client updated successfully.',
       data: clientToChange,
       error: false,
     });
@@ -129,13 +129,13 @@ export const inactiveClient = async (req: Request, res: Response) => {
     );
     if (!clientToChange) {
       return res.status(404).json({
-        message: `Id ${req.params.id} does not exist or is inactive already `,
+        message: `Id ${req.params.id} does not exist or is already inactive.`,
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: 'Client updated successfully',
+      message: 'Client updated successfully.',
       data: clientToChange,
       error: false,
     });
@@ -156,13 +156,13 @@ export const deleteClient = async (req: Request, res: Response) => {
     );
     if (!clientToChange) {
       return res.status(404).json({
-        message: `Id ${req.params.id} does not exist`,
+        message: `Id ${req.params.id} does not exist.`,
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: 'Client delete successfully',
+      message: 'Client deleted successfully.',
       data: clientToChange,
       error: false,
     });
