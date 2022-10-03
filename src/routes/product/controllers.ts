@@ -60,7 +60,7 @@ export const createProduct = async (req: Request, res: Response) => {
     });
     const result = await product.save();
     return res.status(201).json({
-      message: 'Product created successfully',
+      message: 'Product created successfully.',
       data: result,
       error: false,
     });
@@ -89,7 +89,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     }
     return res
       .status(200)
-      .json({ message: 'Product updated successfully', data: productUpdated, error: false });
+      .json({ message: 'Product updated successfully.', data: productUpdated, error: false });
   } catch (error: any) {
     return res.status(400).json({
       message: `Something went wrong: ${error.message}`,
@@ -114,7 +114,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
       });
     }
     return res.status(200).json({
-      message: 'Product deleted successfully',
+      message: 'Product deleted successfully.',
       data: productDeleted,
       error: false,
     });
@@ -136,13 +136,13 @@ export const activeProduct = async (req: Request, res: Response) => {
     );
     if (!productChanged) {
       return res.status(404).json({
-        message: `Products with Id ${req.params.id} does not exist or is active already.`,
+        message: `Products with Id ${req.params.id} does not exist or is already active.`,
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: 'Product updated successfully',
+      message: 'Product updated successfully.',
       data: productChanged,
       error: false,
     });
@@ -164,13 +164,13 @@ export const inactiveProduct = async (req: Request, res: Response) => {
     );
     if (!productChanged) {
       return res.status(404).json({
-        message: `Products with Id ${req.params.id} does not exist or is inactive already.`,
+        message: `Products with Id ${req.params.id} does not exist or is already inactive.`,
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: 'Product updated successfully',
+      message: 'Product updated successfully.',
       data: productChanged,
       error: false,
     });
