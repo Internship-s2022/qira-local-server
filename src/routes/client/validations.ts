@@ -28,7 +28,7 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
       .valid(
         IvaCondition.registeredResponsible,
         IvaCondition.selfEmployment,
-        IvaCondition.Exempt,
+        IvaCondition.exempt,
         IvaCondition.finalConsumer,
       )
       .required()
@@ -120,7 +120,7 @@ export const validateClientUpdate = (req: Request, res: Response, next: NextFunc
       .valid(
         IvaCondition.registeredResponsible,
         IvaCondition.selfEmployment,
-        IvaCondition.Exempt,
+        IvaCondition.exempt,
         IvaCondition.finalConsumer,
       )
       .optional()
