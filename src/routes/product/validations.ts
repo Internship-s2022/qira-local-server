@@ -60,8 +60,8 @@ export const validateProduct = (req: Request, res: Response, next: NextFunction)
   const validation = productSchema.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      message: 'There has been an error in the validation.',
-      data: validation.error.details[0].message,
+      message: `There has been an error in the validation. ${validation.error.details[0].message}`,
+      data: undefined,
       error: true,
     });
   }
@@ -123,8 +123,8 @@ export const validateProductUpdate = (req: Request, res: Response, next: NextFun
   const validation = productSchema.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      message: 'There has been an error in the validation.',
-      data: validation.error.details[0].message,
+      message: `There has been an error in the validation. ${validation.error.details[0].message}`,
+      data: undefined,
       error: true,
     });
   }

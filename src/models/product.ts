@@ -1,6 +1,5 @@
 import mongoose, { InferSchemaType, model, Schema } from 'mongoose';
 
-import Category from './category';
 import { Currency } from './types';
 
 const productSchema = new Schema(
