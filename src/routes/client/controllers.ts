@@ -24,7 +24,7 @@ export const getClientById = async (req: Request, res: Response) => {
     const client = await Client.findOne({ _id: req.params.id, logicDelete: false });
     if (!client) {
       return res.status(404).json({
-        message: `Could not found an client by the id of ${req.params.id}.`,
+        message: `Could not find a client by the id of ${req.params.id}.`,
         data: undefined,
         error: true,
       });
@@ -36,7 +36,7 @@ export const getClientById = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Could not found an client by the id of ${req.params.id}.`,
+      message: `Could not find an client by the id of ${req.params.id}.`,
       data: undefined,
       error: true,
     });
