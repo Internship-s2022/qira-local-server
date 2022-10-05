@@ -13,7 +13,7 @@ export const getAllCategories = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}.`,
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
@@ -25,7 +25,7 @@ export const getCategoryById = async (req: Request, res: Response) => {
     const category = await Category.findOne({ _id: req.params.id, logicDelete: false });
     if (!category) {
       return res.status(404).json({
-        message: `Could not found a category by the id of ${req.params.id}.`,
+        message: `Could not find a category by the id of ${req.params.id}.`,
         data: undefined,
         error: true,
       });
@@ -37,7 +37,7 @@ export const getCategoryById = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}.`,
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
@@ -58,7 +58,7 @@ export const createCategory = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}.`,
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
@@ -74,7 +74,7 @@ export const updateCategory = async (req: Request, res: Response) => {
     );
     if (!categoryUpdate) {
       return res.status(404).json({
-        message: `Could not found a category by the id of ${req.params.id}.`,
+        message: `Could not find a category by the id of ${req.params.id}.`,
         data: undefined,
         error: true,
       });
@@ -86,7 +86,7 @@ export const updateCategory = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}.`,
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
@@ -102,7 +102,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
     );
     if (!categoryDelete) {
       return res.status(404).json({
-        message: `Could not found a category by the id of ${req.params.id}.`,
+        message: `Could not find a category by the id of ${req.params.id}.`,
         data: undefined,
         error: true,
       });
@@ -114,7 +114,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}.`,
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
@@ -142,7 +142,7 @@ export const activeCategory = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}.`,
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
@@ -170,7 +170,7 @@ export const inactiveCategory = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Something went wrong: ${error.message}.`,
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
