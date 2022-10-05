@@ -46,18 +46,7 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const product = new Product({
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-      image: req.body.image,
-      technicalFile: req.body.technicalFile,
-      brand: req.body.brand,
-      category: req.body.category,
-      currency: req.body.currency,
-      stock: req.body.stock,
-      isNew: req.body.isNew,
-    });
+    const product = new Product(req.body);
     const result = await product.save();
     return res.status(201).json({
       message: 'Product created successfully.',
