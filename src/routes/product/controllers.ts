@@ -25,7 +25,7 @@ export const getProductById = async (req: Request, res: Response) => {
     const product = await Product.findOne({ _id: req.params.id, logicDelete: false });
     if (!product) {
       return res.status(404).json({
-        message: `Could not found a product by the id of ${req.params.id}.`,
+        message: `Could not find a product by the id of ${req.params.id}.`,
         data: undefined,
         error: true,
       });
@@ -82,7 +82,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     );
     if (!productUpdated) {
       return res.status(404).json({
-        message: `Could not found a product by the id of ${req.params.id}.`,
+        message: `Could not find a product by the id of ${req.params.id}.`,
         data: undefined,
         error: true,
       });
@@ -108,7 +108,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
     );
     if (!productDeleted) {
       return res.status(404).json({
-        message: `Could not found a product by the id of ${req.params.id}.`,
+        message: `Could not find a product by the id of ${req.params.id}.`,
         data: undefined,
         error: true,
       });
