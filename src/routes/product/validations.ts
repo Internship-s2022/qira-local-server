@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 
-import { Currency } from 'src/models/types';
+import { Currency } from 'src/interfaces';
 
 export const validateProduct = (req: Request, res: Response, next: NextFunction) => {
   const productSchema = Joi.object({

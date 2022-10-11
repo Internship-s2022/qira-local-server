@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 
-import { IvaCondition } from 'src/models/types';
+import { IvaCondition } from 'src/interfaces';
 
 export const validateClient = (req: Request, res: Response, next: NextFunction) => {
   const clientSchema = Joi.object({

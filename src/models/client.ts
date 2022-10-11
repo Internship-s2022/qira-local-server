@@ -1,6 +1,6 @@
 import { InferSchemaType, model, Schema } from 'mongoose';
 
-import { IvaCondition } from './types';
+import { IvaCondition } from 'src/interfaces';
 
 const clientSchema = new Schema({
   businessName: {
