@@ -8,7 +8,7 @@ export const authMiddleware =
   (role: Role) => async (req: RequestWithFirebase, res: Response, next: NextFunction) => {
     const { token } = req.headers;
     if (!token || typeof token !== 'string') {
-      return res.status(400).json({ message: 'Authentication failed' });
+      return res.status(400).json({ message: 'Token is required' });
     }
     try {
       const response = await firebase.auth().verifyIdToken(token);
