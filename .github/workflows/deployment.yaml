@@ -28,6 +28,9 @@ jobs:
         run: | # ADD ALL ENV VARIABLES HERE
           yarn
           DATABASE_URL="${{ secrets.DATABASE_URL}}" \
+          FIREBASE_PRIVATE_KEY="${{ secrets.FIREBASE_PRIVATE_KEY}}" \
+          FIREBASE_CLIENT_EMAIL="${{ secrets.FIREBASE_CLIENT_EMAIL}}" \
+          FIREBASE_PROJECT_ID="${{ secrets.FIREBASE_PROJECT_ID}}" \
           ENV="${{ secrets.ENV }}" \
           yarn build
       - name: Deploy to Vercel Action

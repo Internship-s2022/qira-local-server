@@ -1,3 +1,9 @@
+import { Request } from 'express';
+
+export interface RequestWithFirebase extends Request {
+  firebaseUid?: string;
+}
+
 export enum IvaCondition {
   registeredResponsible = 'RESPONSABLE_INSCRIPTO',
   selfEmployment = 'MONOTRIBUTO',
@@ -8,4 +14,10 @@ export enum IvaCondition {
 export enum Currency {
   DOLLAR = 'DOLLAR',
   PESO = 'PESO',
+}
+
+export enum Role {
+  SUPERADMIN = 'SUPERADMIN',
+  ADMIN = 'ADMIN',
+  CLIENT = 'CLIENT',
 }

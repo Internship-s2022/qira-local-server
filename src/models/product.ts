@@ -1,6 +1,6 @@
 import mongoose, { InferSchemaType, model, Schema } from 'mongoose';
 
-import { Currency } from './types';
+import { Currency } from 'src/interfaces';
 
 const productSchema = new Schema(
   {
