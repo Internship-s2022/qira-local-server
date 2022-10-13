@@ -81,6 +81,7 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
       'any.required': 'Email is a required field.',
       'string.email': 'Invalid Email must contain @ and .',
     }),
+    password: Joi.string().required(),
     isActive: Joi.boolean().optional(),
     logicDelete: Joi.boolean().optional(),
   });
