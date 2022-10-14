@@ -42,6 +42,7 @@ export const getClientById = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const createClient = async (req: Request<any, any, IClient>, res: Response) => {
   try {
     const client = new Client({
@@ -67,6 +68,7 @@ export const createClient = async (req: Request<any, any, IClient>, res: Respons
     });
   }
 };
+
 export const updateClient = async (req: Request, res: Response) => {
   try {
     const clientToUpdate = await Client.findOneAndUpdate(
@@ -94,6 +96,7 @@ export const updateClient = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const activeClient = async (req: Request, res: Response) => {
   try {
     const clientToChange = await Client.findOneAndUpdate(
@@ -121,6 +124,7 @@ export const activeClient = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const inactiveClient = async (req: Request, res: Response) => {
   try {
     const clientToChange = await Client.findOneAndUpdate(
@@ -148,6 +152,7 @@ export const inactiveClient = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const deleteClient = async (req: Request, res: Response) => {
   try {
     const clientToChange = await Client.findOneAndUpdate(
