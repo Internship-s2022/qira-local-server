@@ -43,6 +43,10 @@ const clientSchema = new Schema({
     default: false,
     required: true,
   },
+  firebaseUid: {
+    type: String,
+    required: true,
+  },
 });
 
 export type IClient = InferSchemaType<typeof clientSchema>;

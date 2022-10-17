@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import Client from 'src/models/client';
+import Client, { IClient } from 'src/models/client';
 
 export const getAllClient = async (req: Request, res: Response) => {
   try {
@@ -42,7 +42,8 @@ export const getClientById = async (req: Request, res: Response) => {
     });
   }
 };
-export const createClient = async (req: Request, res: Response) => {
+
+export const createClient = async (req: Request<any, any, IClient>, res: Response) => {
   try {
     const client = new Client({
       businessName: req.body.businessName,
@@ -51,6 +52,7 @@ export const createClient = async (req: Request, res: Response) => {
       address: req.body.address,
       phoneNumber: req.body.phoneNumber,
       email: req.body.email,
+      firebaseUid: req.body.firebaseUid,
     });
     const result = await client.save();
     return res.status(201).json({
@@ -66,6 +68,7 @@ export const createClient = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const updateClient = async (req: Request, res: Response) => {
   try {
     const clientToUpdate = await Client.findOneAndUpdate(
@@ -93,6 +96,7 @@ export const updateClient = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const activeClient = async (req: Request, res: Response) => {
   try {
     const clientToChange = await Client.findOneAndUpdate(
@@ -120,6 +124,7 @@ export const activeClient = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const inactiveClient = async (req: Request, res: Response) => {
   try {
     const clientToChange = await Client.findOneAndUpdate(
@@ -147,6 +152,7 @@ export const inactiveClient = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const deleteClient = async (req: Request, res: Response) => {
   try {
     const clientToChange = await Client.findOneAndUpdate(
