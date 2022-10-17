@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import Client, { IClient } from 'src/models/client';
+import Client from 'src/models/client';
 
 export const getAllClient = async (req: Request, res: Response) => {
   try {
@@ -37,32 +37,6 @@ export const getClientById = async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).json({
       message: `Could not find an client by the id of ${req.params.id}.`,
-      data: undefined,
-      error: true,
-    });
-  }
-};
-
-export const createClient = async (req: Request<any, any, IClient>, res: Response) => {
-  try {
-    const client = new Client({
-      businessName: req.body.businessName,
-      cuit: req.body.cuit,
-      ivaCondition: req.body.ivaCondition,
-      address: req.body.address,
-      phoneNumber: req.body.phoneNumber,
-      email: req.body.email,
-      firebaseUid: req.body.firebaseUid,
-    });
-    const result = await client.save();
-    return res.status(201).json({
-      message: 'Client created successfully.',
-      data: result,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(400).json({
-      message: error.message,
       data: undefined,
       error: true,
     });

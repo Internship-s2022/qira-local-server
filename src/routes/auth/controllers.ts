@@ -1,9 +1,9 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 import firebase from 'src/helper/firebase';
 import { RequestWithFirebase, Role } from 'src/interfaces';
 import Admin from 'src/models/admin';
-import Client from 'src/models/client';
+import Client, { IClient } from 'src/models/client';
 
 export const getUser = async (req: RequestWithFirebase, res: Response) => {
   const { token } = req.headers;
@@ -53,6 +53,24 @@ export const getUser = async (req: RequestWithFirebase, res: Response) => {
   } catch (error: any) {
     return res.status(500).json({
       message: `Something went wrong: ${error.message}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+export const createClient = async (req: Request<any, any, IClient>, res: Response) => {
+  try {
+    const client = new Client(req.body);
+    const result = await client.save();
+    return res.status(201).json({
+      message: 'Client created successfully.',
+      data: result,
+      error: false,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: error.message,
       data: undefined,
       error: true,
     });
