@@ -69,11 +69,11 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
         }),
     }),
     phoneNumber: Joi.string()
-      .regex(/^[0-9\-+]{9,10}$/)
+      .regex(/^[0-9\-+]{8,11}$/)
       .required()
       .messages({
         'string.pattern.base':
-          'Invalid Phone Number, it must only numbers and contain 9 or 10 characters.',
+          'Invalid Phone Number, it must only numbers and contain between 8 and 11 characters.',
         'any.required': 'Phone Number is a required field.',
       }),
     email: Joi.string().email().min(7).required().messages({
