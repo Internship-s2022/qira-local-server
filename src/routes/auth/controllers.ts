@@ -21,7 +21,7 @@ export const getUser = async (req: RequestWithFirebase, res: Response) => {
     }
     if (response.role === Role.ADMIN) {
       const admin = await Admin.findOne({
-        firebaseUid: req.firebaseUid,
+        firebaseUid: response.uid,
         logicDelete: false,
       });
       if (admin) {
@@ -34,7 +34,7 @@ export const getUser = async (req: RequestWithFirebase, res: Response) => {
     }
     if (response.role === Role.CLIENT) {
       const client = await Client.findOne({
-        firebaseUid: req.firebaseUid,
+        firebaseUid: response.uid,
         logicDelete: false,
       });
       if (client) {
