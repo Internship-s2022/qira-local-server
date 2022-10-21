@@ -13,7 +13,7 @@ const uploadFile = async (file: Base64File, bucket: string, instance?: AWS.S3) =
   const buf = Buffer.from(file.base64.split(',')[1], 'base64');
   const params = {
     Bucket: bucket,
-    // ACL: 'public-read',
+    ACL: 'public-read',
     Key: file.name,
     Body: buf,
     ContentEncoding: 'base64',
