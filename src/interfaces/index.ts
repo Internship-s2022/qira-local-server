@@ -21,3 +21,10 @@ export enum Role {
   ADMIN = 'ADMIN',
   CLIENT = 'CLIENT',
 }
+
+export interface Base64File {
+  name: string;
+  type: string;
+  base64: string;
+  isNew?: boolean;
+}
