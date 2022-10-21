@@ -15,8 +15,10 @@ export const validateCategory = (req: Request, res: Response, next: NextFunction
         'any.required': 'Category name is a required field.',
       }),
     image: Joi.object({
-      key: Joi.string().required(),
-      url: Joi.string().required(),
+      name: Joi.string().required(),
+      type: Joi.string().required(),
+      base64: Joi.string().required(),
+      isNew: Joi.boolean().required(),
     }).required(),
   });
 
@@ -43,8 +45,10 @@ export const validateCategoryUpdate = (req: Request, res: Response, next: NextFu
         'string.pattern.base': 'Invalid name, it must contain only letters.',
       }),
     image: Joi.object({
-      key: Joi.string(),
-      url: Joi.string(),
+      name: Joi.string().required(),
+      type: Joi.string().required(),
+      base64: Joi.string().required(),
+      isNew: Joi.boolean().required(),
     }),
   });
 

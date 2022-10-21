@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import s3 from 'src/helper/s3';
 import Category from 'src/models/category';
 
 export const getAllCategories = async (req: Request, res: Response) => {
@@ -46,9 +47,16 @@ export const getCategoryById = async (req: Request, res: Response) => {
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
+    const image = req.body.image;
+    const uploadImage = await s3.uploadFile(image, process.env.AWS_BUCKET_CATEGORIES_IMAGES || '');
+    const imageFile = {
+      key: uploadImage.Key,
+      url: uploadImage.Location,
+    };
+
     const category = new Category({
       name: req.body.name,
-      image: req.body.image,
+      image: imageFile,
     });
     const result = await category.save();
     return res.status(201).json({
@@ -67,18 +75,34 @@ export const createCategory = async (req: Request, res: Response) => {
 
 export const updateCategory = async (req: Request, res: Response) => {
   try {
+    const newValues = { ...req.body };
+
+    if (newValues.image?.isNew) {
+      const category = await Category.findOne({ _id: req.params.id, logicDelete: false });
+      if (!category) {
+        return res.status(404).json({
+          message: `Could not find a category by the id of ${req.params.id}.`,
+          data: undefined,
+          error: true,
+        });
+      }
+      const uploadImage = await s3.replaceFile(
+        newValues.image,
+        category.image.key,
+        process.env.AWS_BUCKET_CATEGORIES_IMAGES || '',
+      );
+      const imageFile = {
+        key: uploadImage.Key,
+        url: uploadImage.Location,
+      };
+      newValues.image = imageFile;
+    }
+
     const categoryUpdate = await Category.findOneAndUpdate(
       { _id: req.params.id, logicDelete: false },
-      req.body,
+      newValues,
       { new: true },
     );
-    if (!categoryUpdate) {
-      return res.status(404).json({
-        message: `Could not find a category by the id of ${req.params.id}.`,
-        data: undefined,
-        error: true,
-      });
-    }
     return res.status(200).json({
       message: 'Category updated successfully.',
       data: categoryUpdate,
