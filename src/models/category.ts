@@ -7,10 +7,8 @@ const categorySchema = new Schema({
   },
   image: {
     type: new Schema({
-      base64: { type: String, required: true },
-      name: { type: String, required: true },
-      type: { type: String, required: true },
-      isNew: { type: Boolean, required: true },
+      key: { type: String, required: true },
+      url: { type: String, required: true },
     }),
     required: true,
   },
