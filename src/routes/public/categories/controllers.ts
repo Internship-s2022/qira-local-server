@@ -7,7 +7,7 @@ export const getAllCategories = async (req: Request, res: Response) => {
     const allCategories = await Category.find({ logicDelete: false, isActive: true });
 
     return res.status(200).json({
-      message: 'Showing Categories.',
+      message: 'Showing active categories.',
       data: allCategories,
       error: false,
     });
