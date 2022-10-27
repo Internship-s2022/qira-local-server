@@ -57,6 +57,7 @@ export const createCategory = async (req: Request, res: Response) => {
     const category = new Category({
       name: req.body.name,
       image: imageFile,
+      url: req.body.url,
     });
     const result = await category.save();
     return res.status(201).json({
