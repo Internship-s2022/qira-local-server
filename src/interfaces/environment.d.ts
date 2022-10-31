@@ -12,6 +12,8 @@ declare global {
       AWS_SECRET_ACCESS_KEY: string;
       AWS_BUCKET: string;
       AWS_BUCKET_CATEGORIES_IMAGES: string;
+      AWS_BUCKET_PRODUCTS_IMAGES: string;
+      AWS_BUCKET_PRODUCTS_TECHNICAL_FILE: string;
     }
   }
 }
