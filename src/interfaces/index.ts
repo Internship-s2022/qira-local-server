@@ -1,4 +1,7 @@
 import { Request } from 'express';
+import { Document, ObjectId, PopulatedDoc } from 'mongoose';
+
+import { ICategory } from 'src/models/category';
 
 export interface RequestWithFirebase extends Request {
   firebaseUid?: string;
