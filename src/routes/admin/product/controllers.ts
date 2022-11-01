@@ -23,7 +23,9 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
 export const getProductById = async (req: Request, res: Response) => {
   try {
-    const product = await Product.findOne({ _id: req.params.id, logicDelete: false });
+    const product = await Product.findOne({ _id: req.params.id, logicDelete: false }).populate(
+      'category',
+    );
     if (!product) {
       return res.status(404).json({
         message: `Could not find a product by the id of ${req.params.id}.`,
@@ -49,10 +51,13 @@ export const createProduct = async (req: Request, res: Response) => {
   try {
     const image = req.body.image;
     const file = req.body.technicalFile;
-
     const uploadImage = await s3.uploadFile(image, process.env.AWS_BUCKET_PRODUCTS_IMAGES || '');
-
+    const imageFile = {
+      key: uploadImage.Key,
+      url: uploadImage.Location,
+    };
     let technicalFile;
+
     if (file?.base64) {
       const uploadFile = await s3.uploadFile(
         file,
@@ -63,10 +68,7 @@ export const createProduct = async (req: Request, res: Response) => {
         url: uploadFile.Location,
       };
     }
-    const imageFile = {
-      key: uploadImage.Key,
-      url: uploadImage.Location,
-    };
+
     const product = new Product({
       ...req.body,
       image: imageFile,
@@ -90,6 +92,9 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
+    let uploadImage;
+    let uploadFile;
+
     const newValues = { ...req.body };
     const product = await Product.findOne({ _id: req.params.id, logicDelete: false });
 
@@ -102,7 +107,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     }
 
     if (newValues.image?.isNew) {
-      const uploadImage = await s3.replaceFile(
+      uploadImage = await s3.replaceFile(
         newValues.image,
         product.image.key,
         process.env.AWS_BUCKET_PRODUCTS_IMAGES || '',
@@ -112,31 +117,30 @@ export const updateProduct = async (req: Request, res: Response) => {
         url: uploadImage.Location,
       };
       newValues.image = imageFile;
+    } else {
+      delete newValues.image;
     }
 
     if (newValues.technicalFile?.isNew) {
       if (product.technicalFile?.key) {
-        const uploadFile = await s3.replaceFile(
+        uploadFile = await s3.replaceFile(
           newValues.technicalFile,
           product.technicalFile.key,
           process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
         );
-        const pdfFile = {
-          key: uploadFile.Key,
-          url: uploadFile.Location,
-        };
-        newValues.technicalFile = pdfFile;
       } else {
-        const uploadFile = await s3.uploadFile(
+        uploadFile = await s3.uploadFile(
           newValues.technicalFile,
           process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
         );
-        const pdfFile = {
-          key: uploadFile.Key,
-          url: uploadFile.Location,
-        };
-        newValues.technicalFile = pdfFile;
       }
+      const pdfFile = {
+        key: uploadFile.Key,
+        url: uploadFile.Location,
+      };
+      newValues.technicalFile = pdfFile;
+    } else {
+      delete newValues.technicalFile;
     }
 
     const productUpdate = await Product.findOneAndUpdate(

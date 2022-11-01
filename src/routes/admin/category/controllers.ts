@@ -97,6 +97,8 @@ export const updateCategory = async (req: Request, res: Response) => {
         url: uploadImage.Location,
       };
       newValues.image = imageFile;
+    } else {
+      delete newValues.image;
     }
 
     const categoryUpdate = await Category.findOneAndUpdate(

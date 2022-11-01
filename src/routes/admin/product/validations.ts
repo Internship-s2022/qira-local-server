@@ -39,7 +39,7 @@ export const validateProduct = (req: Request, res: Response, next: NextFunction)
       type: Joi.string().required(),
       base64: Joi.string().required(),
       isNew: Joi.boolean().required(),
-    }).required(),
+    }),
     brand: Joi.string()
       .min(2)
       .regex(/^[a-zA-Z0-9 ]*$/)
