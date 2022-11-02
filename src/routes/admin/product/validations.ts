@@ -17,6 +17,7 @@ export const validateProduct = (req: Request, res: Response, next: NextFunction)
         'any.required': 'Product name is a required field.',
       }),
     description: Joi.string()
+      .allow('')
       .min(3)
       .regex(/^[a-zA-Z0-9 ]*$/)
       .messages({
