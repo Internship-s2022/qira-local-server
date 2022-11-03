@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import s3 from 'src/helper/s3';
 import Product from 'src/models/product';
 
 export const getAllProducts = async (req: Request, res: Response) => {
@@ -22,7 +23,9 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
 export const getProductById = async (req: Request, res: Response) => {
   try {
-    const product = await Product.findOne({ _id: req.params.id, logicDelete: false });
+    const product = await Product.findOne({ _id: req.params.id, logicDelete: false }).populate(
+      'category',
+    );
     if (!product) {
       return res.status(404).json({
         message: `Could not find a product by the id of ${req.params.id}.`,
@@ -46,7 +49,32 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const product = new Product(req.body);
+    const image = req.body.image;
+    const file = req.body.technicalFile;
+    const uploadImage = await s3.uploadFile(image, process.env.AWS_BUCKET_PRODUCTS_IMAGES || '');
+    const imageFile = {
+      key: uploadImage.Key,
+      url: uploadImage.Location,
+    };
+    let technicalFile;
+
+    if (file?.base64) {
+      const uploadFile = await s3.uploadFile(
+        file,
+        process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
+      );
+      technicalFile = {
+        key: uploadFile.Key,
+        url: uploadFile.Location,
+      };
+    }
+
+    const product = new Product({
+      ...req.body,
+      image: imageFile,
+      technicalFile,
+    });
+
     const result = await product.save();
     return res.status(201).json({
       message: 'Product created successfully.',
@@ -64,21 +92,67 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
-    const productUpdated = await Product.findOneAndUpdate(
-      { _id: req.params.id, logicDelete: false },
-      req.body,
-      { new: true },
-    );
-    if (!productUpdated) {
+    let uploadImage;
+    let uploadFile;
+
+    const newValues = { ...req.body };
+    const product = await Product.findOne({ _id: req.params.id, logicDelete: false });
+
+    if (!product) {
       return res.status(404).json({
         message: `Could not find a product by the id of ${req.params.id}.`,
         data: undefined,
         error: true,
       });
     }
-    return res
-      .status(200)
-      .json({ message: 'Product updated successfully.', data: productUpdated, error: false });
+
+    if (newValues.image?.isNew) {
+      uploadImage = await s3.replaceFile(
+        newValues.image,
+        product.image.key,
+        process.env.AWS_BUCKET_PRODUCTS_IMAGES || '',
+      );
+      const imageFile = {
+        key: uploadImage.Key,
+        url: uploadImage.Location,
+      };
+      newValues.image = imageFile;
+    } else {
+      delete newValues.image;
+    }
+
+    if (newValues.technicalFile?.isNew) {
+      if (product.technicalFile?.key) {
+        uploadFile = await s3.replaceFile(
+          newValues.technicalFile,
+          product.technicalFile.key,
+          process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
+        );
+      } else {
+        uploadFile = await s3.uploadFile(
+          newValues.technicalFile,
+          process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
+        );
+      }
+      const pdfFile = {
+        key: uploadFile.Key,
+        url: uploadFile.Location,
+      };
+      newValues.technicalFile = pdfFile;
+    } else {
+      delete newValues.technicalFile;
+    }
+
+    const productUpdate = await Product.findOneAndUpdate(
+      { _id: req.params.id, logicDelete: false },
+      newValues,
+      { new: true },
+    );
+    return res.status(200).json({
+      message: 'Product updated successfully.',
+      data: productUpdate,
+      error: false,
+    });
   } catch (error: any) {
     return res.status(400).json({
       message: `Something went wrong: ${error.message}`,

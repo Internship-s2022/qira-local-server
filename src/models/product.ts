@@ -18,15 +18,15 @@ const productSchema = new Schema(
     },
     image: {
       type: new Schema({
-        key: { type: String, required: false },
-        url: { type: String, required: false },
+        key: { type: String, required: true },
+        url: { type: String, required: true },
       }),
-      required: false,
+      required: true,
     },
     technicalFile: {
       type: new Schema({
-        key: { type: String, required: false },
-        url: { type: String, required: false },
+        key: { type: String, required: true },
+        url: { type: String, required: true },
       }),
       required: false,
     },
@@ -37,7 +37,6 @@ const productSchema = new Schema(
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',
-      required: true,
     },
     currency: {
       type: String,
