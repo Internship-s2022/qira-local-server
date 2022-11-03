@@ -1,8 +1,5 @@
-import { config } from 'dotenv';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-
-config();
 
 const testMongoServer = new MongoMemoryServer();
 let mongo: MongoMemoryServer;
