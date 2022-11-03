@@ -96,7 +96,9 @@ export const updateProduct = async (req: Request, res: Response) => {
     let uploadFile;
 
     const newValues = { ...req.body };
-    const product = await Product.findOne({ _id: req.params.id, logicDelete: false });
+    const product = await Product.findOne({ _id: req.params.id, logicDelete: false }).populate(
+      'category',
+    );
 
     if (!product) {
       return res.status(404).json({
@@ -147,7 +149,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       { _id: req.params.id, logicDelete: false },
       newValues,
       { new: true },
-    );
+    ).populate('category');
     return res.status(200).json({
       message: 'Product updated successfully.',
       data: productUpdate,
@@ -196,7 +198,7 @@ export const activeProduct = async (req: Request, res: Response) => {
       { _id: req.params.id, logicDelete: false, isActive: false },
       { isActive: true },
       { new: true },
-    );
+    ).populate('category');
     if (!productChanged) {
       return res.status(404).json({
         message: `Products with Id ${req.params.id} does not exist or is already active.`,
@@ -224,7 +226,7 @@ export const inactiveProduct = async (req: Request, res: Response) => {
       { _id: req.params.id, logicDelete: false, isActive: true },
       { isActive: false },
       { new: true },
-    );
+    ).populate('category');
     if (!productChanged) {
       return res.status(404).json({
         message: `Products with Id ${req.params.id} does not exist or is already inactive.`,
