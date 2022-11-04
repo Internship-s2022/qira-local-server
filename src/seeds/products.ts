@@ -4,6 +4,7 @@ import { Currency } from 'src/interfaces';
 
 export default [
   {
+    _id: new mongoose.Types.ObjectId('636534e7b1c86f2d04240078'),
     name: 'Semillas',
     description: 'This is a description',
     price: 2000,
@@ -22,6 +23,7 @@ export default [
     isNew: true,
   },
   {
+    _id: '636567c722ab6362ab13895f',
     name: 'Silos bolsa',
     description: 'This is a description',
     price: 6000,
@@ -38,6 +40,8 @@ export default [
     currency: Currency.PESO,
     stock: 100,
     isNew: true,
+    isActive: false,
+    logicDelete: true,
   },
   {
     name: 'Producto de prueba',
