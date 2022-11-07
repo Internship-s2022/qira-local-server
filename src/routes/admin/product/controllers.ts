@@ -49,24 +49,30 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const image = req.body.image;
-    const file = req.body.technicalFile;
-    const uploadImage = await s3.uploadFile(image, process.env.AWS_BUCKET_PRODUCTS_IMAGES || '');
-    const imageFile = {
-      key: uploadImage.Key,
-      url: uploadImage.Location,
-    };
+    let imageFile;
     let technicalFile;
-
-    if (file?.base64) {
-      const uploadFile = await s3.uploadFile(
-        file,
-        process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
-      );
-      technicalFile = {
-        key: uploadFile.Key,
-        url: uploadFile.Location,
+    if (!process.env.IS_TEST) {
+      const image = req.body.image;
+      const file = req.body.technicalFile;
+      const uploadImage = await s3.uploadFile(image, process.env.AWS_BUCKET_PRODUCTS_IMAGES || '');
+      imageFile = {
+        key: uploadImage.Key,
+        url: uploadImage.Location,
       };
+
+      if (file?.base64) {
+        const uploadFile = await s3.uploadFile(
+          file,
+          process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
+        );
+        technicalFile = {
+          key: uploadFile.Key,
+          url: uploadFile.Location,
+        };
+      }
+    } else {
+      imageFile = { key: 'test', url: 'test' };
+      technicalFile = { key: 'test', url: 'test' };
     }
 
     const product = new Product({
@@ -107,42 +113,46 @@ export const updateProduct = async (req: Request, res: Response) => {
         error: true,
       });
     }
-
-    if (newValues.image?.isNew) {
-      uploadImage = await s3.replaceFile(
-        newValues.image,
-        product.image.key,
-        process.env.AWS_BUCKET_PRODUCTS_IMAGES || '',
-      );
-      const imageFile = {
-        key: uploadImage.Key,
-        url: uploadImage.Location,
-      };
-      newValues.image = imageFile;
-    } else {
-      delete newValues.image;
-    }
-
-    if (newValues.technicalFile?.isNew) {
-      if (product.technicalFile?.key) {
-        uploadFile = await s3.replaceFile(
-          newValues.technicalFile,
-          product.technicalFile.key,
-          process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
+    if (!process.env.IS_TEST) {
+      if (newValues.image?.isNew) {
+        uploadImage = await s3.replaceFile(
+          newValues.image,
+          product.image.key,
+          process.env.AWS_BUCKET_PRODUCTS_IMAGES || '',
         );
+        const imageFile = {
+          key: uploadImage.Key,
+          url: uploadImage.Location,
+        };
+        newValues.image = imageFile;
       } else {
-        uploadFile = await s3.uploadFile(
-          newValues.technicalFile,
-          process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
-        );
+        delete newValues.image;
       }
-      const pdfFile = {
-        key: uploadFile.Key,
-        url: uploadFile.Location,
-      };
-      newValues.technicalFile = pdfFile;
+
+      if (newValues.technicalFile?.isNew) {
+        if (product.technicalFile?.key) {
+          uploadFile = await s3.replaceFile(
+            newValues.technicalFile,
+            product.technicalFile.key,
+            process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
+          );
+        } else {
+          uploadFile = await s3.uploadFile(
+            newValues.technicalFile,
+            process.env.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE || '',
+          );
+        }
+        const pdfFile = {
+          key: uploadFile.Key,
+          url: uploadFile.Location,
+        };
+        newValues.technicalFile = pdfFile;
+      } else {
+        delete newValues.technicalFile;
+      }
     } else {
-      delete newValues.technicalFile;
+      newValues.image = { key: 'test', url: 'test' };
+      newValues.technicalFile = { key: 'test', url: 'test' };
     }
 
     const productUpdate = await Product.findOneAndUpdate(
