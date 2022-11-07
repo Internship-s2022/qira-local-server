@@ -47,13 +47,23 @@ export const getCategoryById = async (req: Request, res: Response) => {
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
-    const image = req.body.image;
-    const uploadImage = await s3.uploadFile(image, process.env.AWS_BUCKET_CATEGORIES_IMAGES || '');
-    const imageFile = {
-      key: uploadImage.Key,
-      url: uploadImage.Location,
-    };
-
+    let imageFile;
+    if (!process.env.IS_TEST) {
+      const image = req.body.image;
+      const uploadImage = await s3.uploadFile(
+        image,
+        process.env.AWS_BUCKET_CATEGORIES_IMAGES || '',
+      );
+      imageFile = {
+        key: uploadImage.Key,
+        url: uploadImage.Location,
+      };
+    } else {
+      imageFile = {
+        key: 'test',
+        url: 'test',
+      };
+    }
     const category = new Category({
       name: req.body.name,
       image: imageFile,
@@ -77,28 +87,34 @@ export const createCategory = async (req: Request, res: Response) => {
 export const updateCategory = async (req: Request, res: Response) => {
   try {
     const newValues = { ...req.body };
-
-    if (newValues.image?.isNew) {
-      const category = await Category.findOne({ _id: req.params.id, logicDelete: false });
-      if (!category) {
-        return res.status(404).json({
-          message: `Could not find a category by the id of ${req.params.id}.`,
-          data: undefined,
-          error: true,
-        });
+    const category = await Category.findOne({ _id: req.params.id, logicDelete: false });
+    if (!category) {
+      return res.status(404).json({
+        message: `Could not find a category by the id of ${req.params.id}.`,
+        data: undefined,
+        error: true,
+      });
+    }
+    if (!process.env.IS_TEST) {
+      if (newValues.image?.isNew) {
+        const uploadImage = await s3.replaceFile(
+          newValues.image,
+          category.image.key,
+          process.env.AWS_BUCKET_CATEGORIES_IMAGES || '',
+        );
+        const imageFile = {
+          key: uploadImage.Key,
+          url: uploadImage.Location,
+        };
+        newValues.image = imageFile;
+      } else {
+        delete newValues.image;
       }
-      const uploadImage = await s3.replaceFile(
-        newValues.image,
-        category.image.key,
-        process.env.AWS_BUCKET_CATEGORIES_IMAGES || '',
-      );
-      const imageFile = {
-        key: uploadImage.Key,
-        url: uploadImage.Location,
-      };
-      newValues.image = imageFile;
     } else {
-      delete newValues.image;
+      newValues.image = {
+        key: 'test',
+        url: 'test',
+      };
     }
 
     const categoryUpdate = await Category.findOneAndUpdate(
