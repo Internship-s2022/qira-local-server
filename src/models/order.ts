@@ -1,6 +1,31 @@
 import { InferSchemaType, model, Schema } from 'mongoose';
 
-import { OrderState } from 'src/interfaces';
+import { IProduct } from './product';
+
+export enum OrderState {
+  APPROVE_PENDING = 'APPROVE_PENDING',
+  DELIVERY_PENDING = 'DELIVERY_PENDING',
+  DELIVERED = 'DELIVERED',
+  REJECTED = 'REJECTED',
+}
+
+export interface OrderProduct {
+  product: IProduct;
+  quantity: number;
+}
+
+export interface Amounts {
+  products: number;
+  taxes: number;
+  total: number;
+}
+
+export interface Authorized {
+  firstName: string;
+  lastName: string;
+  dni: number;
+  phoneNumber: number;
+}
 
 const orderSchema = new Schema(
   {
@@ -9,7 +34,6 @@ const orderSchema = new Schema(
         product: {
           type: Schema.Types.ObjectId,
           ref: 'Product',
-          required: true,
         },
         quantity: {
           type: Number,
@@ -20,7 +44,6 @@ const orderSchema = new Schema(
     client: {
       type: Schema.Types.ObjectId,
       ref: 'Client',
-      required: true,
     },
     state: {
       type: String,
