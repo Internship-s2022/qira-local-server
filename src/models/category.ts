@@ -12,6 +12,10 @@ const categorySchema = new Schema({
     }),
     required: true,
   },
+  url: {
+    type: String,
+    required: true,
+  },
   isActive: {
     type: Boolean,
     required: true,

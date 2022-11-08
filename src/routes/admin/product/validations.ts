@@ -17,6 +17,7 @@ export const validateProduct = (req: Request, res: Response, next: NextFunction)
         'any.required': 'Product name is a required field.',
       }),
     description: Joi.string()
+      .allow('')
       .min(3)
       .regex(/^[a-zA-Z0-9 ]*$/)
       .messages({
@@ -29,12 +30,16 @@ export const validateProduct = (req: Request, res: Response, next: NextFunction)
       'any.required': 'Product price is a required field.',
     }),
     image: Joi.object({
-      key: Joi.string(),
-      url: Joi.string(),
-    }),
+      name: Joi.string().required(),
+      type: Joi.string().required(),
+      base64: Joi.string().required(),
+      isNew: Joi.boolean().required(),
+    }).required(),
     technicalFile: Joi.object({
-      key: Joi.string(),
-      url: Joi.string(),
+      name: Joi.string().required(),
+      type: Joi.string().required(),
+      base64: Joi.string().required(),
+      isNew: Joi.boolean().required(),
     }),
     brand: Joi.string()
       .min(2)
@@ -81,6 +86,7 @@ export const validateProductUpdate = (req: Request, res: Response, next: NextFun
         'any.required': 'Product name is a required field.',
       }),
     description: Joi.string()
+      .allow('')
       .min(3)
       .regex(/^[a-zA-Z0-9 ]*$/)
       .messages({
@@ -93,12 +99,16 @@ export const validateProductUpdate = (req: Request, res: Response, next: NextFun
       'any.required': 'Product price is a required field.',
     }),
     image: Joi.object({
-      key: Joi.string(),
-      url: Joi.string(),
+      name: Joi.string().required(),
+      type: Joi.string().required(),
+      base64: Joi.string().required(),
+      isNew: Joi.boolean().required(),
     }),
     technicalFile: Joi.object({
-      key: Joi.string(),
-      url: Joi.string(),
+      name: Joi.string().required(),
+      type: Joi.string().required(),
+      base64: Joi.string().required(),
+      isNew: Joi.boolean().required(),
     }),
     brand: Joi.string()
       .min(2)

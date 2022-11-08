@@ -15,9 +15,18 @@ export const validateCategory = (req: Request, res: Response, next: NextFunction
         'any.required': 'Category name is a required field.',
       }),
     image: Joi.object({
-      key: Joi.string().required(),
-      url: Joi.string().required(),
+      name: Joi.string().required(),
+      type: Joi.string().required(),
+      base64: Joi.string().required(),
+      isNew: Joi.boolean().required(),
     }).required(),
+    url: Joi.string()
+      .regex(/^([a-z-]*)$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'Invalid url, it must contain only lower case and -.',
+        'any.required': 'Url is a required field.',
+      }),
   });
 
   const validation = categorySchema.validate(req.body);
@@ -43,9 +52,17 @@ export const validateCategoryUpdate = (req: Request, res: Response, next: NextFu
         'string.pattern.base': 'Invalid name, it must contain only letters.',
       }),
     image: Joi.object({
-      key: Joi.string(),
-      url: Joi.string(),
+      name: Joi.string().required(),
+      type: Joi.string().required(),
+      base64: Joi.string().required(),
+      isNew: Joi.boolean().required(),
     }),
+    url: Joi.string()
+      .regex(/^([a-z-]*)$/)
+      .messages({
+        'string.pattern.base': 'Invalid url, it must contain only lower case and -.',
+        'any.required': 'Url is a required field.',
+      }),
   });
 
   const validation = categorySchema.validate(req.body);

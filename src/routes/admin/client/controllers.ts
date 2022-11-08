@@ -36,7 +36,7 @@ export const getClientById = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     return res.status(500).json({
-      message: `Could not find an client by the id of ${req.params.id}.`,
+      message: `Something went wrong: ${error.message}`,
       data: undefined,
       error: true,
     });
