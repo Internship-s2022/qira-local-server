@@ -101,7 +101,6 @@ describe(`/PATCH ${url}`, () => {
   });
   test('Response should return a status 404 and dont update a new Category when the id doesnt exists', async () => {
     const response = await request(app).patch(`${url}/${wrongID}`).send(categoryUpdate);
-    console.log(response.body);
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(`Could not find a category by the id of ${wrongID}.`);
