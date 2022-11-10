@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 
-import { OrderState } from 'src/models/order';
-
 export const validateOrder = (req: Request, res: Response, next: NextFunction) => {
   const orderSchema = Joi.object({
     products: Joi.array()
