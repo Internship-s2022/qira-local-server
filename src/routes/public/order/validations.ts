@@ -24,18 +24,6 @@ export const validateOrder = (req: Request, res: Response, next: NextFunction) =
       .length(24)
       .required()
       .messages({ 'any.required': 'Products is a required field.' }),
-    state: Joi.string()
-      .valid(
-        OrderState.APPROVE_PENDING,
-        OrderState.DELIVERED,
-        OrderState.DELIVERY_PENDING,
-        OrderState.REJECTED,
-      )
-      .required()
-      .messages({
-        'string.valid': 'Only accept APPROVE_PENDING, DELIVERY_PENDING, DELIVERED or REJECTED.',
-        'any.required': 'Type of currency is a required false.',
-      }),
     authorized: Joi.array()
       .items(
         Joi.object({
@@ -109,13 +97,21 @@ export const validateOrder = (req: Request, res: Response, next: NextFunction) =
         'number.precision': 'Invalid total price, it allows maximum of 2 decimals numbers.',
         'any.required': 'Order total price is a required field.',
       }),
-    }),
+    })
+      .required()
+      .messages({
+        'any.required': 'Amounts is a required field.',
+      }),
     payment: Joi.object({
       name: Joi.string().required(),
       type: Joi.string().required(),
       base64: Joi.string().required(),
       isNew: Joi.boolean().required(),
-    }),
+    })
+      .required()
+      .messages({
+        'any.required': 'Payment is a required field.',
+      }),
     exchangeRate: Joi.number().positive().precision(2).required().messages({
       'number.positive': 'Invalid exchange rate, it must be positive.',
       'number.precision': 'Invalid exchange rate, it allows maximum of 2 decimals numbers.',

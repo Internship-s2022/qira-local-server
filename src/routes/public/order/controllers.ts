@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import s3 from 'src/helper/s3';
 import { Currency } from 'src/interfaces';
 import Client from 'src/models/client';
-import { Amounts, OrderProduct } from 'src/models/order';
+import Order, { Amounts, OrderProduct } from 'src/models/order';
 import Product from 'src/models/product';
 
 const checkStock = (orderProducts: OrderProduct[]): boolean => {
@@ -88,10 +88,10 @@ export const createOrder = async (req: Request, res: Response) => {
       url: uploadPayment.Location,
     };
 
-    const newOrder = {
+    const newOrder = new Order({
       ...req.body,
       payment: paymentFile,
-    };
+    });
 
     const result = await newOrder.save();
     if (result) {
