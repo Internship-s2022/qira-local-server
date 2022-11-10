@@ -1,4 +1,4 @@
-import { InferSchemaType, model, Schema } from 'mongoose';
+import mongoose, { InferSchemaType, model, Schema } from 'mongoose';
 
 import { IProduct } from './product';
 
