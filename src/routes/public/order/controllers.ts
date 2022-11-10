@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import s3 from 'src/helper/s3';
 import { Currency } from 'src/interfaces';
 import Client from 'src/models/client';
-import Order, { Amounts, OrderProduct } from 'src/models/order';
+import { Amounts, OrderProduct } from 'src/models/order';
 import Product from 'src/models/product';
 
 const checkStock = (orderProducts: OrderProduct[]): boolean => {
@@ -53,16 +53,6 @@ const calculateAmounts = async (
   return sameAmounts;
 };
 
-const updateStock = (orderProducts: OrderProduct[]) => {
-  orderProducts.forEach(async (product) => {
-    const productUpdate = await Product.findOneAndUpdate(
-      { _id: product.product._id, logicDelete: false },
-      { ...product.product, stock: product.product.stock - product.quantity },
-      { new: true },
-    ).populate('category');
-  });
-};
-
 export const createOrder = async (req: Request, res: Response) => {
   try {
     const client = await Client.findOne({ _id: req.body.client, logicDelete: false });
@@ -105,7 +95,20 @@ export const createOrder = async (req: Request, res: Response) => {
 
     const result = await newOrder.save();
     if (result) {
-      updateStock(req.body.products);
+      req.body.products.forEach(async (product: OrderProduct) => {
+        const productUpdate = await Product.findOneAndUpdate(
+          { _id: product.product._id, logicDelete: false },
+          { ...product.product, stock: product.product.stock - product.quantity },
+          { new: true },
+        ).populate('category');
+        if (!productUpdate) {
+          return res.status(400).json({
+            message: 'Something went wrong.',
+            data: undefined,
+            error: true,
+          });
+        }
+      });
     } else {
       return res.status(400).json({
         message: 'Something went wrong.',
