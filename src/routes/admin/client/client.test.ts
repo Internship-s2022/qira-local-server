@@ -22,7 +22,9 @@ describe('/GET /admin/client', () => {
     expect(response.body.message).toEqual('Showing Clients.');
     expect(response.body.data.length).toBeGreaterThan(0);
   });
+});
 
+describe('/GET /admin/client/:id', () => {
   test('Response should return only one client and status 200', async () => {
     const response = await request(app).get(`/admin/client/${validClientId}`).send();
     expect(response.status).toBe(200);
@@ -32,7 +34,7 @@ describe('/GET /admin/client', () => {
     );
   });
 
-  test('Response should return error and status 404', async () => {
+  test('Invalid Id, response should return error and status 404', async () => {
     const response = await request(app).get(`/admin/client/${invalidClientId}`).send();
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
@@ -60,7 +62,7 @@ describe('/PATCH /admin/client/:id', () => {
     expect(response.body.data.email).toBe('changedemail@radiumrocket.com');
   });
 
-  test('Response should return error and status 404', async () => {
+  test('Invalid Id, response should return error and status 404', async () => {
     const response = await request(app).patch(`/admin/client/${invalidClientId}`).send({
       businessName: 'Not Gonna Change',
     });
