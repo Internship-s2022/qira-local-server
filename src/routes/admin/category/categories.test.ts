@@ -34,7 +34,7 @@ beforeAll(async () => {
   await categoryModel.insertMany(categoriesSeed);
 });
 
-describe(`/GET ${url}`, () => {
+describe('/GET /admin/category', () => {
   test('Response should return all categories & return status 200', async () => {
     const response = await request(app).get(`${url}`).send();
     expect(response.status).toBe(200);
@@ -44,7 +44,7 @@ describe(`/GET ${url}`, () => {
   });
 });
 
-describe(`/POST ${url}`, () => {
+describe('/POST /admin/category', () => {
   test('Response should return a  status 201 & create a new Category when the body is correct', async () => {
     const response = await request(app).post(`${url}`).send(category);
     expect(response.status).toBe(201);
@@ -54,6 +54,7 @@ describe(`/POST ${url}`, () => {
     expect(response.body.data.url).toEqual(category.url);
     categoryID = response.body.data._id;
   });
+
   test('Response should return a status 400 and dont create a new CAtegory when the name is wrong', async () => {
     const response = await request(app)
       .post(`${url}`)
@@ -71,6 +72,7 @@ describe(`/POST ${url}`, () => {
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual('Invalid name, it must contain at least 3 characters.');
   });
+
   test('Response should return a status 400 and dont create a new Category when the url is empty', async () => {
     const response = await request(app)
       .post(`${url}`)
@@ -90,7 +92,7 @@ describe(`/POST ${url}`, () => {
   });
 });
 
-describe(`/PATCH ${url}`, () => {
+describe('/PATCH /admin/category', () => {
   test('Response should return a  status 200 & update the Category when the id and body are corrects', async () => {
     const response = await request(app).patch(`${url}/${categoryID}`).send(categoryUpdate);
     expect(response.status).toBe(200);
@@ -99,12 +101,14 @@ describe(`/PATCH ${url}`, () => {
     expect(response.body.data.name).toEqual(categoryUpdate.name);
     expect(response.body.data.url).toEqual(categoryUpdate.url);
   });
+
   test('Response should return a status 404 and dont update a new Category when the id doesnt exists', async () => {
     const response = await request(app).patch(`${url}/${wrongID}`).send(categoryUpdate);
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(`Could not find a category by the id of ${wrongID}.`);
   });
+
   test('Response should return a status 400 and dont update Category when the name is empty', async () => {
     const response = await request(app)
       .post(`${url}`)
@@ -124,7 +128,7 @@ describe(`/PATCH ${url}`, () => {
   });
 });
 
-describe(`/GET ${url}/:id`, () => {
+describe('/GET /admin/category/:id', () => {
   test('Response should return a status code 200 & one product', async () => {
     const response = await request(app).get(`${url}/${categoryID}`);
     expect(response.status).toBe(200);
@@ -142,7 +146,7 @@ describe(`/GET ${url}/:id`, () => {
   });
 });
 
-describe(`/PATCH ${url}/inactivate/:id`, () => {
+describe('/PATCH /admin/category/inactivate/:id', () => {
   test('Response should return a status 200 and inactivate the Category', async () => {
     const response = await request(app).patch(`${url}/inactivate/${categoryID}`);
     expect(response.status).toBe(200);
@@ -162,7 +166,7 @@ describe(`/PATCH ${url}/inactivate/:id`, () => {
   });
 });
 
-describe(`/PATCH ${url}/activate/:id`, () => {
+describe('/PATCH /admin/category/activate/:id', () => {
   test('Response should activate a Category & return status 200', async () => {
     const response = await request(app).patch(`${url}/activate/${categoryID}`);
     expect(response.status).toBe(200);
@@ -180,7 +184,7 @@ describe(`/PATCH ${url}/activate/:id`, () => {
   });
 });
 
-describe(`/PATCH ${url}/delete/:id`, () => {
+describe('/PATCH /admin/category/delete/:id', () => {
   test('Response should logic delete a category & return status 200', async () => {
     const response = await request(app).patch(`${url}/delete/${categoryID}`);
     expect(response.status).toBe(200);
