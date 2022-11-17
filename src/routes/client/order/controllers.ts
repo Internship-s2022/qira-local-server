@@ -92,7 +92,7 @@ export const createOrder = async (req: Request, res: Response) => {
       req.body.products.forEach(async (product: OrderProduct) => {
         const productUpdate = await Product.findOneAndUpdate(
           { _id: product.product._id, logicDelete: false },
-          { ...product.product, stock: product.product.stock - product.quantity },
+          { stock: product.product.stock - product.quantity },
           { new: true },
         ).populate('category');
         if (!productUpdate) {
