@@ -17,7 +17,6 @@ export const calculateAmounts = async (
   orderProducts: OrderProduct[],
   exchangeRate: number,
 ) => {
-  let sameAmounts = true;
   const recalculatedAmounts: Amounts = {
     products: 0,
     taxes: 0,
@@ -33,8 +32,7 @@ export const calculateAmounts = async (
       }
       recalculatedAmounts.products = recalculatedAmounts.products + productPrice;
     } else {
-      sameAmounts = false;
-      return sameAmounts;
+      return false;
     }
   });
   recalculatedAmounts.taxes = recalculatedAmounts.products * 0.21;
@@ -44,7 +42,7 @@ export const calculateAmounts = async (
     amounts.taxes !== recalculatedAmounts.taxes ||
     amounts.total !== recalculatedAmounts.total
   ) {
-    sameAmounts = false;
+    return false;
   }
-  return sameAmounts;
+  return true;
 };
