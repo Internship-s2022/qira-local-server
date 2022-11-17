@@ -9,8 +9,12 @@ export enum OrderState {
   REJECTED = 'REJECTED',
 }
 
+interface Product extends IProduct {
+  _id: string;
+}
+
 export interface OrderProduct {
-  product: IProduct;
+  product: Product;
   quantity: number;
 }
 
@@ -49,6 +53,7 @@ const orderSchema = new Schema(
       type: String,
       enum: Object.values(OrderState),
       required: true,
+      default: OrderState.APPROVE_PENDING,
     },
     authorized: [
       {
@@ -61,11 +66,11 @@ const orderSchema = new Schema(
           required: true,
         },
         dni: {
-          type: Number,
+          type: String,
           required: true,
         },
         phoneNumber: {
-          type: Number,
+          type: String,
           required: true,
         },
       },
