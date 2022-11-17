@@ -11,6 +11,6 @@ const router = express.Router();
 
 router.use('/categories', categoriesRouter);
 router.use('/products', productsRouter);
-router.use('/order', authMiddleware(Role.CLIENT), orderRouter);
+router.use('/orders', authMiddleware(Role.CLIENT), orderRouter);
 
 export default router;
