@@ -14,6 +14,7 @@ declare global {
       AWS_BUCKET_CATEGORIES_IMAGES: string;
       AWS_BUCKET_PRODUCTS_IMAGES: string;
       AWS_BUCKET_PRODUCTS_TECHNICAL_FILE: string;
+      AWS_BUCKET_TRANSFER_RECEIPTS: string;
     }
   }
 }
