@@ -62,7 +62,7 @@ beforeAll(async () => {
   await productModel.insertMany(productsSeeds);
 });
 
-describe(`/GET ${url}`, () => {
+describe('/GET /admin/product', () => {
   test('Response should return all products & return status 200', async () => {
     const response = await request(app).get(`${url}`).send();
     expect(response.status).toBe(200);
@@ -72,7 +72,7 @@ describe(`/GET ${url}`, () => {
   });
 });
 
-describe(`/POST ${url}`, () => {
+describe('/POST /admin/product', () => {
   test('Response should return the product created & return status 201', async () => {
     const response = await request(app).post(`${url}`).send(testProduct);
     expect(response.status).toBe(201);
@@ -122,7 +122,7 @@ describe(`/POST ${url}`, () => {
   });
 });
 
-describe(`/PATCH ${url}/:id`, () => {
+describe('/PATCH /admin/product/:id', () => {
   test('Response should return the product updated & return status 200', async () => {
     const response = await request(app).patch(`${url}/${productID}`).send(testProductUpdated);
     expect(response.status).toBe(200);
@@ -170,7 +170,7 @@ describe(`/PATCH ${url}/:id`, () => {
   });
 });
 
-describe(`/GET ${url}/:id`, () => {
+describe('/GET /admin/product/:id', () => {
   test('Response should return one product & return status 200', async () => {
     const response = await request(app).get(`${url}/${productID}`);
     expect(response.status).toBe(200);
@@ -188,7 +188,7 @@ describe(`/GET ${url}/:id`, () => {
   });
 });
 
-describe(`/PATCH ${url}/inactivate/:id`, () => {
+describe('/PATCH /admin/product/inactivate/:id', () => {
   test('Response should inactivate a product & return status 200', async () => {
     const response = await request(app).patch(`${url}/inactivate/${productID}`);
     expect(response.status).toBe(200);
@@ -208,7 +208,7 @@ describe(`/PATCH ${url}/inactivate/:id`, () => {
   });
 });
 
-describe(`/PATCH ${url}/activate/:id`, () => {
+describe('/PATCH /admin/product/activate/:id', () => {
   test('Response should activate a product & return status 200', async () => {
     const response = await request(app).patch(`${url}/activate/${productID}`);
     expect(response.status).toBe(200);
@@ -228,7 +228,7 @@ describe(`/PATCH ${url}/activate/:id`, () => {
   });
 });
 
-describe(`/PATCH ${url}/delete/:id`, () => {
+describe('/PATCH /admin/product/delete/:id', () => {
   test('Response should logic delete a product & return status 200', async () => {
     const response = await request(app).patch(`${url}/delete/${productID}`);
     expect(response.status).toBe(200);

@@ -23,7 +23,7 @@ export default [
     isNew: true,
   },
   {
-    _id: '636567c722ab6362ab13895f',
+    _id: new mongoose.Types.ObjectId('636567c722ab6362ab13895f'),
     name: 'Silos bolsa',
     description: 'This is a description',
     price: 6000,
@@ -44,6 +44,7 @@ export default [
     logicDelete: true,
   },
   {
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e911'),
     name: 'Producto de prueba',
     description: 'This is a description',
     price: 6000,
@@ -62,6 +63,7 @@ export default [
     isNew: true,
   },
   {
+    _id: new mongoose.Types.ObjectId('633db28c0b76198b1fb9e915'),
     name: 'Fertilizante x23',
     description: 'Descripcion',
     price: 123,
@@ -80,6 +82,7 @@ export default [
     isNew: true,
   },
   {
+    _id: new mongoose.Types.ObjectId('633db2bd0b76198b1fb9e919'),
     name: 'BugKiller',
     description: 'Mata bugs',
     price: 2500,
@@ -98,6 +101,7 @@ export default [
     isNew: true,
   },
   {
+    _id: new mongoose.Types.ObjectId('635985d6c69ae7cc9690cd10'),
     name: 'Fertimax',
     description: 'Fertilizante especial',
     price: 430,
@@ -116,6 +120,7 @@ export default [
     isNew: true,
   },
   {
+    _id: new mongoose.Types.ObjectId('635c3b1a1dbbdc223be4d84e'),
     name: 'Sulfoxaflor',
     description: 'Sulfato premium',
     price: 1500,
@@ -134,6 +139,7 @@ export default [
     isNew: true,
   },
   {
+    _id: new mongoose.Types.ObjectId('635fcea269c6117027039343'),
     name: 'Coadload',
     description: 'Ayudante de coad',
     price: 2000,
@@ -152,6 +158,7 @@ export default [
     isNew: true,
   },
   {
+    _id: new mongoose.Types.ObjectId('635fd06415bdf89bec285c01'),
     name: 'Autoflorecientes',
     description: 'Auto',
     price: 421,
@@ -170,6 +177,7 @@ export default [
     isNew: true,
   },
   {
+    _id: new mongoose.Types.ObjectId('635fd10e15bdf89bec285c07'),
     name: 'Nombre',
     description: 'Descripcion',
     price: 123,
