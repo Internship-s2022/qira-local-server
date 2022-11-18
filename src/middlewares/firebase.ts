@@ -6,6 +6,10 @@ import firebase from '../helper/firebase';
 
 export const authMiddleware =
   (role: Role) => async (req: RequestWithFirebase, res: Response, next: NextFunction) => {
+    if (process.env.IS_TEST) {
+      return next();
+    }
+
     const { token } = req.headers;
     if (!token || typeof token !== 'string') {
       return res.status(400).json({ message: 'Token is required' });

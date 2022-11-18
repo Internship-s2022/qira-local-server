@@ -9,8 +9,6 @@ app.use(express.json({ limit: '10mb' }));
 
 app.use(cors());
 
-app.use(express.json());
-
 app.use('/', router);
 
 app.get('/', (_req, res: Response) => {
