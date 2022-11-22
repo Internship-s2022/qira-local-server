@@ -1,50 +1,34 @@
 import { Request, Response } from 'express';
 
 import s3 from 'src/helper/s3';
+import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Order, { OrderState } from 'src/models/order';
 import Product from 'src/models/product';
 
 export const getAllOrders = async (req: Request, res: Response) => {
-  try {
-    const allOrders = await Order.find({ ...req.query }).populate('client');
-    return res.status(200).json({
-      message: 'Showing Orders.',
-      data: allOrders,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
-      data: undefined,
-      error: true,
-    });
+  const allOrders = await Order.find({ ...req.query }).populate('client');
+  if (allOrders.length < 1) {
+    throw new Error('There are no orders created.');
   }
+  return res.status(200).json({
+    message: 'Showing Orders.',
+    data: allOrders,
+    error: false,
+  });
 };
 
 export const getOrderById = async (req: Request, res: Response) => {
-  try {
-    const order = await Order.findOne({ _id: req.params.id })
-      .populate('client')
-      .populate('products.product');
-    if (!order) {
-      return res.status(404).json({
-        message: `Could not find an order by the id of ${req.params.id}.`,
-        data: undefined,
-        error: true,
-      });
-    }
-    return res.status(200).json({
-      message: `Showing the specified order by the id of ${req.params.id}.`,
-      data: order,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
-      data: undefined,
-      error: true,
-    });
+  const order = await Order.findOne({ _id: req.params.id })
+    .populate('client')
+    .populate('products.product');
+  if (!order) {
+    throw new CustomError(404, `Could not find an order by the id of ${req.params.id}.`);
   }
+  return res.status(200).json({
+    message: `Showing the specified order by the id of ${req.params.id}.`,
+    data: order,
+    error: false,
+  });
 };
 
 export const approveOrder = async (req: Request, res: Response) => {
