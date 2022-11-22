@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import request from 'supertest';
 
 import app from 'src/app';
@@ -104,9 +105,11 @@ describe('/PATCH /admin/category', () => {
 
   test('Response should return a status 404 and dont update a new Category when the id doesnt exists', async () => {
     const response = await request(app).patch(`${url}/${wrongID}`).send(categoryUpdate);
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual(`Could not find a category by the id of ${wrongID}.`);
+    expect(response.body.message).toEqual(
+      `Something went wrong. Could not find a category by the id of ${wrongID}.`,
+    );
   });
 
   test('Response should return a status 400 and dont update Category when the name is empty', async () => {
@@ -139,9 +142,11 @@ describe('/GET /admin/category/:id', () => {
 
   test('Response should return an status 404 when the id is wrong', async () => {
     const response = await request(app).get(`${url}/${wrongID}`);
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual(`Could not find a category by the id of ${wrongID}.`);
+    expect(response.body.message).toEqual(
+      `Something went wrong. Could not find a category by the id of ${wrongID}.`,
+    );
     expect(response.body.data).toBe(undefined);
   });
 });
@@ -157,10 +162,10 @@ describe('/PATCH /admin/category/inactivate/:id', () => {
 
   test('Response should return error with already inactive id', async () => {
     const response = await request(app).patch(`${url}/inactivate/${inactiveId}`);
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Id ${inactiveId} does not exist or is already inactive.`,
+      `Something went wrong. Id ${inactiveId} does not exist or is already inactive.`,
     );
     expect(response.body.data).toBe(undefined);
   });
@@ -177,9 +182,11 @@ describe('/PATCH /admin/category/activate/:id', () => {
 
   test('Response should return error with already active id', async () => {
     const response = await request(app).patch(`${url}/activate/${categoryID}`);
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual(`Id ${categoryID} does not exist or is already active.`);
+    expect(response.body.message).toEqual(
+      `Something went wrong. Id ${categoryID} does not exist or is already active.`,
+    );
     expect(response.body.data).toBe(undefined);
   });
 });
@@ -195,10 +202,10 @@ describe('/PATCH /admin/category/delete/:id', () => {
 
   test('Response should return error with already deleted id', async () => {
     const response = await request(app).patch(`${url}/delete/${logicDeletedID}`);
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Could not find a category by the id of ${logicDeletedID}.`,
+      `Something went wrong. Could not find a category by the id of ${logicDeletedID}.`,
     );
     expect(response.body.data).toBe(undefined);
   });

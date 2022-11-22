@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import request from 'supertest';
 
 import app from 'src/app';
@@ -36,10 +37,10 @@ describe('/GET /admin/client/:id', () => {
 
   test('Invalid Id, response should return error and status 404', async () => {
     const response = await request(app).get(`/admin/client/${invalidClientId}`).send();
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Could not find a client by the id of ${invalidClientId}.`,
+      `Something went wrong. Could not find a client by the id of ${invalidClientId}.`,
     );
   });
 });
@@ -66,9 +67,11 @@ describe('/PATCH /admin/client/:id', () => {
     const response = await request(app).patch(`/admin/client/${invalidClientId}`).send({
       businessName: 'Not Gonna Change',
     });
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual(`Id ${invalidClientId} does not exist.`);
+    expect(response.body.message).toEqual(
+      `Something went wrong. Could not find a client by the id of ${invalidClientId}.`,
+    );
   });
 
   test('Error in validation, response should return error and status 400', async () => {
@@ -115,10 +118,10 @@ describe('/PATCH /admin/client/inactivate/:id', () => {
 
   test('Response should return error with already inactive id', async () => {
     const response = await request(app).patch(`/admin/client/inactivate/${inactiveClientId}`);
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Id ${inactiveClientId} does not exist or is already inactive.`,
+      `Something went wrong. Id ${inactiveClientId} does not exist or is already inactive.`,
     );
     expect(response.body.data).toBe(undefined);
   });
@@ -135,10 +138,10 @@ describe('/PATCH /admin/client/activate/:id', () => {
 
   test('Response should return error with already active id', async () => {
     const response = await request(app).patch(`/admin/client/activate/${validClientId}`);
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Id ${validClientId} does not exist or is already active.`,
+      `Something went wrong. Id ${validClientId} does not exist or is already active.`,
     );
     expect(response.body.data).toBe(undefined);
   });
@@ -155,9 +158,11 @@ describe('/PATCH /admin/client/delete/:id', () => {
 
   test('Response should return error with already deleted id', async () => {
     const response = await request(app).patch(`/admin/client/delete/${deletedClientId}`);
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual(`Id ${deletedClientId} does not exist.`);
+    expect(response.body.message).toEqual(
+      `Something went wrong. Id ${deletedClientId} does not exist.`,
+    );
     expect(response.body.data).toBe(undefined);
   });
 });
