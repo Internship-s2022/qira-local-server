@@ -13,6 +13,8 @@ router.route('/approve/:id').patch(orderValidations.validateInvoiceOrder, contro
 
 router.route('/reject/:id').patch(controllers.rejectOrder);
 
-router.route('/deliver/:id').patch(orderValidations.validateInvoiceOrder, controllers.deliverOrder);
+router
+  .route('/deliver/:id')
+  .patch(orderValidations.validateSignedInvoiceOrder, controllers.deliverOrder);
 
 export default router;

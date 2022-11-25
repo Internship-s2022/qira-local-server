@@ -83,16 +83,19 @@ export const approveOrder = async (req: Request, res: Response) => {
 
 export const deliverOrder = async (req: Request, res: Response) => {
   try {
-    const invoice = req.body.invoice;
-    const uploadInvoice = await s3.uploadFile(invoice, process.env.AWS_BUCKET_ORDER_INVOICE || '');
-    const invoiceFile = {
-      key: uploadInvoice.Key,
-      url: uploadInvoice.Location,
+    const signedInvoice = req.body.signedInvoice;
+    const uploadSignedInvoice = await s3.uploadFile(
+      signedInvoice,
+      process.env.AWS_BUCKET_ORDER_INVOICE || '',
+    );
+    const signedInvoiceFile = {
+      key: uploadSignedInvoice.Key,
+      url: uploadSignedInvoice.Location,
     };
 
     const orderUpdate = await Order.findOneAndUpdate(
       { _id: req.params.id, logicDelete: false, state: OrderState.DELIVERY_PENDING },
-      { state: OrderState.DELIVERED, invoice: invoiceFile, deliverDate: Date.now() },
+      { state: OrderState.DELIVERED, signedInvoice: signedInvoiceFile, deliverDate: Date.now() },
       { new: true },
     );
     if (!orderUpdate) {
