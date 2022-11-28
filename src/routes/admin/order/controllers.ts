@@ -59,7 +59,9 @@ export const approveOrder = async (req: Request, res: Response) => {
       { _id: req.params.id, logicDelete: false, state: OrderState.APPROVE_PENDING },
       { state: OrderState.DELIVERY_PENDING, invoice: invoiceFile, payAuthDate: Date.now() },
       { new: true },
-    );
+    )
+      .populate('client')
+      .populate('products.product');
     if (!orderUpdate) {
       return res.status(404).json({
         message: `Could not find an order by the id of ${req.params.id} or the change you are trying to make it is not allowed`,
@@ -97,7 +99,9 @@ export const deliverOrder = async (req: Request, res: Response) => {
       { _id: req.params.id, logicDelete: false, state: OrderState.DELIVERY_PENDING },
       { state: OrderState.DELIVERED, signedInvoice: signedInvoiceFile, deliverDate: Date.now() },
       { new: true },
-    );
+    )
+      .populate('client')
+      .populate('products.product');
     if (!orderUpdate) {
       return res.status(404).json({
         message: `Could not find an order by the id of ${req.params.id} or the change you are trying to make it is not allowed`,
@@ -125,7 +129,9 @@ export const rejectOrder = async (req: Request, res: Response) => {
       { _id: req.params.id, logicDelete: false, state: OrderState.APPROVE_PENDING },
       { state: OrderState.REJECTED },
       { new: true },
-    );
+    )
+      .populate('client')
+      .populate('products.product');
     if (!order) {
       return res.status(404).json({
         message: `Could not find an order by the id of ${req.params.id}.`,
