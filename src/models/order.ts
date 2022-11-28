@@ -82,6 +82,13 @@ const orderSchema = new Schema(
       }),
       required: false,
     },
+    signedInvoice: {
+      type: new Schema({
+        key: { type: String, required: true },
+        url: { type: String, required: true },
+      }),
+      required: false,
+    },
     amounts: {
       products: {
         type: Number,

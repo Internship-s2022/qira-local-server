@@ -38,6 +38,8 @@ jobs:
           AWS_BUCKET_PRODUCTS_IMAGES="${{ secrets.AWS_BUCKET_PRODUCTS_IMAGES}}" \
           AWS_BUCKET_PRODUCTS_TECHNICAL_FILE="${{ secrets.AWS_BUCKET_PRODUCTS_TECHNICAL_FILE}}" \
           AWS_BUCKET_TRANSFER_RECEIPTS="${{ secrets.AWS_BUCKET_TRANSFER_RECEIPTS}}" \
+          AWS_BUCKET_ORDER_INVOICE="${{ secrets.AWS_BUCKET_ORDER_INVOICE}}" \
+          AWS_BUCKET_ORDER_SIGNED_INVOICE="${{ secrets.AWS_BUCKET_ORDER_SIGNED_INVOICE}}" \
           ENV="${{ secrets.ENV }}" \
           yarn build
       - name: Deploy to Vercel Action
