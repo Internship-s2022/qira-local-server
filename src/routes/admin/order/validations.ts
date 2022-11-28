@@ -8,7 +8,7 @@ export const validateInvoiceOrder = (req: Request, res: Response, next: NextFunc
       type: Joi.string().required(),
       base64: Joi.string().required(),
       isNew: Joi.boolean().required(),
-    }),
+    }).required(),
   });
 
   const validation = orderSchema.validate(req.body);
@@ -29,7 +29,7 @@ export const validateSignedInvoiceOrder = (req: Request, res: Response, next: Ne
       type: Joi.string().required(),
       base64: Joi.string().required(),
       isNew: Joi.boolean().required(),
-    }),
+    }).required(),
   });
 
   const validation = orderSchema.validate(req.body);

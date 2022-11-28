@@ -16,6 +16,7 @@ declare global {
       AWS_BUCKET_PRODUCTS_TECHNICAL_FILE: string;
       AWS_BUCKET_TRANSFER_RECEIPTS: string;
       AWS_BUCKET_ORDER_INVOICE: string;
+      AWS_BUCKET_ORDER_SIGNED_INVOICE: string;
     }
   }
 }

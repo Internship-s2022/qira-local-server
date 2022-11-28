@@ -86,7 +86,7 @@ export const deliverOrder = async (req: Request, res: Response) => {
     const signedInvoice = req.body.signedInvoice;
     const uploadSignedInvoice = await s3.uploadFile(
       signedInvoice,
-      process.env.AWS_BUCKET_ORDER_INVOICE || '',
+      process.env.AWS_BUCKET_ORDER_SIGNED_INVOICE || '',
     );
     const signedInvoiceFile = {
       key: uploadSignedInvoice.Key,
@@ -122,7 +122,7 @@ export const deliverOrder = async (req: Request, res: Response) => {
 export const rejectOrder = async (req: Request, res: Response) => {
   try {
     const order = await Order.findOneAndUpdate(
-      { _id: req.params.id },
+      { _id: req.params.id, logicDelete: false, state: OrderState.APPROVE_PENDING },
       { state: OrderState.REJECTED },
       { new: true },
     );
@@ -132,25 +132,25 @@ export const rejectOrder = async (req: Request, res: Response) => {
         data: undefined,
         error: true,
       });
-    } else {
-      order.products.forEach(async (product) => {
-        const completeProduct = await Product.findById(product.product);
-        if (completeProduct) {
-          const productUpdate = await Product.findOneAndUpdate(
-            { _id: product.product, logicDelete: false },
-            { stock: completeProduct.stock + product.quantity },
-            { new: true },
-          );
-          if (!productUpdate) {
-            return res.status(400).json({
-              message: 'Something went wrong.',
-              data: undefined,
-              error: true,
-            });
-          }
-        }
-      });
     }
+    order.products.forEach(async (product) => {
+      const completeProduct = await Product.findById(product.product);
+      if (completeProduct) {
+        const productUpdate = await Product.findOneAndUpdate(
+          { _id: product.product, logicDelete: false },
+          { stock: completeProduct.stock + product.quantity },
+          { new: true },
+        );
+        if (!productUpdate) {
+          return res.status(400).json({
+            message: 'Something went wrong.',
+            data: undefined,
+            error: true,
+          });
+        }
+      }
+    });
+
     return res.status(200).json({
       message: `Order rejected successfully ${req.params.id}.`,
       data: order,
