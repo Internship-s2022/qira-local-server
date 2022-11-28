@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { Request, Response } from 'express';
 
 import { calculateAmounts, checkStock } from 'src/helper/orders';
@@ -83,6 +84,7 @@ export const createOrder = async (req: Request, res: Response) => {
 
   const newOrder = new Order({
     ...req.body,
+    orderDate: format(new Date(), 'MM/dd/yyyy'),
     payment: paymentFile,
   });
 
