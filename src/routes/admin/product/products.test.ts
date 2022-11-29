@@ -182,11 +182,9 @@ describe('/GET /admin/product/:id', () => {
 
   test('Response should return error with a wrong id', async () => {
     const response = await request(app).get(`${url}/${wrongID}`);
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual(
-      `Something went wrong. Could not find a product by the id of ${wrongID}.`,
-    );
+    expect(response.body.message).toEqual(`Could not find a product by the id of ${wrongID}.`);
     expect(response.body.data).toBe(undefined);
   });
 });
@@ -202,10 +200,10 @@ describe('/PATCH /admin/product/inactivate/:id', () => {
 
   test('Response should return error with already inactive id', async () => {
     const response = await request(app).patch(`${url}/inactivate/${logicDeletedID}`);
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Something went wrong. Product with Id ${logicDeletedID} does not exist or is already inactive.`,
+      `Product with Id ${logicDeletedID} does not exist or is already inactive.`,
     );
     expect(response.body.data).toBe(undefined);
   });
@@ -222,10 +220,10 @@ describe('/PATCH /admin/product/activate/:id', () => {
 
   test('Response should return error with already active id', async () => {
     const response = await request(app).patch(`${url}/activate/${productID}`);
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Something went wrong. Product with Id ${productID} does not exist or is already active.`,
+      `Product with Id ${productID} does not exist or is already active.`,
     );
     expect(response.body.data).toBe(undefined);
   });
@@ -242,10 +240,10 @@ describe('/PATCH /admin/product/delete/:id', () => {
 
   test('Response should return error with already deleted id', async () => {
     const response = await request(app).patch(`${url}/delete/${logicDeletedID}`);
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Something went wrong. Could not find a product by the id of ${logicDeletedID}.`,
+      `Could not find a product by the id of ${logicDeletedID}.`,
     );
     expect(response.body.data).toBe(undefined);
   });

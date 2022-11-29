@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
 
+import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Client from 'src/models/client';
 
 export const getAllClient = async (req: Request, res: Response) => {
   const allClients = await Client.find({ ...req.query, logicDelete: false });
-  if (allClients.length < 1) {
-    throw new Error('There are no active clients.');
-  }
+
   return res.status(200).json({
     message: 'Showing Clients.',
     data: allClients,
@@ -17,7 +16,7 @@ export const getAllClient = async (req: Request, res: Response) => {
 export const getClientById = async (req: Request, res: Response) => {
   const client = await Client.findOne({ _id: req.params.id, logicDelete: false });
   if (!client) {
-    throw new Error(`Could not find a client by the id of ${req.params.id}.`);
+    throw new CustomError(404, `Could not find a client by the id of ${req.params.id}.`);
   }
   return res.status(200).json({
     message: `Showing the specified client by the id of ${req.params.id}.`,
@@ -33,7 +32,7 @@ export const updateClient = async (req: Request, res: Response) => {
     { new: true },
   );
   if (!clientToUpdate) {
-    throw new Error(`Could not find a client by the id of ${req.params.id}.`);
+    throw new CustomError(404, `Could not find a client by the id of ${req.params.id}.`);
   }
   return res.status(200).json({
     message: 'Client updated successfully.',
@@ -49,7 +48,7 @@ export const activeClient = async (req: Request, res: Response) => {
     { new: true },
   );
   if (!clientToChange) {
-    throw new Error(`Id ${req.params.id} does not exist or is already active.`);
+    throw new CustomError(404, `Id ${req.params.id} does not exist or is already active.`);
   }
   return res.status(200).json({
     message: 'Client updated successfully.',
@@ -65,7 +64,7 @@ export const inactiveClient = async (req: Request, res: Response) => {
     { new: true },
   );
   if (!clientToChange) {
-    throw new Error(`Id ${req.params.id} does not exist or is already inactive.`);
+    throw new CustomError(404, `Id ${req.params.id} does not exist or is already inactive.`);
   }
   return res.status(200).json({
     message: 'Client updated successfully.',
@@ -81,7 +80,7 @@ export const deleteClient = async (req: Request, res: Response) => {
     { new: true },
   );
   if (!clientToChange) {
-    throw new Error(`Id ${req.params.id} does not exist.`);
+    throw new CustomError(404, `Id ${req.params.id} does not exist.`);
   }
   return res.status(200).json({
     message: 'Client deleted successfully.',

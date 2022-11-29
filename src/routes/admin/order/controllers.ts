@@ -7,9 +7,7 @@ import Product from 'src/models/product';
 
 export const getAllOrders = async (req: Request, res: Response) => {
   const allOrders = await Order.find({ ...req.query }).populate('client');
-  if (allOrders.length < 1) {
-    throw new Error('There are no orders created.');
-  }
+
   return res.status(200).json({
     message: 'Showing Orders.',
     data: allOrders,

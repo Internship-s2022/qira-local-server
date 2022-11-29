@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { calculateAmounts, checkStock } from 'src/helper/orders';
 import s3 from 'src/helper/s3';
 import { RequestWithFirebase } from 'src/interfaces';
+import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Client from 'src/models/client';
 import Order, { OrderProduct } from 'src/models/order';
 import Product from 'src/models/product';
@@ -61,13 +62,13 @@ export const getOrderById = async (req: Request, res: Response) => {
 export const createOrder = async (req: Request, res: Response) => {
   const client = await Client.findOne({ _id: req.body.client, logicDelete: false });
   if (!client) {
-    throw new Error(`Could not find a client by the id of ${req.params.id}.`);
+    throw new CustomError(404, `Could not find a client by the id of ${req.params.id}.`);
   }
   if (!checkStock(req.body.products)) {
-    throw new Error('There is no stock left.');
+    throw new CustomError(500, 'There is no stock left.');
   }
   if (!calculateAmounts(req.body.amounts, req.body.products, req.body.exchangeRate)) {
-    throw new Error('There has been an error during price calculation.');
+    throw new CustomError(500, 'There has been an error during price calculation.');
   }
 
   const payment = req.body.payment;
@@ -94,11 +95,11 @@ export const createOrder = async (req: Request, res: Response) => {
         { new: true },
       ).populate('category');
       if (!productUpdate) {
-        throw new Error('Could not update the product stock.');
+        throw new CustomError(500, 'Could not update the product stock.');
       }
     });
   } else {
-    throw new Error('Could not create the order.');
+    throw new CustomError(500, 'Could not create the order.');
   }
   return res.status(201).json({
     message: 'Order created successfully.',

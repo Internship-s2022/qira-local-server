@@ -6,7 +6,7 @@ const handleError = (
   err: TypeError | CustomError,
   req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) => {
   let customError = new CustomError(500, `Something went wrong. ${err.message}`, true);
 

@@ -7,10 +7,6 @@ export const getAllProducts = async (req: Request, res: Response) => {
     'category',
   );
 
-  if (allProducts.length < 1) {
-    throw new Error('There are no active products.');
-  }
-
   return res.status(200).json({
     message: 'Showing active products.',
     data: allProducts,

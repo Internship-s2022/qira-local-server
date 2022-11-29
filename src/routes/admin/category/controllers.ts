@@ -1,13 +1,12 @@
 import { Request, Response } from 'express';
 
 import s3 from 'src/helper/s3';
+import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Category from 'src/models/category';
 
 export const getAllCategories = async (req: Request, res: Response) => {
   const allCategories = await Category.find({ logicDelete: false });
-  if (allCategories.length < 1) {
-    throw new Error('There are no active categories.');
-  }
+
   return res.status(200).json({
     message: 'Showing Categories.',
     data: allCategories,
@@ -18,7 +17,7 @@ export const getAllCategories = async (req: Request, res: Response) => {
 export const getCategoryById = async (req: Request, res: Response) => {
   const category = await Category.findOne({ _id: req.params.id, logicDelete: false });
   if (!category) {
-    throw new Error(`Could not find a category by the id of ${req.params.id}.`);
+    throw new CustomError(404, `Could not find a category by the id of ${req.params.id}.`);
   }
   return res.status(200).json({
     message: `Showing the category by the id of ${req.params.id}.`,
@@ -49,7 +48,7 @@ export const createCategory = async (req: Request, res: Response) => {
   });
   const result = await category.save();
   if (!result) {
-    throw new Error('There has been an error creating the category.');
+    throw new CustomError(500, 'There has been an error creating the category.');
   }
   return res.status(201).json({
     message: 'Category created successfully.',
@@ -62,7 +61,7 @@ export const updateCategory = async (req: Request, res: Response) => {
   const newValues = { ...req.body };
   const category = await Category.findOne({ _id: req.params.id, logicDelete: false });
   if (!category) {
-    throw new Error(`Could not find a category by the id of ${req.params.id}.`);
+    throw new CustomError(404, `Could not find a category by the id of ${req.params.id}.`);
   }
   if (!process.env.IS_TEST) {
     if (newValues.image?.isNew) {
@@ -105,7 +104,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
     { new: true },
   );
   if (!categoryDelete) {
-    throw new Error(`Could not find a category by the id of ${req.params.id}.`);
+    throw new CustomError(404, `Could not find a category by the id of ${req.params.id}.`);
   }
   return res.status(200).json({
     message: 'Category deleted successfully.',
@@ -121,7 +120,7 @@ export const activeCategory = async (req: Request, res: Response) => {
     { new: true },
   );
   if (!categoryChange) {
-    throw new Error(`Id ${req.params.id} does not exist or is already active.`);
+    throw new CustomError(404, `Id ${req.params.id} does not exist or is already active.`);
   }
   return res.status(200).json({
     message: 'Category updated successfully.',
@@ -137,7 +136,7 @@ export const inactiveCategory = async (req: Request, res: Response) => {
     { new: true },
   );
   if (!categoryChange) {
-    throw new Error(`Id ${req.params.id} does not exist or is already inactive.`);
+    throw new CustomError(404, `Id ${req.params.id} does not exist or is already inactive.`);
   }
   return res.status(200).json({
     message: 'Category updated successfully.',

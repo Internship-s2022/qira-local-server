@@ -1,13 +1,12 @@
 import { Request, Response } from 'express';
 
 import s3 from 'src/helper/s3';
+import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Product from 'src/models/product';
 
 export const getAllProducts = async (req: Request, res: Response) => {
   const allProducts = await Product.find({ logicDelete: false }).populate('category');
-  if (allProducts.length < 1) {
-    throw new Error('There are no active products.');
-  }
+
   return res.status(200).json({
     message: 'Showing Products.',
     data: allProducts,
@@ -20,7 +19,7 @@ export const getProductById = async (req: Request, res: Response) => {
     'category',
   );
   if (!product) {
-    throw new Error(`Could not find a product by the id of ${req.params.id}.`);
+    throw new CustomError(404, `Could not find a product by the id of ${req.params.id}.`, true);
   }
   return res.status(200).json({
     message: `Showing the product by the id of ${req.params.id}.`,
@@ -64,7 +63,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
   const result = await product.save();
   if (!result) {
-    throw new Error('There has been an error creating the product.');
+    throw new CustomError(500, 'There has been an error creating the product.', true);
   }
   return res.status(201).json({
     message: 'Product created successfully.',
@@ -83,7 +82,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   );
 
   if (!product) {
-    throw new Error(`Could not find a product by the id of ${req.params.id}.`);
+    throw new CustomError(404, `Could not find a product by the id of ${req.params.id}.`, true);
   }
   if (!process.env.IS_TEST) {
     if (newValues.image?.isNew) {
@@ -146,7 +145,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
     { new: true },
   );
   if (!productDeleted) {
-    throw new Error(`Could not find a product by the id of ${req.params.id}.`);
+    throw new CustomError(404, `Could not find a product by the id of ${req.params.id}.`, true);
   }
   return res.status(200).json({
     message: 'Product deleted successfully.',
@@ -162,7 +161,10 @@ export const activeProduct = async (req: Request, res: Response) => {
     { new: true },
   ).populate('category');
   if (!productChanged) {
-    throw new Error(`Product with Id ${req.params.id} does not exist or is already active.`);
+    throw new CustomError(
+      404,
+      `Product with Id ${req.params.id} does not exist or is already active.`,
+    );
   }
   return res.status(200).json({
     message: 'Product updated successfully.',
@@ -178,7 +180,10 @@ export const inactiveProduct = async (req: Request, res: Response) => {
     { new: true },
   ).populate('category');
   if (!productChanged) {
-    throw new Error(`Product with Id ${req.params.id} does not exist or is already inactive.`);
+    throw new CustomError(
+      404,
+      `Product with Id ${req.params.id} does not exist or is already inactive.`,
+    );
   }
   return res.status(200).json({
     message: 'Product updated successfully.',
