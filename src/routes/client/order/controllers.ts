@@ -18,13 +18,6 @@ export const getClientOrders = async (req: RequestWithFirebase, res: Response) =
         error: true,
       });
     }
-    if (!clientOrders) {
-      return res.status(404).json({
-        message: `Could not find orders for the client by the id of ${client?._id}.`,
-        data: undefined,
-        error: true,
-      });
-    }
     return res.status(200).json({
       message: 'Showing client orders.',
       data: clientOrders,
