@@ -2,16 +2,25 @@ import { Request, Response } from 'express';
 
 import { calculateAmounts, checkStock } from 'src/helper/orders';
 import s3 from 'src/helper/s3';
+import { RequestWithFirebase } from 'src/interfaces';
 import Client from 'src/models/client';
 import Order, { OrderProduct } from 'src/models/order';
 import Product from 'src/models/product';
 
-export const getAllOrders = async (req: Request, res: Response) => {
+export const getClientOrders = async (req: RequestWithFirebase, res: Response) => {
   try {
-    const allOrders = await Order.find({ ...req.query });
+    const client = await Client.findOne({ firebaseUid: req.firebaseUid });
+    const clientOrders = await Order.find({ client: client?._id, logicDelete: false });
+    if (!client) {
+      return res.status(404).json({
+        message: `Could not find a client by the firebaseUid of ${req.firebaseUid}.`,
+        data: undefined,
+        error: true,
+      });
+    }
     return res.status(200).json({
-      message: 'Showing Orders.',
-      data: allOrders,
+      message: 'Showing client orders.',
+      data: clientOrders,
       error: false,
     });
   } catch (error: any) {
@@ -25,7 +34,9 @@ export const getAllOrders = async (req: Request, res: Response) => {
 
 export const getOrderById = async (req: Request, res: Response) => {
   try {
-    const order = await Order.findOne({ _id: req.params.id });
+    const order = await Order.findOne({ _id: req.params.id })
+      .populate('client')
+      .populate('products.product');
     if (!order) {
       return res.status(404).json({
         message: `Could not find an order by the id of ${req.params.id}.`,
