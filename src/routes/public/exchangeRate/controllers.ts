@@ -3,9 +3,18 @@ import fetch from 'node-fetch';
 
 import Settings from 'src/models/settings';
 
+import { ExchangeRate } from './types';
+
 export const getExchangeRate = async (req: Request, res: Response) => {
-  const settings = await Settings.find();
-  if (settings) {
+  try {
+    const settings = await Settings.find();
+    if (!settings) {
+      return res.status(404).json({
+        message: 'There are no settings.',
+        data: undefined,
+        error: true,
+      });
+    }
     const lastExchangeRate = settings[0].exchangeRate;
     const today = new Date();
     const yesterday = new Date(today.getTime());
@@ -18,35 +27,43 @@ export const getExchangeRate = async (req: Request, res: Response) => {
         error: false,
       });
     }
+    const response = await fetch('https://api.estadisticasbcra.com/usd_of', {
+      headers: {
+        Authorization: process.env.TOKEN_BCRA || '',
+      },
+    });
+    const data: ExchangeRate[] = await response.json();
 
-    try {
-      const response = await fetch('https://api.estadisticasbcra.com/usd_of', {
-        headers: {
-          Authorization:
-            'BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTg0MjEwMTAsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJnaW5hLnNjaGlhcHBhcGlldHJhQHJhZGl1bXJvY2tldC5jb20ifQ.dsKi-6AWNRXu3K7jv2rBG-U93RKI1luipXIEsOB0b8v9rd8dCENgJamWkJRt_iX64WYDoz1YGXXOT_yep8Gn1A',
-        },
-      });
-      const data = await response.json();
-
-      if (data) {
-        data.reverse();
-        await Settings.findByIdAndUpdate(
-          { _id: settings[0]._id },
-          { exchangeRate: { value: data[0].v, date: data[0].d } },
-          { new: true },
-        );
-        return res.status(200).json({
-          message: 'Showing exchange rate.',
-          data: data[0],
-          error: false,
-        });
-      }
-    } catch (error: any) {
-      return res.status(400).json({
-        message: `Something went wrong: ${error.message}`,
+    if (!data) {
+      return res.status(404).json({
+        message: 'Something went wrong ',
         data: undefined,
         error: true,
       });
     }
+    const newExchangeRate = data.pop();
+    if (!newExchangeRate) {
+      return res.status(404).json({
+        message: 'Theres no exchange rate.',
+        data: undefined,
+        error: true,
+      });
+    }
+    await Settings.findByIdAndUpdate(
+      { _id: settings[0]._id },
+      { exchangeRate: { value: newExchangeRate.v, date: newExchangeRate.d } },
+      { new: true },
+    );
+    return res.status(200).json({
+      message: 'Showing exchange rate.',
+      data: { value: newExchangeRate.v, date: newExchangeRate.d },
+      error: false,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: `Something went wrong: ${error.message}`,
+      data: undefined,
+      error: true,
+    });
   }
 };

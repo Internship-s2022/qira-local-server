@@ -40,6 +40,7 @@ jobs:
           AWS_BUCKET_TRANSFER_RECEIPTS="${{ secrets.AWS_BUCKET_TRANSFER_RECEIPTS}}" \
           AWS_BUCKET_ORDER_INVOICE="${{ secrets.AWS_BUCKET_ORDER_INVOICE}}" \
           AWS_BUCKET_ORDER_SIGNED_INVOICE="${{ secrets.AWS_BUCKET_ORDER_SIGNED_INVOICE}}" \
+          TOKEN_BCRA="${{ secrets.TOKEN_BCRA }}" \
           ENV="${{ secrets.ENV }}" \
           yarn build
       - name: Deploy to Vercel Action

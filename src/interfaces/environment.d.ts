@@ -17,6 +17,7 @@ declare global {
       AWS_BUCKET_TRANSFER_RECEIPTS: string;
       AWS_BUCKET_ORDER_INVOICE: string;
       AWS_BUCKET_ORDER_SIGNED_INVOICE: string;
+      TOKEN_BCRA: string;
     }
   }
 }
