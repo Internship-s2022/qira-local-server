@@ -29,6 +29,40 @@ export const getOrderById = async (req: Request, res: Response) => {
   });
 };
 
+export const getOrderToDeliver = async (req: Request, res: Response) => {
+  try {
+    const order = await Order.findOne({ _id: req.params.id });
+    if (!order) {
+      return res.status(404).json({
+        message: `Could not find an order by the id of ${req.params.id}.`,
+        data: undefined,
+        error: true,
+      });
+    }
+    const validAuthorized = order.authorized.some((authorized) => {
+      return authorized.dni === req.query.dni;
+    });
+    if (!validAuthorized) {
+      return res.status(404).json({
+        message: `Could not find an authorized with the dni ${req.query.dni}.`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: `Showing the specified order by the id of ${req.params.id}.`,
+      data: order,
+      error: false,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      message: `Something went wrong: ${error.message}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 export const approveOrder = async (req: Request, res: Response) => {
   try {
     const invoice = req.body.invoice;
