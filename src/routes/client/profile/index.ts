@@ -10,10 +10,6 @@ const router = express.Router();
 
 router
   .route('/update')
-  .patch(
-    clientValidations.validateUpdateClientInformation,
-    authMiddleware(Role.CLIENT),
-    controllers.updateClientInformation,
-  );
+  .patch(clientValidations.validateUpdateClientInformation, controllers.updateClientInformation);
 
 export default router;
