@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import mongoose from 'mongoose';
 import request from 'supertest';
 
@@ -202,7 +203,7 @@ describe('/PATCH /admin/product/inactivate/:id', () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Products with Id ${logicDeletedID} does not exist or is already inactive.`,
+      `Product with Id ${logicDeletedID} does not exist or is already inactive.`,
     );
     expect(response.body.data).toBe(undefined);
   });
@@ -222,7 +223,7 @@ describe('/PATCH /admin/product/activate/:id', () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Products with Id ${productID} does not exist or is already active.`,
+      `Product with Id ${productID} does not exist or is already active.`,
     );
     expect(response.body.data).toBe(undefined);
   });

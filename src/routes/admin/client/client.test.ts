@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import request from 'supertest';
 
 import app from 'src/app';
@@ -68,7 +69,9 @@ describe('/PATCH /admin/client/:id', () => {
     });
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual(`Id ${invalidClientId} does not exist.`);
+    expect(response.body.message).toEqual(
+      `Could not find a client by the id of ${invalidClientId}.`,
+    );
   });
 
   test('Error in validation, response should return error and status 400', async () => {

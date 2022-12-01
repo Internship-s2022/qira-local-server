@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import request from 'supertest';
 
 import app from 'src/app';
