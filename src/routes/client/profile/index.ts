@@ -1,8 +1,5 @@
 import express from 'express';
 
-import { Role } from 'src/interfaces';
-import { authMiddleware } from 'src/middlewares/firebase';
-
 import * as controllers from './controllers';
 import * as clientValidations from './validations';
 
