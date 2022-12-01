@@ -31,7 +31,9 @@ export const getOrderById = async (req: Request, res: Response) => {
 
 export const getOrderToDeliver = async (req: Request, res: Response) => {
   try {
-    const order = await Order.findOne({ _id: req.params.id });
+    const order = await Order.findOne({ _id: req.params.id })
+      .populate('client')
+      .populate('products.product');
     if (!order) {
       return res.status(404).json({
         message: `Could not find an order by the id of ${req.params.id}.`,
