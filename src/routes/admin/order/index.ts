@@ -15,6 +15,7 @@ router.route('/reject/:id').patch(controllers.rejectOrder);
 
 router
   .route('/deliver/:id')
+  .get(controllers.getOrderToDeliver)
   .patch(orderValidations.validateSignedInvoiceOrder, controllers.deliverOrder);
 
 export default router;
