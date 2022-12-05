@@ -1,4 +1,5 @@
 import { InferSchemaType, model, Schema } from 'mongoose';
+import { customAlphabet } from 'nanoid';
 
 import { IProduct } from './product';
 
@@ -31,8 +32,14 @@ export interface Authorized {
   phoneNumber: number;
 }
 
+const customNanoId = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', 8);
+
 const orderSchema = new Schema(
   {
+    _id: {
+      type: String,
+      default: () => customNanoId(),
+    },
     products: [
       {
         product: {
