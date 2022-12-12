@@ -10,54 +10,30 @@ import Order, { OrderProduct } from 'src/models/order';
 import Product from 'src/models/product';
 
 export const getClientOrders = async (req: RequestWithFirebase, res: Response) => {
-  try {
-    const client = await Client.findOne({ firebaseUid: req.firebaseUid });
-    const clientOrders = await Order.find({ client: client?._id, logicDelete: false });
-    if (!client) {
-      return res.status(404).json({
-        message: `Could not find a client by the firebaseUid of ${req.firebaseUid}.`,
-        data: undefined,
-        error: true,
-      });
-    }
-    return res.status(200).json({
-      message: 'Showing client orders.',
-      data: clientOrders,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
-      data: undefined,
-      error: true,
-    });
+  const client = await Client.findOne({ firebaseUid: req.firebaseUid });
+  const clientOrders = await Order.find({ client: client?._id, logicDelete: false });
+  if (!client) {
+    throw new CustomError(404, `Could not find a client by the firebaseUid of ${req.firebaseUid}.`);
   }
+  return res.status(200).json({
+    message: 'Showing client orders.',
+    data: clientOrders,
+    error: false,
+  });
 };
 
 export const getOrderById = async (req: Request, res: Response) => {
-  try {
-    const order = await Order.findOne({ _id: req.params.id })
-      .populate('client')
-      .populate('products.product');
-    if (!order) {
-      return res.status(404).json({
-        message: `Could not find an order by the id of ${req.params.id}.`,
-        data: undefined,
-        error: true,
-      });
-    }
-    return res.status(200).json({
-      message: `Showing the specified order by the id of ${req.params.id}.`,
-      data: order,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
-      data: undefined,
-      error: true,
-    });
+  const order = await Order.findOne({ _id: req.params.id })
+    .populate('client')
+    .populate('products.product');
+  if (!order) {
+    throw new CustomError(404, `Could not find an order by the id of ${req.params.id}.`);
   }
+  return res.status(200).json({
+    message: `Showing the specified order by the id of ${req.params.id}.`,
+    data: order,
+    error: false,
+  });
 };
 
 export const createOrder = async (req: Request, res: Response) => {
