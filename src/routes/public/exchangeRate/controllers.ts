@@ -1,3 +1,4 @@
+import { format, subDays } from 'date-fns';
 import { Request, Response } from 'express';
 import fetch from 'node-fetch';
 
@@ -12,11 +13,9 @@ export const getExchangeRate = async (req: Request, res: Response) => {
     throw new CustomError(404, 'There are no settings.');
   }
   const lastExchangeRate = settings[0].exchangeRate;
-  const today = new Date();
-  const yesterday = new Date(today.getTime());
-  yesterday.setDate(today.getDate() - 1);
+  const yesterday = format(subDays(new Date(), 1), 'yyyy-MM-dd');
 
-  if (lastExchangeRate.date === yesterday.toISOString().substring(0, 10)) {
+  if (lastExchangeRate.date === yesterday) {
     return res.status(200).json({
       message: 'Showing exchange rate.',
       data: lastExchangeRate,
