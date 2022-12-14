@@ -42,6 +42,6 @@ export const createFirebaseUser =
       if (firebaseUid) {
         await firebase.auth().deleteUser(firebaseUid);
       }
-      throw new CustomError(400, 'Something went wrong.');
+      throw new CustomError(400, `${error.message}`);
     }
   };
