@@ -27,12 +27,12 @@ export const getCategoryById = async (req: Request, res: Response) => {
 };
 
 export const createCategory = async (req: Request, res: Response) => {
-  const categories = await Category.find({
+  const duplicatedCategory = await Category.findOne({
     logicDelete: false,
     name: req.body.name,
     url: req.body.url,
   });
-  if (categories[0]) {
+  if (duplicatedCategory) {
     throw new CustomError(500, 'The category already exists.');
   }
   let imageFile;

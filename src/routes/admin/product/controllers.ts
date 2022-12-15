@@ -29,12 +29,12 @@ export const getProductById = async (req: Request, res: Response) => {
 };
 
 export const createProduct = async (req: Request, res: Response) => {
-  const products = await Product.find({
+  const duplicatedProduct = await Product.findOne({
     logicDelete: false,
     name: req.body.name,
     brand: req.body.brand,
   });
-  if (products[0]) {
+  if (duplicatedProduct) {
     throw new CustomError(500, 'The product already exists.');
   }
   let imageFile;
