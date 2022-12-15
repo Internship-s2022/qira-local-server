@@ -14,7 +14,7 @@ let productID: string;
 const wrongID = '628cf237305204bf7d672d7c';
 const logicDeletedID = '636567c722ab6362ab13895f';
 const testProduct = {
-  name: 'Producto de prueba',
+  name: 'Producto de test',
   description: 'This is a description',
   price: 6000,
   image: {
