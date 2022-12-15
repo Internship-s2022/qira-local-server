@@ -11,14 +11,14 @@ const logicDeletedID = '6365066b4777ae2267b697c7';
 const inactiveId = '6361757fbc1a382119d49e64';
 let categoryID: string;
 const category = {
-  name: 'test',
+  name: 'categoria test',
   image: {
     name: 'test',
     type: 'test',
     base64: 'test',
     isNew: true,
   },
-  url: 'test',
+  url: 'categoriatest',
 };
 const categoryUpdate = {
   name: 'testUpdate',
