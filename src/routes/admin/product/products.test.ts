@@ -14,7 +14,7 @@ let productID: string;
 const wrongID = '628cf237305204bf7d672d7c';
 const logicDeletedID = '636567c722ab6362ab13895f';
 const testProduct = {
-  name: 'Producto de test',
+  name: 'Producto test',
   description: 'This is a description',
   price: 6000,
   image: {
@@ -29,7 +29,7 @@ const testProduct = {
     base64: 'f',
     isNew: true,
   },
-  brand: 'Qira',
+  brand: 'marca test',
   category: new mongoose.Types.ObjectId('63617504bc1a382119d49e4b'),
   currency: Currency.PESO,
   stock: 100,
