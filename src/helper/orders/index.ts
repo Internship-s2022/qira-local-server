@@ -1,3 +1,5 @@
+import Dinero from 'dinero.js';
+
 import { Currency } from 'src/interfaces';
 import { Amounts, OrderProduct } from 'src/models/order';
 import Product from 'src/models/product';
@@ -26,17 +28,23 @@ export const calculateAmounts = async (
   orderProducts.forEach((cartProduct) => {
     const product = products.find((product) => cartProduct.product._id === product._id.toString());
     if (product) {
-      let productPrice = product.price * cartProduct.quantity;
+      let productPrice = Dinero({ amount: product.price }).multiply(cartProduct.quantity);
       if (product.currency === Currency.DOLLAR) {
-        productPrice = productPrice * exchangeRate;
+        productPrice = Dinero({ amount: productPrice.getAmount() }).multiply(exchangeRate);
       }
-      recalculatedAmounts.products = recalculatedAmounts.products + productPrice;
+      recalculatedAmounts.products = Dinero({ amount: recalculatedAmounts.products })
+        .add(productPrice)
+        .getAmount();
     } else {
       return false;
     }
   });
-  recalculatedAmounts.taxes = recalculatedAmounts.products * 0.21;
-  recalculatedAmounts.total = recalculatedAmounts.products + recalculatedAmounts.taxes;
+  recalculatedAmounts.taxes = Dinero({ amount: recalculatedAmounts.products })
+    .multiply(0.21)
+    .getAmount();
+  recalculatedAmounts.total = Dinero({ amount: recalculatedAmounts.products })
+    .add(Dinero({ amount: recalculatedAmounts.taxes }))
+    .getAmount();
   if (
     amounts.products !== recalculatedAmounts.products ||
     amounts.taxes !== recalculatedAmounts.taxes ||
