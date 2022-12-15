@@ -46,10 +46,10 @@ export const createOrder = async (req: Request, res: Response) => {
       throw new CustomError(404, `Could not find a client by the id of ${req.params.id}.`);
     }
     if (!checkStock(req.body.products)) {
-      throw new CustomError(500, 'There is no stock left.');
+      throw new CustomError(400, 'There is no stock left.');
     }
     if (!calculateAmounts(req.body.amounts, req.body.products, req.body.exchangeRate)) {
-      throw new CustomError(500, 'There has been an error during price calculation.');
+      throw new CustomError(400, 'There has been an error during price calculation.');
     }
 
     const payment = req.body.payment;
@@ -75,7 +75,9 @@ export const createOrder = async (req: Request, res: Response) => {
           { _id: product.product._id, logicDelete: false },
           { stock: product.product.stock - product.quantity },
           { new: true },
-        ).populate('category');
+        )
+          .populate('category')
+          .session(session);
         if (!productUpdate) {
           throw new CustomError(500, 'Could not update the product stock.');
         }
