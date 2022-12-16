@@ -7,7 +7,7 @@ import s3 from 'src/helper/s3';
 import { RequestWithFirebase } from 'src/interfaces';
 import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Client from 'src/models/client';
-import Order, { OrderProduct } from 'src/models/order';
+import Order from 'src/models/order';
 import Product from 'src/models/product';
 
 export const getClientOrders = async (req: RequestWithFirebase, res: Response) => {
@@ -70,7 +70,7 @@ export const createOrder = async (req: Request, res: Response) => {
 
     const result = await newOrder.save({ session });
     if (result) {
-      req.body.products.forEach(async (product: OrderProduct) => {
+      for (const product of req.body.products) {
         const productUpdate = await Product.findOneAndUpdate(
           { _id: product.product._id, logicDelete: false },
           { stock: product.product.stock - product.quantity },
@@ -81,7 +81,7 @@ export const createOrder = async (req: Request, res: Response) => {
         if (!productUpdate) {
           throw new CustomError(500, 'Could not update the product stock.');
         }
-      });
+      }
     } else {
       throw new CustomError(500, 'Could not create the order.');
     }
