@@ -1,4 +1,5 @@
 import { InferSchemaType, model, Schema } from 'mongoose';
+import { customAlphabet } from 'nanoid';
 
 import { IProduct } from './product';
 
@@ -31,8 +32,14 @@ export interface Authorized {
   phoneNumber: number;
 }
 
+const customNanoId = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', 8);
+
 const orderSchema = new Schema(
   {
+    _id: {
+      type: String,
+      default: () => customNanoId(),
+    },
     products: [
       {
         product: {
@@ -82,6 +89,13 @@ const orderSchema = new Schema(
       }),
       required: false,
     },
+    signedInvoice: {
+      type: new Schema({
+        key: { type: String, required: true },
+        url: { type: String, required: true },
+      }),
+      required: false,
+    },
     amounts: {
       products: {
         type: Number,
@@ -118,6 +132,10 @@ const orderSchema = new Schema(
     deliverDate: {
       type: Date,
       required: false,
+    },
+    estimatedDeliveryDate: {
+      type: Date,
+      required: true,
     },
   },
   { timestamps: true },

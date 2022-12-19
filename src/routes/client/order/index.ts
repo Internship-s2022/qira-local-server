@@ -7,7 +7,8 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(controllers.getAllOrders)
+  .get(controllers.getClientOrders)
+
   .post(orderValidations.validateOrder, controllers.createOrder);
 
 router.route('/:id').get(controllers.getOrderById);

@@ -1,156 +1,90 @@
 import { Request, Response } from 'express';
 
+import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Client from 'src/models/client';
 
 export const getAllClient = async (req: Request, res: Response) => {
-  try {
-    const allClients = await Client.find({ ...req.query, logicDelete: false });
-    return res.status(200).json({
-      message: 'Showing Clients.',
-      data: allClients,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
-      data: undefined,
-      error: true,
-    });
-  }
+  const allClients = await Client.find({ ...req.query, logicDelete: false });
+
+  return res.status(200).json({
+    message: 'Showing Clients.',
+    data: allClients,
+    error: false,
+  });
 };
 
 export const getClientById = async (req: Request, res: Response) => {
-  try {
-    const client = await Client.findOne({ _id: req.params.id, logicDelete: false });
-    if (!client) {
-      return res.status(404).json({
-        message: `Could not find a client by the id of ${req.params.id}.`,
-        data: undefined,
-        error: true,
-      });
-    }
-    return res.status(200).json({
-      message: `Showing the specified client by the id of ${req.params.id}.`,
-      data: client,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      message: `Something went wrong: ${error.message}`,
-      data: undefined,
-      error: true,
-    });
+  const client = await Client.findOne({ _id: req.params.id, logicDelete: false });
+  if (!client) {
+    throw new CustomError(404, `Could not find a client by the id of ${req.params.id}.`);
   }
+  return res.status(200).json({
+    message: `Showing the specified client by the id of ${req.params.id}.`,
+    data: client,
+    error: false,
+  });
 };
 
 export const updateClient = async (req: Request, res: Response) => {
-  try {
-    const clientToUpdate = await Client.findOneAndUpdate(
-      { _id: req.params.id, logicDelete: false },
-      req.body,
-      { new: true },
-    );
-    if (!clientToUpdate) {
-      return res.status(404).json({
-        message: `Id ${req.params.id} does not exist.`,
-        data: undefined,
-        error: true,
-      });
-    }
-    return res.status(200).json({
-      message: 'Client updated successfully.',
-      data: clientToUpdate,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(400).json({
-      message: error.message,
-      data: undefined,
-      error: true,
-    });
+  const clientToUpdate = await Client.findOneAndUpdate(
+    { _id: req.params.id, logicDelete: false },
+    req.body,
+    { new: true },
+  );
+  if (!clientToUpdate) {
+    throw new CustomError(404, `Could not find a client by the id of ${req.params.id}.`);
   }
+  return res.status(200).json({
+    message: 'Client updated successfully.',
+    data: clientToUpdate,
+    error: false,
+  });
 };
 
 export const activeClient = async (req: Request, res: Response) => {
-  try {
-    const clientToChange = await Client.findOneAndUpdate(
-      { _id: req.params.id, logicDelete: false, isActive: false },
-      { isActive: true },
-      { new: true },
-    );
-    if (!clientToChange) {
-      return res.status(404).json({
-        message: `Id ${req.params.id} does not exist or is already active.`,
-        data: undefined,
-        error: true,
-      });
-    }
-    return res.status(200).json({
-      message: 'Client updated successfully.',
-      data: clientToChange,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(400).json({
-      message: error.message,
-      data: undefined,
-      error: true,
-    });
+  const clientToChange = await Client.findOneAndUpdate(
+    { _id: req.params.id, logicDelete: false, isActive: false },
+    { isActive: true },
+    { new: true },
+  );
+  if (!clientToChange) {
+    throw new CustomError(404, `Id ${req.params.id} does not exist or is already active.`);
   }
+  return res.status(200).json({
+    message: 'Client updated successfully.',
+    data: clientToChange,
+    error: false,
+  });
 };
 
 export const inactiveClient = async (req: Request, res: Response) => {
-  try {
-    const clientToChange = await Client.findOneAndUpdate(
-      { _id: req.params.id, logicDelete: false, isActive: true },
-      { isActive: false },
-      { new: true },
-    );
-    if (!clientToChange) {
-      return res.status(404).json({
-        message: `Id ${req.params.id} does not exist or is already inactive.`,
-        data: undefined,
-        error: true,
-      });
-    }
-    return res.status(200).json({
-      message: 'Client updated successfully.',
-      data: clientToChange,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(400).json({
-      message: error.message,
-      data: undefined,
-      error: true,
-    });
+  const clientToChange = await Client.findOneAndUpdate(
+    { _id: req.params.id, logicDelete: false, isActive: true },
+    { isActive: false },
+    { new: true },
+  );
+  if (!clientToChange) {
+    throw new CustomError(404, `Id ${req.params.id} does not exist or is already inactive.`);
   }
+  return res.status(200).json({
+    message: 'Client updated successfully.',
+    data: clientToChange,
+    error: false,
+  });
 };
 
 export const deleteClient = async (req: Request, res: Response) => {
-  try {
-    const clientToChange = await Client.findOneAndUpdate(
-      { _id: req.params.id, logicDelete: false },
-      { logicDelete: true },
-      { new: true },
-    );
-    if (!clientToChange) {
-      return res.status(404).json({
-        message: `Id ${req.params.id} does not exist.`,
-        data: undefined,
-        error: true,
-      });
-    }
-    return res.status(200).json({
-      message: 'Client deleted successfully.',
-      data: clientToChange,
-      error: false,
-    });
-  } catch (error: any) {
-    return res.status(400).json({
-      message: error.message,
-      data: undefined,
-      error: true,
-    });
+  const clientToChange = await Client.findOneAndUpdate(
+    { _id: req.params.id, logicDelete: false },
+    { logicDelete: true },
+    { new: true },
+  );
+  if (!clientToChange) {
+    throw new CustomError(404, `Id ${req.params.id} does not exist.`);
   }
+  return res.status(200).json({
+    message: 'Client deleted successfully.',
+    data: clientToChange,
+    error: false,
+  });
 };

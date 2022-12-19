@@ -3,42 +3,26 @@ import { NextFunction, Response } from 'express';
 import { RequestWithFirebase, Role } from 'src/interfaces';
 
 import firebase from '../helper/firebase';
+import { CustomError } from './error-handler/custom-error.model';
 
 export const authMiddleware =
   (role: Role) => async (req: RequestWithFirebase, res: Response, next: NextFunction) => {
     if (process.env.IS_TEST) {
       return next();
     }
-
     const { token } = req.headers;
     if (!token || typeof token !== 'string') {
-      return res.status(400).json({ message: 'Token is required' });
+      throw new CustomError(400, 'Token is required.');
     }
-    try {
-      const response = await firebase.auth().verifyIdToken(token);
-      if (!response.role) {
-        return res.status(403).json({
-          message: 'No credentials found',
-          data: undefined,
-          error: true,
-        });
-      }
-      if (response.role !== role) {
-        return res.status(403).json({
-          message: 'Credentials not authorized to access this information',
-          data: undefined,
-          error: true,
-        });
-      }
-      req.firebaseUid = response.uid;
-      return next();
-    } catch (error: any) {
-      return res.status(401).json({
-        message: error.message,
-        data: undefined,
-        error: true,
-      });
+    const response = await firebase.auth().verifyIdToken(token);
+    if (!response.role) {
+      throw new CustomError(403, 'No credentials found.');
     }
+    if (response.role !== role) {
+      throw new CustomError(403, 'Credentials not authorized to access this information.');
+    }
+    req.firebaseUid = response.uid;
+    return next();
   };
 
 export const createFirebaseUser =
@@ -58,10 +42,6 @@ export const createFirebaseUser =
       if (firebaseUid) {
         await firebase.auth().deleteUser(firebaseUid);
       }
-      return res.status(400).json({
-        message: error.message,
-        data: undefined,
-        error: true,
-      });
+      throw new CustomError(400, `${error.message}`);
     }
   };

@@ -115,11 +115,7 @@ export const validateOrder = (req: Request, res: Response, next: NextFunction) =
       'number.precision': 'Invalid exchange rate, it allows maximum of 2 decimals numbers.',
       'any.required': 'Exchange rate is a required field.',
     }),
-    orderDate: Joi.date().required().messages({
-      'any.required': 'Order date is a required field.',
-    }),
-    payAuthDate: Joi.date(),
-    deliverDate: Joi.date(),
+    estimatedDeliveryDate: Joi.date().required(),
   });
 
   const validation = orderSchema.validate(req.body);
