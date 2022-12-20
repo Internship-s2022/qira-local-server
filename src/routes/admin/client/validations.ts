@@ -84,6 +84,7 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
     password: Joi.string().required(),
     isActive: Joi.boolean().optional(),
     logicDelete: Joi.boolean().optional(),
+    approved: Joi.boolean().optional(),
   });
   const validation = clientSchema.validate(req.body);
   if (validation.error) {
@@ -172,6 +173,7 @@ export const validateClientUpdate = (req: Request, res: Response, next: NextFunc
     }),
     isActive: Joi.boolean().optional(),
     logicDelete: Joi.boolean().optional(),
+    approved: Joi.boolean().optional(),
   });
   const validation = clientSchema.validate(req.body);
   if (validation.error) {

@@ -43,6 +43,11 @@ const clientSchema = new Schema({
     default: false,
     required: true,
   },
+  approved: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
   firebaseUid: {
     type: String,
     required: true,
