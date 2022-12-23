@@ -6,9 +6,10 @@ import { IvaCondition } from 'src/interfaces';
 export const validateClient = (req: Request, res: Response, next: NextFunction) => {
   const clientSchema = Joi.object({
     businessName: Joi.string()
-      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
+      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+/)
       .min(3)
       .max(50)
+      .trim()
       .required()
       .messages({
         'string.min': 'Invalid name, it must contain at least 3 characters.',
