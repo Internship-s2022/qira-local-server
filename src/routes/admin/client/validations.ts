@@ -6,7 +6,7 @@ import { IvaCondition } from 'src/interfaces';
 export const validateClient = (req: Request, res: Response, next: NextFunction) => {
   const clientSchema = Joi.object({
     businessName: Joi.string()
-      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+/)
+      .regex(/^([a-zA-Z0-9]+\s)*[a-zA-Z0-9]+/)
       .min(3)
       .max(50)
       .trim()
@@ -15,7 +15,7 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
         'string.min': 'Invalid name, it must contain at least 3 characters.',
         'string.max': 'Invalid name, it must not contain more than 50 characters.',
         'any.required': 'Business Name is a required field.',
-        'string.pattern.base': 'Invalid business name, it must contain only letters.',
+        'string.pattern.base': 'Invalid business name, it must contain only letters and numbers.',
       }),
     cuit: Joi.string()
       .regex(/^[0-9\-+]{11}$/)
