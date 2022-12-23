@@ -71,7 +71,6 @@ export const createOrder = async (req: Request, res: Response) => {
     const result = await newOrder.save({ session });
     if (result) {
       const promises = req.body.products.map((product: OrderProduct) => {
-        console.log('stock:', product.product.stock, 'quantity:', product.quantity);
         return Product.findOneAndUpdate(
           { _id: product.product._id, logicDelete: false },
           { stock: product.product.stock - product.quantity },
@@ -81,7 +80,6 @@ export const createOrder = async (req: Request, res: Response) => {
           .session(session);
       });
       const productsChanged = await Promise.all(promises);
-      console.log(productsChanged);
       const someUndefined = productsChanged.some((product) => !product);
       if (someUndefined) {
         throw new CustomError(500, 'Could not update the product stock.');
