@@ -1,4 +1,4 @@
-import { format, subDays } from 'date-fns';
+import { format } from 'date-fns';
 import { Request, Response } from 'express';
 import fetch from 'node-fetch';
 
@@ -13,9 +13,8 @@ export const getExchangeRate = async (req: Request, res: Response) => {
     throw new CustomError(404, 'There are no settings.');
   }
   const lastExchangeRate = settings[0].exchangeRate;
-  const yesterday = format(subDays(new Date(), 1), 'yyyy-MM-dd');
-
-  if (lastExchangeRate.date === yesterday) {
+  const today = format(new Date(), 'yyyy-MM-dd');
+  if (lastExchangeRate.date === today) {
     return res.status(200).json({
       message: 'Showing exchange rate.',
       data: lastExchangeRate,
@@ -27,6 +26,7 @@ export const getExchangeRate = async (req: Request, res: Response) => {
       Authorization: process.env.TOKEN_BCRA || '',
     },
   });
+
   const data: ExchangeRate[] = await response.json();
 
   if (!data) {
@@ -38,12 +38,12 @@ export const getExchangeRate = async (req: Request, res: Response) => {
   }
   await Settings.findByIdAndUpdate(
     { _id: settings[0]._id },
-    { exchangeRate: { value: newExchangeRate.v, date: newExchangeRate.d } },
+    { exchangeRate: { value: newExchangeRate.v, date: today } },
     { new: true },
   );
   return res.status(200).json({
     message: 'Showing exchange rate.',
-    data: { value: newExchangeRate.v, date: newExchangeRate.d },
+    data: { value: newExchangeRate.v, date: today },
     error: false,
   });
 };
