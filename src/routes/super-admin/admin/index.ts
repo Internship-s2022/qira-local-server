@@ -10,7 +10,6 @@ const router = express.Router();
 
 router
   .route('/')
-  // .get(controllers.getAdmins)
   .post(adminValidations.validateAdmin, createFirebaseUser(Role.ADMIN), controllers.createAdmin);
 
 export default router;
