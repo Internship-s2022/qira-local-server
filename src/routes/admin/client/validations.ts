@@ -100,9 +100,10 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
 export const validateClientUpdate = (req: Request, res: Response, next: NextFunction) => {
   const clientSchema = Joi.object({
     businessName: Joi.string()
-      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
+      .regex(/^([a-zA-Z0-9]+\s)*[a-zA-Z0-9]+/)
       .min(3)
       .max(50)
+      .trim()
       .optional()
       .messages({
         'string.min': 'Invalid name, it must contain at least 3 characters.',
