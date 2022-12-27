@@ -53,7 +53,7 @@ export const createOrder = async (req: Request, res: Response) => {
     if (!checkStock(req.body.products)) {
       throw new CustomError(400, 'There is no stock left.');
     }
-    if (!calculateAmounts(req.body.amounts, req.body.products, req.body.exchangeRate)) {
+    if (!(await calculateAmounts(req.body.amounts, req.body.products, req.body.exchangeRate))) {
       throw new CustomError(400, 'There has been an error during price calculation.');
     }
     if (!process.env.IS_TEST) {
