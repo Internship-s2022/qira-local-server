@@ -3,7 +3,7 @@ import { startSession } from 'mongoose';
 
 import s3 from 'src/helper/s3';
 import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
-import Order, { OrderProduct, OrderState } from 'src/models/order';
+import Order, { OrderState } from 'src/models/order';
 import Product from 'src/models/product';
 export const getAllOrders = async (req: Request, res: Response) => {
   const allOrders = await Order.find({ ...req.query }).populate('client');
