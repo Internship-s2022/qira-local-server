@@ -6,7 +6,7 @@ import { IvaCondition } from 'src/interfaces';
 export const validateClient = (req: Request, res: Response, next: NextFunction) => {
   const clientSchema = Joi.object({
     businessName: Joi.string()
-      .regex(/^([a-zA-Z0-9]+\s)*[a-zA-Z0-9]+/)
+      .regex(/^([0-9]*)(\s?[A-zÀ-ú]+)(\s[0-9A-zÀ-ú]+)*\s?$/)
       .min(3)
       .max(50)
       .trim()
@@ -60,7 +60,7 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
           'any.required': 'Zip code is a required field.',
         }),
       street: Joi.string()
-        .regex(/[a-zA-Z0-9]+\s[a-zA-Z0-9]/)
+        .regex(/^([0-9]*)(\s?[A-zÀ-ú]+)(\s[0-9A-zÀ-ú]+)*\s?$/)
         .min(3)
         .required()
         .messages({
@@ -100,7 +100,7 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
 export const validateClientUpdate = (req: Request, res: Response, next: NextFunction) => {
   const clientSchema = Joi.object({
     businessName: Joi.string()
-      .regex(/^([a-zA-Z0-9]+\s)*[a-zA-Z0-9]+/)
+      .regex(/^([0-9]*)(\s?[A-zÀ-ú]+)(\s[0-9A-zÀ-ú]+)*\s?$/)
       .min(3)
       .max(50)
       .trim()
@@ -153,7 +153,7 @@ export const validateClientUpdate = (req: Request, res: Response, next: NextFunc
             'Invalid Zip Code, it must contain only numbers and must be 4 characters.',
         }),
       street: Joi.string()
-        .regex(/[a-zA-Z0-9]+\s[a-zA-Z0-9]/)
+        .regex(/^([0-9]*)(\s?[A-zÀ-ú]+)(\s[0-9A-zÀ-ú]+)*\s?$/)
         .min(3)
         .optional()
         .messages({
