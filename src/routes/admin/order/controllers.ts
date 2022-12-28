@@ -33,7 +33,10 @@ export const getOrderToDeliver = async (req: Request, res: Response) => {
   const order = await Order.findOne({ _id: req.params.id })
     .populate('client')
     .populate('products.product');
-  if (!order || !OrderState.DELIVERY_PENDING) {
+  if (
+    !order ||
+    (order.state !== OrderState.DELIVERY_PENDING && order.state !== OrderState.DELIVERED)
+  ) {
     throw new CustomError(404, `Could not find an order by the id of ${req.params.id}.`);
   }
   if (order.state === OrderState.DELIVERED) {
