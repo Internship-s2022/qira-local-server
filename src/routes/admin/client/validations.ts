@@ -82,8 +82,6 @@ export const validateClient = (req: Request, res: Response, next: NextFunction) 
       'string.email': 'Invalid Email must contain @ and .',
     }),
     password: Joi.string().required(),
-    isActive: Joi.boolean().optional(),
-    logicDelete: Joi.boolean().optional(),
   });
   const validation = clientSchema.validate(req.body);
   if (validation.error) {
@@ -170,8 +168,6 @@ export const validateClientUpdate = (req: Request, res: Response, next: NextFunc
       'string.min': 'Invalid Email, it must contain at least 7 characters.',
       'string.email': 'Invalid Email must contain @ and .',
     }),
-    isActive: Joi.boolean().optional(),
-    logicDelete: Joi.boolean().optional(),
   });
   const validation = clientSchema.validate(req.body);
   if (validation.error) {

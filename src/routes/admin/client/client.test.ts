@@ -141,7 +141,7 @@ describe('/PATCH /admin/client/activate/:id', () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.message).toEqual(
-      `Id ${validClientId} does not exist or is already active.`,
+      `Id ${validClientId} does not exist, is not approved or is already active.`,
     );
     expect(response.body.data).toBe(undefined);
   });

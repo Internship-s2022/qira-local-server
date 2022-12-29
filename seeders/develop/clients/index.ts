@@ -18,6 +18,7 @@ export default [
     isActive: true,
     logicDelete: false,
     firebaseUid: 'Xtgz5H34blVOketypcQ94pPdg962',
+    approved: true,
   },
   {
     _id: new mongoose.Types.ObjectId('62891944b389642a7f13ca02'),
@@ -35,6 +36,7 @@ export default [
     isActive: true,
     logicDelete: false,
     firebaseUid: 'Xtgz5H34blVOketypcQ94pPdg123',
+    approved: true,
   },
   {
     _id: new mongoose.Types.ObjectId('62891944b389642a7f13ca03'),
@@ -52,6 +54,7 @@ export default [
     isActive: true,
     logicDelete: false,
     firebaseUid: 'Xtgz5H34blVOketypcQ94pPdg456',
+    approved: true,
   },
   {
     // CLIENT INACTIVE
@@ -70,6 +73,7 @@ export default [
     isActive: false,
     logicDelete: false,
     firebaseUid: 'Xtgz5H34blVOketypcQ94pPdg789',
+    approved: true,
   },
   {
     // CLIENT WITH LOGIC DELETE TRUE
@@ -88,5 +92,6 @@ export default [
     isActive: false,
     logicDelete: true,
     firebaseUid: 'Xtgz5H34blVOketypcQ94pPdg159',
+    approved: true,
   },
 ];

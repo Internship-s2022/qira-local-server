@@ -41,7 +41,11 @@ export const createOrder = async (req: Request, res: Response) => {
   const session = await startSession();
   session.startTransaction();
   try {
-    const client = await Client.findOne({ _id: req.body.client, logicDelete: false });
+    const client = await Client.findOne({
+      _id: req.body.client,
+      logicDelete: false,
+      approved: true,
+    });
     if (!client) {
       throw new CustomError(404, `Could not find a client by the id of ${req.params.id}.`);
     }

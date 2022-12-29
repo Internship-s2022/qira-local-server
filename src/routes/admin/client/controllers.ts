@@ -43,12 +43,15 @@ export const updateClient = async (req: Request, res: Response) => {
 
 export const activeClient = async (req: Request, res: Response) => {
   const clientToChange = await Client.findOneAndUpdate(
-    { _id: req.params.id, logicDelete: false, isActive: false },
+    { _id: req.params.id, logicDelete: false, isActive: false, approved: true },
     { isActive: true },
     { new: true },
   );
   if (!clientToChange) {
-    throw new CustomError(404, `Id ${req.params.id} does not exist or is already active.`);
+    throw new CustomError(
+      404,
+      `Id ${req.params.id} does not exist, is not approved or is already active.`,
+    );
   }
   return res.status(200).json({
     message: 'Client updated successfully.',
@@ -84,6 +87,22 @@ export const deleteClient = async (req: Request, res: Response) => {
   }
   return res.status(200).json({
     message: 'Client deleted successfully.',
+    data: clientToChange,
+    error: false,
+  });
+};
+
+export const approveClient = async (req: Request, res: Response) => {
+  const clientToChange = await Client.findOneAndUpdate(
+    { _id: req.params.id, logicDelete: false, approved: false },
+    { approved: true },
+    { new: true },
+  );
+  if (!clientToChange) {
+    throw new CustomError(404, `Id ${req.params.id} does not exist or is already approved.`);
+  }
+  return res.status(200).json({
+    message: 'Client approved successfully.',
     data: clientToChange,
     error: false,
   });
