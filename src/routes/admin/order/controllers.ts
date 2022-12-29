@@ -33,8 +33,14 @@ export const getOrderToDeliver = async (req: Request, res: Response) => {
   const order = await Order.findOne({ _id: req.params.id })
     .populate('client')
     .populate('products.product');
-  if (!order) {
+  if (
+    !order ||
+    (order.state !== OrderState.DELIVERY_PENDING && order.state !== OrderState.DELIVERED)
+  ) {
     throw new CustomError(404, `Could not find an order by the id of ${req.params.id}.`);
+  }
+  if (order.state === OrderState.DELIVERED) {
+    throw new CustomError(404, `The order with the id ${req.params.id} is already delivered.`);
   }
   const validAuthorized = order.authorized.some((authorized) => {
     return authorized.dni === req.query.dni;
