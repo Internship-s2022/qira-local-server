@@ -7,10 +7,10 @@ import clientModel from 'src/models/client';
 import orderModel from 'src/models/order';
 import productModel from 'src/models/product';
 
-import categorySeeds from '../../../../seeders/develop/categories';
-import clientSeeds from '../../../../seeders/develop/clients';
-import orderSeeds from '../../../../seeders/develop/orders';
-import productSeeds from '../../../../seeders/develop/products';
+import categorySeeds from '../../../../seeders/data/develop/categories';
+import clientSeeds from '../../../../seeders/data/develop/clients';
+import orderSeeds from '../../../../seeders/data/develop/orders';
+import productSeeds from '../../../../seeders/data/develop/products';
 
 const url = '/client/orders';
 const stockProduct = [

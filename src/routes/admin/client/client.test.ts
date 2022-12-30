@@ -4,7 +4,7 @@ import request from 'supertest';
 import app from 'src/app';
 import clientModel from 'src/models/client';
 
-import clientsSeeds from '../../../../seeders/develop/clients';
+import clientsSeeds from '../../../../seeders/data/develop/clients';
 
 beforeAll(async () => {
   await clientModel.insertMany(clientsSeeds);

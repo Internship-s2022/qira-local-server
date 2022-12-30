@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 
 import { Currency } from 'src/interfaces';
 
-export default [
+// TODO: Fix IProduct type and change any -> IProduct
+const products: any = [
   {
     _id: new mongoose.Types.ObjectId('636534e7b1c86f2d04240078'),
     name: 'Semillas',
@@ -21,6 +22,8 @@ export default [
     currency: Currency.DOLLAR,
     stock: 50,
     isNew: true,
+    isActive: true,
+    logicDelete: false,
   },
   {
     _id: new mongoose.Types.ObjectId('636567c722ab6362ab13895f'),
@@ -61,6 +64,8 @@ export default [
     currency: Currency.PESO,
     stock: 100,
     isNew: true,
+    isActive: true,
+    logicDelete: false,
   },
   {
     _id: new mongoose.Types.ObjectId('633db28c0b76198b1fb9e915'),
@@ -80,6 +85,8 @@ export default [
     currency: Currency.PESO,
     stock: 123,
     isNew: true,
+    isActive: true,
+    logicDelete: false,
   },
   {
     _id: new mongoose.Types.ObjectId('633db2bd0b76198b1fb9e919'),
@@ -99,6 +106,8 @@ export default [
     currency: Currency.DOLLAR,
     stock: 13,
     isNew: true,
+    isActive: true,
+    logicDelete: false,
   },
   {
     _id: new mongoose.Types.ObjectId('635985d6c69ae7cc9690cd10'),
@@ -118,6 +127,8 @@ export default [
     currency: Currency.DOLLAR,
     stock: 100,
     isNew: true,
+    isActive: true,
+    logicDelete: false,
   },
   {
     _id: new mongoose.Types.ObjectId('635c3b1a1dbbdc223be4d84e'),
@@ -137,6 +148,8 @@ export default [
     currency: Currency.DOLLAR,
     stock: 100,
     isNew: true,
+    isActive: true,
+    logicDelete: false,
   },
   {
     _id: new mongoose.Types.ObjectId('635fcea269c6117027039343'),
@@ -156,6 +169,8 @@ export default [
     currency: Currency.DOLLAR,
     stock: 123,
     isNew: true,
+    isActive: true,
+    logicDelete: false,
   },
   {
     _id: new mongoose.Types.ObjectId('635fd06415bdf89bec285c01'),
@@ -175,6 +190,8 @@ export default [
     currency: Currency.DOLLAR,
     stock: 204,
     isNew: true,
+    isActive: true,
+    logicDelete: false,
   },
   {
     _id: new mongoose.Types.ObjectId('635fd10e15bdf89bec285c07'),
@@ -194,5 +211,9 @@ export default [
     currency: Currency.PESO,
     stock: 123,
     isNew: true,
+    isActive: true,
+    logicDelete: false,
   },
 ];
+
+export default products;

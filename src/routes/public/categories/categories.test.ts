@@ -3,7 +3,7 @@ import request from 'supertest';
 import app from 'src/app';
 import categoryModel from 'src/models/category';
 
-import categoriesSeed from '../../../../seeders/develop/categories';
+import categoriesSeed from '../../../../seeders/data/develop/categories';
 
 const url = '/public/categories';
 
