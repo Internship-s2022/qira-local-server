@@ -6,8 +6,9 @@ import app from 'src/app';
 import { Currency } from 'src/interfaces';
 import categoryModel from 'src/models/category';
 import productModel from 'src/models/product';
-import categoriesSeed from 'src/seeders/develop/categories';
-import productsSeeds from 'src/seeders/develop/products';
+
+import categoriesSeed from '../../../../seeders/develop/categories';
+import productsSeeds from '../../../../seeders/develop/products';
 
 const url = '/admin/product';
 let productID: string;
