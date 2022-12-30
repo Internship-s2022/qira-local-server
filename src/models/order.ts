@@ -122,19 +122,19 @@ const orderSchema = new Schema(
       required: true,
     },
     orderDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     payAuthDate: {
-      type: Date,
+      type: String,
       required: false,
     },
     deliverDate: {
-      type: Date,
+      type: String,
       required: false,
     },
     estimatedDeliveryDate: {
-      type: Date,
+      type: String,
       required: true,
     },
   },

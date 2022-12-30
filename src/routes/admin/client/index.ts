@@ -18,4 +18,6 @@ router.patch('/inactivate/:id', controllers.inactiveClient);
 
 router.patch('/delete/:id', controllers.deleteClient);
 
+router.patch('/approve/:id', controllers.approveClient);
+
 export default router;
