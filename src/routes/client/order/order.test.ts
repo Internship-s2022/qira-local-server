@@ -6,10 +6,11 @@ import categoryModel from 'src/models/category';
 import clientModel from 'src/models/client';
 import orderModel from 'src/models/order';
 import productModel from 'src/models/product';
-import categorySeeds from 'src/seeders/develop/categories';
-import clientSeeds from 'src/seeders/develop/clients';
-import orderSeeds from 'src/seeders/develop/orders';
-import productSeeds from 'src/seeders/develop/products';
+
+import categorySeeds from '../../../../seeders/data/develop/categories';
+import clientSeeds from '../../../../seeders/data/develop/clients';
+import orderSeeds from '../../../../seeders/data/develop/orders';
+import productSeeds from '../../../../seeders/data/develop/products';
 
 const url = '/client/orders';
 const stockProduct = [

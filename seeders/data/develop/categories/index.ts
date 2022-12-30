@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-export default [
+// TODO: Fix ICategory type and change any -> ICategory
+const categories: any[] = [
   {
     _id: new mongoose.Types.ObjectId('63617504bc1a382119d49e4b'),
     name: 'Herbicidas',
@@ -68,3 +69,5 @@ export default [
     logicDelete: false,
   },
 ];
+
+export default categories;

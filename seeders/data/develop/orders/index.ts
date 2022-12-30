@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-export default [
+// TODO: Fix IOrder type and change any -> IOrder
+const orders: any = [
   {
     products: [
       {
@@ -54,7 +55,7 @@ export default [
     },
     state: 'APPROVE_PENDING',
     exchangeRate: 160,
-    orderDate: '2022-10-31T13:33:22.372Z',
+    orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-10-2022',
   },
   {
@@ -114,3 +115,5 @@ export default [
     estimatedDeliveryDate: '10-10-2022',
   },
 ];
+
+export default orders;

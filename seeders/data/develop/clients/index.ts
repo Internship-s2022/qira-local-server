@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-export default [
+// TODO: Fix IClient type and change any -> IClient
+const clients: any = [
   {
     _id: new mongoose.Types.ObjectId('62891944b389642a7f13ca01'),
     businessName: 'Radium Rocket',
@@ -94,4 +95,44 @@ export default [
     firebaseUid: 'Xtgz5H34blVOketypcQ94pPdg159',
     approved: true,
   },
+  {
+    _id: '636d11d68a2997f1b06fd387',
+    businessName: 'Empresa Agro',
+    cuit: '27401205727',
+    ivaCondition: 'RESPONSABLE_INSCRIPTO',
+    address: {
+      province: 'Santa Fe',
+      city: 'Rosario',
+      zipCode: '2000',
+      street: 'catamarca 1214',
+      _id: new mongoose.Types.ObjectId('639776644382729f3d6113ff'),
+    },
+    phoneNumber: '011-1234564',
+    email: 'gina.cliente@gmail.com',
+    isActive: true,
+    logicDelete: false,
+    firebaseUid: 'xw4SFudaMlQ8IMaeNJtKlACxppe2',
+    approved: true,
+  },
+  {
+    _id: '633db2570b76198b1fb9e911',
+    businessName: 'Test seeder',
+    cuit: '27401205723',
+    ivaCondition: 'RESPONSABLE_INSCRIPTO',
+    address: {
+      province: 'Santa Fe',
+      city: 'Rosario',
+      zipCode: '2000',
+      street: 'catamarca 1214',
+      _id: new mongoose.Types.ObjectId('639776644382729f3d6113ff'),
+    },
+    phoneNumber: '011-1234564',
+    email: 'test@seeders.com',
+    isActive: true,
+    logicDelete: false,
+    firebaseUid: 'Xtgz5H34blVOketypcQ94pPdg962',
+    approved: true,
+  },
 ];
+
+export default clients;

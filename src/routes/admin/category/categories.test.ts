@@ -3,7 +3,8 @@ import request from 'supertest';
 
 import app from 'src/app';
 import categoryModel from 'src/models/category';
-import categoriesSeed from 'src/seeders/develop/categories';
+
+import categoriesSeed from '../../../../seeders/data/develop/categories';
 
 const url = '/admin/category';
 const wrongID = '63617504bc1a382119d49e4c';
