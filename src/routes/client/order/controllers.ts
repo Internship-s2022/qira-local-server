@@ -39,6 +39,7 @@ export const getOrderById = async (req: Request, res: Response) => {
 
 export const createOrder = async (req: Request, res: Response) => {
   const session = await startSession();
+  let paymentFile;
   session.startTransaction();
   try {
     const client = await Client.findOne({
@@ -47,25 +48,27 @@ export const createOrder = async (req: Request, res: Response) => {
       approved: true,
     });
     if (!client) {
-      throw new CustomError(404, `Could not find a client by the id of ${req.params.id}.`);
+      throw new CustomError(404, `Could not find a client by the id of ${req.body.client}.`);
     }
     if (!checkStock(req.body.products)) {
       throw new CustomError(400, 'There is no stock left.');
     }
-    if (!calculateAmounts(req.body.amounts, req.body.products, req.body.exchangeRate)) {
+    if (!(await calculateAmounts(req.body.amounts, req.body.products, req.body.exchangeRate))) {
       throw new CustomError(400, 'There has been an error during price calculation.');
     }
-
-    const payment = req.body.payment;
-    const uploadPayment = await s3.uploadFile(
-      payment,
-      process.env.AWS_BUCKET_TRANSFER_RECEIPTS || '',
-    );
-    const paymentFile = {
-      key: uploadPayment.Key,
-      url: uploadPayment.Location,
-    };
-
+    if (!process.env.IS_TEST) {
+      const payment = req.body.payment;
+      const uploadPayment = await s3.uploadFile(
+        payment,
+        process.env.AWS_BUCKET_TRANSFER_RECEIPTS || '',
+      );
+      paymentFile = {
+        key: uploadPayment.Key,
+        url: uploadPayment.Location,
+      };
+    } else {
+      paymentFile = { key: 'test', url: 'test' };
+    }
     const newOrder = new Order({
       ...req.body,
       orderDate: format(new Date(), 'MM/dd/yyyy'),
