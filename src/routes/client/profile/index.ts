@@ -1,8 +1,5 @@
 import express from 'express';
 
-import { Role } from 'src/interfaces';
-import { authMiddleware } from 'src/middlewares/firebase';
-
 import * as controllers from './controllers';
 import * as clientValidations from './validations';
 
@@ -14,9 +11,5 @@ router
 
 router
   .route('/update/password')
-  .patch(
-    authMiddleware(Role.CLIENT),
-    clientValidations.validateUpdatePassword,
-    controllers.updatePassword,
-  );
+  .patch(clientValidations.validateUpdatePassword, controllers.updatePassword);
 export default router;
