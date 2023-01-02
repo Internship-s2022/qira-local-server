@@ -5,7 +5,7 @@ export const categorySchema = Joi.object({
     .min(3)
     .max(50)
     .required()
-    .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
+    .regex(/^([A-zÀ-ú]+\s)*[A-zÀ-ú\s?]+$/)
     .messages({
       'string.min': 'Invalid name, it must contain at least 3 characters.',
       'string.max': 'Invalid name, it must not contain more than 50 characters.',
@@ -31,7 +31,7 @@ export const updateCategorySchema = Joi.object({
   name: Joi.string()
     .min(3)
     .max(50)
-    .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
+    .regex(/^([A-zÀ-ú]+\s)*[A-zÀ-ú\s?]+$/)
     .messages({
       'string.min': 'Invalid name, it must contain at least 3 characters.',
       'string.max': 'Invalid name, it must not contain more than 50 characters.',
