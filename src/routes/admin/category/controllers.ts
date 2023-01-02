@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import s3 from 'src/helper/s3';
 import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Category from 'src/models/category';
+import Product from 'src/models/product';
 
 export const getAllCategories = async (req: Request, res: Response) => {
   const allCategories = await Category.find({ logicDelete: false });
@@ -106,14 +107,22 @@ export const updateCategory = async (req: Request, res: Response) => {
 };
 
 export const deleteCategory = async (req: Request, res: Response) => {
+  const category = await Category.findOne({ _id: req.params.id, logicDelete: false });
+  if (!category) {
+    throw new CustomError(404, `Could not find a category by the id of ${req.params.id}.`);
+  }
+  const productsWithCategory = await Product.find({
+    category: category._id,
+    logicDelete: false,
+  });
+  if (productsWithCategory.length > 0) {
+    throw new CustomError(400, 'This category has products assigned.');
+  }
   const categoryDelete = await Category.findOneAndUpdate(
-    { _id: req.params.id, logicDelete: false },
+    { _id: req.params.id },
     { logicDelete: true },
     { new: true },
   );
-  if (!categoryDelete) {
-    throw new CustomError(404, `Could not find a category by the id of ${req.params.id}.`);
-  }
   return res.status(200).json({
     message: 'Category deleted successfully.',
     data: categoryDelete,
@@ -138,14 +147,26 @@ export const activeCategory = async (req: Request, res: Response) => {
 };
 
 export const inactiveCategory = async (req: Request, res: Response) => {
+  const category = await Category.findOne({
+    _id: req.params.id,
+    logicDelete: false,
+    isActive: true,
+  });
+  if (!category) {
+    throw new CustomError(404, `Id ${req.params.id} does not exist or is already inactive.`);
+  }
+  const productsWithCategory = await Product.find({
+    category: category._id,
+    logicDelete: false,
+  });
+  if (productsWithCategory.length > 0) {
+    throw new CustomError(400, 'This category has products assigned.');
+  }
   const categoryChange = await Category.findOneAndUpdate(
-    { _id: req.params.id, logicDelete: false, isActive: true },
+    { _id: req.params.id },
     { isActive: false },
     { new: true },
   );
-  if (!categoryChange) {
-    throw new CustomError(404, `Id ${req.params.id} does not exist or is already inactive.`);
-  }
   return res.status(200).json({
     message: 'Category updated successfully.',
     data: categoryChange,
