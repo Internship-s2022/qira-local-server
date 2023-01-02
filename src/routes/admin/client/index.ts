@@ -22,4 +22,6 @@ router.patch('/delete/:id', controllers.deleteClient);
 
 router.patch('/approve/:id', controllers.approveClient);
 
+router.patch('/password/:id', clientValidations.validateUpdatePassword, controllers.updatePassword);
+
 export default router;
