@@ -12,4 +12,11 @@ router
   .route('/update')
   .patch(clientValidations.validateUpdateClientInformation, controllers.updateClientInformation);
 
+router
+  .route('/update/password')
+  .patch(
+    authMiddleware(Role.CLIENT),
+    clientValidations.validateUpdatePassword,
+    controllers.updatePassword,
+  );
 export default router;
