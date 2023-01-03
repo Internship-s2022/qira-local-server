@@ -4,7 +4,7 @@ import { startSession } from 'mongoose';
 
 import { calculateAmounts, checkStock } from 'src/helper/orders';
 import s3 from 'src/helper/s3';
-import { RequestWithFirebase } from 'src/interfaces';
+import { RequestWithFirebase, SubCodes } from 'src/interfaces';
 import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Client from 'src/models/client';
 import Order, { OrderProduct } from 'src/models/order';
@@ -14,7 +14,12 @@ export const getClientOrders = async (req: RequestWithFirebase, res: Response) =
   const client = await Client.findOne({ firebaseUid: req.firebaseUid });
   const clientOrders = await Order.find({ client: client?._id, logicDelete: false });
   if (!client) {
-    throw new CustomError(404, `Could not find a client by the firebaseUid of ${req.firebaseUid}.`);
+    throw new CustomError(
+      404,
+      `Could not find a client by the firebaseUid of ${req.firebaseUid}.`,
+      true,
+      SubCodes.CLIENT_NOT_FOUND,
+    );
   }
   return res.status(200).json({
     message: 'Showing client orders.',
@@ -48,13 +53,23 @@ export const createOrder = async (req: Request, res: Response) => {
       approved: true,
     });
     if (!client) {
-      throw new CustomError(404, `Could not find a client by the id of ${req.body.client}.`);
+      throw new CustomError(
+        404,
+        `Could not find a client by the id of ${req.body.client}.`,
+        true,
+        SubCodes.CLIENT_NOT_FOUND,
+      );
     }
     if (!checkStock(req.body.products)) {
-      throw new CustomError(400, 'There is no stock left.');
+      throw new CustomError(400, 'There is no stock left.', true, SubCodes.NO_STOCK);
     }
     if (!(await calculateAmounts(req.body.amounts, req.body.products, req.body.exchangeRate))) {
-      throw new CustomError(400, 'There has been an error during price calculation.');
+      throw new CustomError(
+        400,
+        'There has been an error during price calculation.',
+        true,
+        SubCodes.INCORRECT_PRICES,
+      );
     }
     if (!process.env.IS_TEST) {
       const payment = req.body.payment;
@@ -89,7 +104,12 @@ export const createOrder = async (req: Request, res: Response) => {
       const productsChanged = await Promise.all(promises);
       const someUndefined = productsChanged.some((product) => !product);
       if (someUndefined) {
-        throw new CustomError(500, 'Could not update the product stock.');
+        throw new CustomError(
+          500,
+          'Could not update the product stock.',
+          true,
+          SubCodes.CANNOT_UPDATE_STOCK,
+        );
       }
     } else {
       throw new CustomError(500, 'Could not create the order.');

@@ -18,6 +18,7 @@ const handleError = (
     message: customError.message,
     data: undefined,
     error: true,
+    subcode: customError.subcode,
   });
 };
 
