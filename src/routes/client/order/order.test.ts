@@ -39,26 +39,27 @@ const stockProduct = [
     quantity: 100000,
   },
 ];
+
 const testOrder = {
   products: [
     {
       product: {
-        _id: '633db2570b76198b1fb9e911',
-        name: 'test',
-        description: 'test',
-        price: 6000,
+        _id: '636534e7b1c86f2d04240078',
+        name: 'Semillas Premium',
+        description: 'Semillas marca Qira de la mejor calidad',
+        price: 2000,
         image: {
-          key: 'test',
-          url: 'test',
+          key: 'develop/products-images/Semillas.jpg',
+          url: 'https://qira-local.s3.amazonaws.com/develop/products-images/Semillas.jpg',
         },
         technicalFile: {
-          key: 'randomKey',
-          url: 'randomKey.jpg',
+          key: 'develop/products-technical-file/Semillas.pdf',
+          url: 'https://qira-local.s3.amazonaws.com/develop/products-technical-file/Semillas.pdf',
         },
-        brand: 'test',
-        category: '63617504bc1a382119d49e4b',
+        brand: 'Qira',
+        category: '63617554bc1a382119d49e5a',
         currency: 'DOLLAR',
-        stock: 49,
+        stock: 50,
         isNew: true,
         isActive: true,
         logicDelete: false,
@@ -66,7 +67,7 @@ const testOrder = {
       quantity: 1,
     },
   ],
-  client: '636d11d68a2997f1b06fd387',
+  client: '62891944b389642a7f13ca01',
   authorized: [
     {
       firstName: 'test',
@@ -87,7 +88,7 @@ const testOrder = {
     base64: 'test',
     isNew: true,
   },
-  amounts: { products: 6000, taxes: 1260, total: 7260 },
+  amounts: { products: 320000, taxes: 67200, total: 387200 },
   exchangeRate: 160,
   estimatedDeliveryDate: '10-10-2022',
 };
