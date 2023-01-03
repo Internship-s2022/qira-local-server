@@ -75,7 +75,9 @@ describe('/PATCH /admin/orders/approve/:id', () => {
     const response = await request(app).patch(`${url}/approve/${wrongID}`).send();
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual('"invoice" is required');
+    expect(response.body.message).toEqual(
+      'There has been an error in the validation. "invoice" is required',
+    );
   });
 });
 

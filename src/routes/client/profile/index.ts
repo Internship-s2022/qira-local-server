@@ -1,13 +1,13 @@
 import express from 'express';
 
+import { validateFunction } from 'src/helper/joi-validations';
+
 import * as controllers from './controllers';
-import * as clientValidations from './validations';
+import { clientSchema } from './validations';
 
 const router = express.Router();
 
-router
-  .route('/update')
-  .patch(clientValidations.validateUpdateClientInformation, controllers.updateClientInformation);
+router.route('/update').patch(validateFunction(clientSchema), controllers.updateClientInformation);
 
 router
   .route('/update/password')
