@@ -9,7 +9,5 @@ const router = express.Router();
 
 router.route('/update').patch(validateFunction(clientSchema), controllers.updateClientInformation);
 
-router
-  .route('/update/password')
-  .patch(clientValidations.validateUpdatePassword, controllers.updatePassword);
+router.route('/update/password').patch(validateFunction(clientSchema), controllers.updatePassword);
 export default router;
