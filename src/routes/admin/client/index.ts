@@ -3,7 +3,7 @@ import express from 'express';
 import { validateFunction } from 'src/helper/joi-validations';
 
 import * as controllers from './controllers';
-import { updateClientSchema } from './validations';
+import { updateClientPasswordSchema, updateClientSchema } from './validations';
 
 const router = express.Router();
 
@@ -22,6 +22,10 @@ router.patch('/delete/:id', controllers.deleteClient);
 
 router.patch('/approve/:id', controllers.approveClient);
 
-router.patch('/password/:id', clientValidations.validateUpdatePassword, controllers.updatePassword);
+router.patch(
+  '/password/:id',
+  validateFunction(updateClientPasswordSchema),
+  controllers.updatePassword,
+);
 
 export default router;
