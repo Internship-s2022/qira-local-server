@@ -1,7 +1,9 @@
 import express from 'express';
 
+import { validateFunction } from 'src/helper/joi-validations';
+
 import * as controllers from './controllers';
-import * as orderValidations from './validations';
+import { invoiceSchema, signedInvoiceSchema } from './validations';
 
 const router = express.Router();
 
@@ -9,13 +11,13 @@ router.route('/').get(controllers.getAllOrders);
 
 router.route('/:id').get(controllers.getOrderById);
 
-router.route('/approve/:id').patch(orderValidations.validateInvoiceOrder, controllers.approveOrder);
+router.route('/approve/:id').patch(validateFunction(invoiceSchema), controllers.approveOrder);
 
 router.route('/reject/:id').patch(controllers.rejectOrder);
 
 router
   .route('/deliver/:id')
   .get(controllers.getOrderToDeliver)
-  .patch(orderValidations.validateSignedInvoiceOrder, controllers.deliverOrder);
+  .patch(validateFunction(signedInvoiceSchema), controllers.deliverOrder);
 
 export default router;

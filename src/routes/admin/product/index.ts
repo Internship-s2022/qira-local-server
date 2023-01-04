@@ -1,19 +1,21 @@
 import express from 'express';
 
+import { validateFunction } from 'src/helper/joi-validations';
+
 import * as controllers from './controllers';
-import * as productValidations from './validations';
+import { productSchema, updateProductSchema } from './validations';
 
 const router = express.Router();
 
 router
   .route('/')
   .get(controllers.getAllProducts)
-  .post(productValidations.validateProduct, controllers.createProduct);
+  .post(validateFunction(productSchema), controllers.createProduct);
 
 router
   .route('/:id')
   .get(controllers.getProductById)
-  .patch(productValidations.validateProductUpdate, controllers.updateProduct);
+  .patch(validateFunction(updateProductSchema), controllers.updateProduct);
 
 router.route('/delete/:id').patch(controllers.deleteProduct);
 
