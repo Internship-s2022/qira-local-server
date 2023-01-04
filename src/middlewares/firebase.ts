@@ -8,7 +8,7 @@ import { CustomError } from './error-handler/custom-error.model';
 export const authMiddleware =
   (role: Role) => async (req: RequestWithFirebase, res: Response, next: NextFunction) => {
     if (process.env.IS_TEST) {
-      req.firebaseUid = 'xw4SFudaMlQ8IMaeNJtKlACxppe2';
+      req.firebaseUid = 'Zk5wn4nxJMdeOy2tt3dZVRutCF22';
       return next();
     }
     const { token } = req.headers;
