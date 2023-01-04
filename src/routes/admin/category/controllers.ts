@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import s3 from 'src/helper/s3';
+import { SubCodes } from 'src/interfaces';
 import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Category from 'src/models/category';
 import Product from 'src/models/product';
@@ -116,7 +117,12 @@ export const deleteCategory = async (req: Request, res: Response) => {
     logicDelete: false,
   });
   if (productsWithCategory.length > 0) {
-    throw new CustomError(400, 'This category has products assigned.');
+    throw new CustomError(
+      400,
+      'This category has products assigned.',
+      true,
+      SubCodes.CATEGORY_WITH_PRODUCTS,
+    );
   }
   const categoryDelete = await Category.findOneAndUpdate(
     { _id: req.params.id },
@@ -160,7 +166,12 @@ export const inactiveCategory = async (req: Request, res: Response) => {
     logicDelete: false,
   });
   if (productsWithCategory.length > 0) {
-    throw new CustomError(400, 'This category has products assigned.');
+    throw new CustomError(
+      400,
+      'This category has products assigned.',
+      true,
+      SubCodes.CATEGORY_WITH_PRODUCTS,
+    );
   }
   const categoryChange = await Category.findOneAndUpdate(
     { _id: req.params.id },
