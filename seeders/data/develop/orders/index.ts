@@ -1,33 +1,12 @@
 import mongoose from 'mongoose';
 
-import { Currency } from 'src/interfaces';
-
 // TODO: Fix IOrder type and change any -> IOrder
 const orders: any = [
   {
+    _id: '790IIUO4',
     products: [
       {
-        product: {
-          _id: new mongoose.Types.ObjectId('636534e7b1c86f2d04240078'),
-          name: 'Semillas Premium',
-          description: 'Semillas marca Qira de la mejor calidad',
-          price: 2000,
-          image: {
-            key: 'develop/products-images/Semillas.jpg',
-            url: 'https://qira-local.s3.amazonaws.com/develop/products-images/Semillas.jpg',
-          },
-          technicalFile: {
-            key: 'develop/products-technical-file/Semillas.pdf',
-            url: 'https://qira-local.s3.amazonaws.com/develop/products-technical-file/Semillas.pdf',
-          },
-          brand: 'Qira',
-          category: new mongoose.Types.ObjectId('63617554bc1a382119d49e5a'),
-          currency: Currency.DOLLAR,
-          stock: 50,
-          isNew: true,
-          isActive: true,
-          logicDelete: false,
-        },
+        product: new mongoose.Types.ObjectId('636534e7b1c86f2d04240078'),
         quantity: 2,
       },
     ],
@@ -61,29 +40,10 @@ const orders: any = [
     estimatedDeliveryDate: '10-20-2022',
   },
   {
+    _id: '3PK2AW0D',
     products: [
       {
-        product: {
-          _id: new mongoose.Types.ObjectId('636534e7b1c86f2d04240078'),
-          name: 'Semillas Premium',
-          description: 'Semillas marca Qira de la mejor calidad',
-          price: 2000,
-          image: {
-            key: 'develop/products-images/Semillas.jpg',
-            url: 'https://qira-local.s3.amazonaws.com/develop/products-images/Semillas.jpg',
-          },
-          technicalFile: {
-            key: 'randomKey',
-            url: 'randomKey.jpg',
-          },
-          brand: 'Qira',
-          category: new mongoose.Types.ObjectId('63617554bc1a382119d49e5a'),
-          currency: Currency.DOLLAR,
-          stock: 50,
-          isNew: true,
-          isActive: true,
-          logicDelete: false,
-        },
+        product: new mongoose.Types.ObjectId('636534e7b1c86f2d04240078'),
         quantity: 1,
       },
     ],
