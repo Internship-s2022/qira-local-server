@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { Request, Response } from 'express';
 import { startSession } from 'mongoose';
 
@@ -80,7 +81,11 @@ export const approveOrder = async (req: Request, res: Response) => {
     }
     const orderUpdate = await Order.findOneAndUpdate(
       { _id: req.params.id, logicDelete: false, state: OrderState.APPROVE_PENDING },
-      { state: OrderState.DELIVERY_PENDING, invoice: invoiceFile, payAuthDate: Date.now() },
+      {
+        state: OrderState.DELIVERY_PENDING,
+        invoice: invoiceFile,
+        payAuthDate: format(new Date(), 'MM/dd/yyyy'),
+      },
       { new: true },
     )
       .populate('client')
@@ -122,7 +127,11 @@ export const deliverOrder = async (req: Request, res: Response) => {
     }
     const orderUpdate = await Order.findOneAndUpdate(
       { _id: req.params.id, logicDelete: false, state: OrderState.DELIVERY_PENDING },
-      { state: OrderState.DELIVERED, signedInvoice: signedInvoiceFile, deliverDate: Date.now() },
+      {
+        state: OrderState.DELIVERED,
+        signedInvoice: signedInvoiceFile,
+        deliverDate: format(new Date(), 'MM/dd/yyyy'),
+      },
       { new: true },
     )
       .populate('client')
