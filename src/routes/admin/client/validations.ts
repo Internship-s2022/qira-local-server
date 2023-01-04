@@ -68,11 +68,11 @@ export const clientSchema = Joi.object({
       }),
   }),
   phoneNumber: Joi.string()
-    .regex(/^[0-9\-+]{9,12}$/)
+    .regex(/^[0-9\-+]{10,13}$/)
     .required()
     .messages({
       'string.pattern.base':
-        'Invalid Phone Number, it must only contain numbers and between 9 and 12 characters.',
+        'Invalid Phone Number, it must only contain numbers and between 9 and 12 numeric characters.(There is an extra "-" character between area code and phone).',
       'any.required': 'Phone Number is a required field.',
     }),
   email: Joi.string().email().min(7).required().messages({
@@ -147,11 +147,11 @@ export const updateClientSchema = Joi.object({
       }),
   }),
   phoneNumber: Joi.string()
-    .regex(/^[0-9\-+]{9,12}$/)
+    .regex(/^[0-9\-+]{10,13}$/)
     .optional()
     .messages({
       'string.pattern.base':
-        'Invalid Phone Number, it must only contain numbers and between 9 and 12 characters.',
+        'Invalid Phone Number, it must only contain numbers and between 9 and 12 numeric characters.(There is an extra "-" character between area code and phone).',
     }),
   email: Joi.string().email().min(7).optional().messages({
     'string.min': 'Invalid Email, it must contain at least 7 characters.',
