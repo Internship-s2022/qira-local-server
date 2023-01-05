@@ -58,7 +58,7 @@ const categories: any[] = [
     logicDelete: false,
   },
   {
-    _id: new mongoose.Types.ObjectId('63617504bc1a382119d49e6p'),
+    _id: new mongoose.Types.ObjectId('63617504bc1a382119d49e3f'),
     name: 'Nutricion Animal',
     image: {
       key: 'develop/categories-images/Nutricion-animal.jpg',

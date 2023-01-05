@@ -80,12 +80,6 @@ const firebaseClients: FirebaseUser[] = [
   },
   //DISAPPROVED
   {
-    email: 'karen.soto@gmail.com',
-    password: 'test1234',
-    uid: 'fmhF69Km2dNL2pXCysrDELR7zrd2',
-    role: Role.CLIENT,
-  },
-  {
     email: 'luciano.alarcon@gmail.com',
     password: 'test1234',
     uid: 'fmhF69Km2dNL2pXCysrDELR7zrd2',
@@ -119,12 +113,6 @@ const firebaseClients: FirebaseUser[] = [
   //DISABLED
   {
     email: 'franco.marini@gmail.com',
-    password: 'test1234',
-    uid: 'fmhF69Km2dNL2pXCysrDELR7zrv2',
-    role: Role.CLIENT,
-  },
-  {
-    email: 'iara.criscenti@gmail.com',
     password: 'test1234',
     uid: 'fmhF69Km2dNL2pXCysrDELR7zrv2',
     role: Role.CLIENT,

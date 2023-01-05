@@ -76,7 +76,7 @@ const clients: any = [
     approved: true,
   },
   {
-    _id: '636d11d68a2997f1b06fd387',
+    _id: new mongoose.Types.ObjectId('636d11d68a2997f1b06fd387'),
     businessName: 'Intrepid Travel',
     cuit: '27401205727',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
