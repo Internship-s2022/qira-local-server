@@ -158,3 +158,15 @@ export const updateClientSchema = Joi.object({
     'string.email': 'Invalid Email must contain @ and .',
   }),
 });
+
+export const updateClientPasswordSchema = Joi.object({
+  password: Joi.string()
+    .required()
+    .min(8)
+    .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
+    .messages({
+      'string.empty': 'Password is a required field.',
+      'string.min': 'Invalid password, it must contain only numbers and must be 8 characters.',
+      'string.pattern.base': 'Invalid password, it must contain letters and numbers.',
+    }),
+});
