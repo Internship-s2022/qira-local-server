@@ -1,7 +1,7 @@
 import { Role } from '../../../../src/interfaces';
+import { FirebaseUser } from '../../../types';
 
-// TODO: Add firebase users type
-const firebaseAdmins = [
+const firebaseAdmins: FirebaseUser[] = [
   {
     email: 'admin1@qira.com',
     password: 'test1234',
@@ -40,7 +40,7 @@ const firebaseAdmins = [
   },
 ];
 
-const firebaseClients = [
+const firebaseClients: FirebaseUser[] = [
   {
     email: 'qira@radiumrocket.com',
     password: 'test1234',
