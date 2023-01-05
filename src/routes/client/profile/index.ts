@@ -1,15 +1,16 @@
 import express from 'express';
 
-import { Role } from 'src/interfaces';
-import { authMiddleware } from 'src/middlewares/firebase';
+import { validateFunction } from 'src/helper/joi-validations';
+import { updateClientPasswordSchema } from 'src/routes/admin/client/validations';
 
 import * as controllers from './controllers';
-import * as clientValidations from './validations';
+import { clientSchema } from './validations';
 
 const router = express.Router();
 
-router
-  .route('/update')
-  .patch(clientValidations.validateUpdateClientInformation, controllers.updateClientInformation);
+router.route('/update').patch(validateFunction(clientSchema), controllers.updateClientInformation);
 
+router
+  .route('/update/password')
+  .patch(validateFunction(updateClientPasswordSchema), controllers.updatePassword);
 export default router;

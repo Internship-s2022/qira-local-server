@@ -4,7 +4,7 @@ import request from 'supertest';
 import app from 'src/app';
 import clientModel from 'src/models/client';
 
-import clientsSeeds from '../../../../seeders/develop/clients';
+import clientsSeeds from '../../../../seeders/data/develop/clients';
 
 beforeAll(async () => {
   await clientModel.insertMany(clientsSeeds);
@@ -80,9 +80,8 @@ describe('/PATCH /admin/client/:id', () => {
     });
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual('There has been an error in the validation.');
-    expect(response.body.data).toEqual(
-      'Invalid cuit, it must contain only numbers and must be 11 characters.',
+    expect(response.body.message).toEqual(
+      'There has been an error in the validation. Invalid cuit, it must contain only numbers and must be 11 characters.',
     );
   });
 
@@ -92,8 +91,9 @@ describe('/PATCH /admin/client/:id', () => {
     });
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual('There has been an error in the validation.');
-    expect(response.body.data).toEqual('Invalid Email must contain @ and .');
+    expect(response.body.message).toEqual(
+      'There has been an error in the validation. Invalid Email must contain @ and .',
+    );
   });
 
   test('Error in validation, response should return error and status 400', async () => {
@@ -102,8 +102,9 @@ describe('/PATCH /admin/client/:id', () => {
     });
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual('There has been an error in the validation.');
-    expect(response.body.data).toEqual('"businessName" is not allowed to be empty');
+    expect(response.body.message).toEqual(
+      'There has been an error in the validation. "businessName" is not allowed to be empty',
+    );
   });
 });
 

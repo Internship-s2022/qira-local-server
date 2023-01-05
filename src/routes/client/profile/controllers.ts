@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import firebase from 'src/helper/firebase';
 import { RequestWithFirebase } from 'src/interfaces';
 import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Client from 'src/models/client';
@@ -20,6 +21,19 @@ export const updateClientInformation = async (req: RequestWithFirebase, res: Res
   return res.status(200).json({
     message: 'User updated successfully.',
     data: userUpdated,
+    error: false,
+  });
+};
+export const updatePassword = async (req: RequestWithFirebase, res: Response) => {
+  const result = await firebase
+    .auth()
+    .updateUser(req.firebaseUid || '', { password: req.body.password });
+  if (!result) {
+    throw new CustomError(400, 'Something went wrong.');
+  }
+  return res.status(200).json({
+    message: 'Password updated successfully.',
+    data: result,
     error: false,
   });
 };

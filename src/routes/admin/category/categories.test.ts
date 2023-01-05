@@ -3,7 +3,8 @@ import request from 'supertest';
 
 import app from 'src/app';
 import categoryModel from 'src/models/category';
-import categoriesSeed from 'src/seeders/develop/categories';
+
+import categoriesSeed from '../../../../seeders/data/develop/categories';
 
 const url = '/admin/category';
 const wrongID = '63617504bc1a382119d49e4c';
@@ -71,7 +72,9 @@ describe('/POST /admin/category', () => {
       });
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual('Invalid name, it must contain at least 3 characters.');
+    expect(response.body.message).toEqual(
+      'There has been an error in the validation. Invalid name, it must contain at least 3 characters.',
+    );
   });
 
   test('Response should return a status 400 and dont create a new Category when the url is empty', async () => {
@@ -89,7 +92,9 @@ describe('/POST /admin/category', () => {
       });
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual('"url" is not allowed to be empty');
+    expect(response.body.message).toEqual(
+      'There has been an error in the validation. "url" is not allowed to be empty',
+    );
   });
 });
 
@@ -125,7 +130,9 @@ describe('/PATCH /admin/category', () => {
       });
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual('"name" is not allowed to be empty');
+    expect(response.body.message).toEqual(
+      'There has been an error in the validation. "name" is not allowed to be empty',
+    );
   });
 });
 

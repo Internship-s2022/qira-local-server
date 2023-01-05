@@ -6,10 +6,11 @@ import categoryModel from 'src/models/category';
 import clientModel from 'src/models/client';
 import orderModel, { IOrder } from 'src/models/order';
 import productModel from 'src/models/product';
-import categorySeeds from 'src/seeders/develop/categories';
-import clientSeeds from 'src/seeders/develop/clients';
-import orderSeeds from 'src/seeders/develop/orders';
-import productSeeds from 'src/seeders/develop/products';
+
+import categorySeeds from '../../../../seeders/data/develop/categories';
+import clientSeeds from '../../../../seeders/data/develop/clients';
+import orderSeeds from '../../../../seeders/data/develop/orders';
+import productSeeds from '../../../../seeders/data/develop/products';
 
 const url = '/admin/orders';
 let orderId: string;
@@ -74,7 +75,9 @@ describe('/PATCH /admin/orders/approve/:id', () => {
     const response = await request(app).patch(`${url}/approve/${wrongID}`).send();
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toEqual('"invoice" is required');
+    expect(response.body.message).toEqual(
+      'There has been an error in the validation. "invoice" is required',
+    );
   });
 });
 

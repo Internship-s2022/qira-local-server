@@ -1,7 +1,9 @@
+import { format } from 'date-fns';
 import { Request, Response } from 'express';
 import { startSession } from 'mongoose';
 
 import s3 from 'src/helper/s3';
+import { SubCodes } from 'src/interfaces';
 import { CustomError } from 'src/middlewares/error-handler/custom-error.model';
 import Order, { OrderState } from 'src/models/order';
 import Product from 'src/models/product';
@@ -41,16 +43,31 @@ export const getOrderToDeliver = async (req: Request, res: Response) => {
     !order ||
     (order.state !== OrderState.DELIVERY_PENDING && order.state !== OrderState.DELIVERED)
   ) {
-    throw new CustomError(404, `Could not find an order by the id of ${req.params.id}.`);
+    throw new CustomError(
+      404,
+      `Could not find an order by the id of ${req.params.id}.`,
+      true,
+      SubCodes.INCORRECT_ORDER_STATE,
+    );
   }
   if (order.state === OrderState.DELIVERED) {
-    throw new CustomError(404, `The order with the id ${req.params.id} is already delivered.`);
+    throw new CustomError(
+      404,
+      `The order with the id ${req.params.id} is already delivered.`,
+      true,
+      SubCodes.DELIVERED_ORDER,
+    );
   }
   const validAuthorized = order.authorized.some((authorized) => {
     return authorized.dni === req.query.dni;
   });
   if (!validAuthorized) {
-    throw new CustomError(404, `Could not find an authorized with the dni ${req.query.dni}.`);
+    throw new CustomError(
+      404,
+      `Could not find an authorized with the dni ${req.query.dni}.`,
+      true,
+      SubCodes.INCORRECT_DNI,
+    );
   }
   return res.status(200).json({
     message: `Showing the specified order by the id of ${req.params.id}.`,
@@ -80,7 +97,11 @@ export const approveOrder = async (req: Request, res: Response) => {
     }
     const orderUpdate = await Order.findOneAndUpdate(
       { _id: req.params.id, logicDelete: false, state: OrderState.APPROVE_PENDING },
-      { state: OrderState.DELIVERY_PENDING, invoice: invoiceFile, payAuthDate: Date.now() },
+      {
+        state: OrderState.DELIVERY_PENDING,
+        invoice: invoiceFile,
+        payAuthDate: format(new Date(), 'MM/dd/yyyy'),
+      },
       { new: true },
     )
       .populate('client')
@@ -122,7 +143,11 @@ export const deliverOrder = async (req: Request, res: Response) => {
     }
     const orderUpdate = await Order.findOneAndUpdate(
       { _id: req.params.id, logicDelete: false, state: OrderState.DELIVERY_PENDING },
-      { state: OrderState.DELIVERED, signedInvoice: signedInvoiceFile, deliverDate: Date.now() },
+      {
+        state: OrderState.DELIVERED,
+        signedInvoice: signedInvoiceFile,
+        deliverDate: format(new Date(), 'MM/dd/yyyy'),
+      },
       { new: true },
     )
       .populate('client')
@@ -172,7 +197,12 @@ export const rejectOrder = async (req: Request, res: Response) => {
     const productsChanged = await Promise.all(promises);
     const someUndefined = productsChanged.some((product) => !product);
     if (someUndefined) {
-      throw new CustomError(500, 'Could not update the product stock.');
+      throw new CustomError(
+        500,
+        'Could not update the product stock.',
+        true,
+        SubCodes.CANNOT_UPDATE_STOCK,
+      );
     }
     return res.status(200).json({
       message: `Order rejected successfully ${req.params.id}.`,
