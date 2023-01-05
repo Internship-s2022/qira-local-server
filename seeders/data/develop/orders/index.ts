@@ -68,8 +68,8 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -80,6 +80,7 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
   },
   {
     _id: '636534E8',
@@ -109,12 +110,12 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     signedInvoice: {
-      key: 'develop/transfer-receipts/signed-invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/signed-invoice.pdf',
+      key: 'develop/order-signed-invoice/signed-invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-signed-invoice/signed-invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -125,6 +126,8 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
+    deliverDate: '10-16-2022',
   },
   {
     _id: '636534E9',
@@ -229,8 +232,8 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -241,6 +244,7 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
   },
   {
     _id: '236534E8',
@@ -270,12 +274,12 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     signedInvoice: {
-      key: 'develop/transfer-receipts/signed-invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/signed-invoice.pdf',
+      key: 'develop/order-signed-invoice/signed-invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-signed-invoice/signed-invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -286,6 +290,8 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
+    deliverDate: '10-16-2022',
   },
   {
     _id: '236534E9',
@@ -390,8 +396,8 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -402,6 +408,7 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
   },
   {
     _id: '336534E8',
@@ -431,12 +438,12 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     signedInvoice: {
-      key: 'develop/transfer-receipts/signed-invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/signed-invoice.pdf',
+      key: 'develop/order-signed-invoice/signed-invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-signed-invoice/signed-invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -447,6 +454,8 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
+    deliverDate: '10-16-2022',
   },
   {
     _id: '336534E9',
@@ -551,8 +560,8 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -563,6 +572,7 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
   },
   {
     _id: '436534E8',
@@ -592,12 +602,12 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     signedInvoice: {
-      key: 'develop/transfer-receipts/signed-invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/signed-invoice.pdf',
+      key: 'develop/order-signed-invoice/signed-invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-signed-invoice/signed-invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -608,6 +618,8 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
+    deliverDate: '10-16-2022',
   },
   {
     _id: '436534E9',
@@ -712,8 +724,8 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -724,6 +736,7 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
   },
   {
     _id: '536534E8',
@@ -753,12 +766,12 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     signedInvoice: {
-      key: 'develop/transfer-receipts/signed-invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/signed-invoice.pdf',
+      key: 'develop/order-signed-invoice/signed-invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-signed-invoice/signed-invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -769,6 +782,8 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
+    deliverDate: '10-16-2022',
   },
   {
     _id: '536534E9',
@@ -873,8 +888,8 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -885,6 +900,7 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
   },
   {
     _id: '736534E8',
@@ -914,12 +930,12 @@ const orders: any[] = [
       url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/example-transfer.pdf',
     },
     invoice: {
-      key: 'develop/transfer-receipts/invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/invoice.pdf',
+      key: 'develop/order-invoice/invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-invoice/invoice.pdf',
     },
     signedInvoice: {
-      key: 'develop/transfer-receipts/signed-invoice.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/transfer-receipts/signed-invoice.pdf',
+      key: 'develop/order-signed-invoice/signed-invoice.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/order-signed-invoice/signed-invoice.pdf',
     },
     amounts: {
       products: 2000,
@@ -930,6 +946,8 @@ const orders: any[] = [
     exchangeRate: 160,
     orderDate: '10-10-2022',
     estimatedDeliveryDate: '10-20-2022',
+    payAuthDate: '10-13-2022',
+    deliverDate: '10-16-2022',
   },
   {
     _id: '736534E9',

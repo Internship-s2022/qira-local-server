@@ -78,7 +78,7 @@ const firebaseClients: FirebaseUser[] = [
     uid: 'qn8KW4DgFtbTtrCbmcn9zsBIDw73',
     role: Role.CLIENT,
   },
-  //DISAPPROVED
+  // PENDING APPROVAL
   {
     email: 'luciano.alarcon@gmail.com',
     password: 'test1234',
@@ -107,6 +107,12 @@ const firebaseClients: FirebaseUser[] = [
     email: 'nicolas.lobos@gmail.com',
     password: 'test1234',
     uid: 'fmhF69Km2dNL2pXCysrDELR7zrn2',
+    role: Role.CLIENT,
+  },
+  {
+    email: 'karen.soto@gmail.com',
+    password: 'test1234',
+    uid: 'fmhF69Km2dNL2pXCysrDELR7zrl3',
     role: Role.CLIENT,
   },
 
@@ -139,6 +145,12 @@ const firebaseClients: FirebaseUser[] = [
     email: 'iara.criscenti@gmail.com',
     password: 'test1234',
     uid: 'fmhF69Km2dNL2pXCysrDELR7zre2',
+    role: Role.CLIENT,
+  },
+  {
+    email: 'guido.cerioni@gmail.com',
+    password: 'test1234',
+    uid: 'fmhF69Km2dNL2pXCysrDELR7zrd5',
     role: Role.CLIENT,
   },
 ];

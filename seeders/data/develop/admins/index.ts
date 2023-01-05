@@ -4,7 +4,7 @@ const admins: any = [
   {
     _id: new mongoose.Types.ObjectId('62891944b389642a7f10aa01'),
     firebaseUid: '4GFNFYixDNQmHG3Ia0m5EpVCkAz2',
-    firstName: 'BaLtazar',
+    firstName: 'Baltazar',
     lastName: 'Cortina',
     email: 'baltazar.cortina@qira.com',
     isActive: true,

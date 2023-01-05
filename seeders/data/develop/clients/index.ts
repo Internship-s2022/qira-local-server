@@ -114,7 +114,7 @@ const clients: any = [
 
   {
     //DISAPPROVED
-    _id: '633db2570b76198b1fb9e910',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e910'),
     businessName: 'Twisters Gymnastics Academy',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -128,11 +128,11 @@ const clients: any = [
     email: 'karen.soto@gmail.com',
     isActive: false,
     logicDelete: false,
-    firebaseUid: 'fmhF69Km2dNL2pXCysrDELR7zrp1',
+    firebaseUid: 'fmhF69Km2dNL2pXCysrDELR7zrl3',
     approved: false,
   },
   {
-    _id: '633db2570b76198b1fb9e911',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e911'),
     businessName: 'Aims Community College',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -150,7 +150,7 @@ const clients: any = [
     approved: false,
   },
   {
-    _id: '633db2570b76198b1fb9e912',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e912'),
     businessName: 'Kaboom Fireworks',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -168,7 +168,7 @@ const clients: any = [
     approved: false,
   },
   {
-    _id: '633db2570b76198b1fb9e913',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e913'),
     businessName: 'Compass Mortgage',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -186,7 +186,7 @@ const clients: any = [
     approved: false,
   },
   {
-    _id: '633db2570b76198b1fb9e914',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e914'),
     businessName: 'Marathon Physical Therapy',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -204,7 +204,7 @@ const clients: any = [
     approved: false,
   },
   {
-    _id: '633db2570b76198b1fb9e915',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e915'),
     businessName: 'Semicolon Bookstore',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -223,7 +223,7 @@ const clients: any = [
   },
   //DISABLED
   {
-    _id: '633db2570b76198b1fb9e916',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e916'),
     businessName: '9Yards Media',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -241,7 +241,7 @@ const clients: any = [
     approved: true,
   },
   {
-    _id: '633db2570b76198b1fb9e917',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e917'),
     businessName: 'When Pigs Fly',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -259,7 +259,7 @@ const clients: any = [
     approved: true,
   },
   {
-    _id: '633db2570b76198b1fb9e918',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e918'),
     businessName: 'Light As a Feather',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -277,7 +277,7 @@ const clients: any = [
     approved: true,
   },
   {
-    _id: '633db2570b76198b1fb9e919',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e919'),
     businessName: 'More Than Words',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -295,7 +295,7 @@ const clients: any = [
     approved: true,
   },
   {
-    _id: '633db2570b76198b1fb9e921',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e921'),
     businessName: 'Top It Off',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -313,7 +313,7 @@ const clients: any = [
     approved: true,
   },
   {
-    _id: '633db2570b76198b1fb9e922',
+    _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e922'),
     businessName: 'Bent Out Shape Jewelry',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
@@ -327,7 +327,7 @@ const clients: any = [
     email: 'guido.cerioni@gmail.com',
     isActive: false,
     logicDelete: false,
-    firebaseUid: 'fmhF69Km2dNL2pXCysrDELR7zre2',
+    firebaseUid: 'fmhF69Km2dNL2pXCysrDELR7zrd5',
     approved: true,
   },
 ];
