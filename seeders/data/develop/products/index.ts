@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { Currency } from 'src/interfaces';
 
 // TODO: Fix IProduct type and change any -> IProduct
-const products: any = [
+const products: any[] = [
   {
     _id: new mongoose.Types.ObjectId('636534e7b1c86f2d04240078'),
     name: 'Semillas Premium',

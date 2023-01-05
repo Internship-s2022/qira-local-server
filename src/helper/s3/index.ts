@@ -44,6 +44,7 @@ const replaceFile = async (newFile: Base64File, oldFileKey: string, bucket: stri
 };
 
 export default {
+  newS3,
   uploadFile,
   deleteFile,
   deleteFiles,

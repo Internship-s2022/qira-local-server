@@ -14,13 +14,15 @@
     "format": "prettier --write './**/*.{ts,test.ts}' --config ./.prettierrc",
     "lint:fix": "eslint --fix && yarn format",
     "pre-commit": "yarn type-check && yarn lint && yarn test --watchAll=false",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "seed": "ts-node -r tsconfig-paths/register ./seeders/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/dinero.js": "^1.9.0",
+    "@types/lodash": "^4.14.191",
     "aws-sdk": "^2.1237.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
@@ -32,6 +34,7 @@
     "express-async-errors": "^3.1.1",
     "firebase-admin": "^11.0.1",
     "joi": "^17.6.1",
+    "lodash": "^4.17.21",
     "mongodb-memory-server": "^8.9.5",
     "mongoose": "^6.6.1",
     "nanoid": "^3.3.4",

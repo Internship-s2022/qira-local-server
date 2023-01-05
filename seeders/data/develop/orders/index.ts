@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // TODO: Fix IOrder type and change any -> IOrder
-const orders: any = [
+const orders: any[] = [
   {
     _id: '790IIUO4',
     products: [
