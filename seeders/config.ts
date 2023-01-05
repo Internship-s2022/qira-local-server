@@ -73,7 +73,15 @@ export default {
     s3: [
       {
         bucket: process.env.AWS_BUCKET_TRANSFER_RECEIPTS,
-        files: orders.files,
+        files: orders.transferReceipts,
+      },
+      {
+        bucket: process.env.AWS_BUCKET_ORDER_INVOICE,
+        files: orders.invoices,
+      },
+      {
+        bucket: process.env.AWS_BUCKET_ORDER_SIGNED_INVOICE,
+        files: orders.signedInvoices,
       },
     ],
     message: 'Orders',

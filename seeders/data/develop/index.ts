@@ -4,7 +4,9 @@ import categoriesImages from './categories/images';
 import clients from './clients';
 import firebaseUsers from './firebaseUsers';
 import orders from './orders';
-import ordersFiles from './orders/files';
+import ordersInvoices from './orders/invoices';
+import ordersSignedInvoices from './orders/signed-invoices';
+import ordersTransferReceipts from './orders/transfer-receipts';
 import products from './products';
 import productsFiles from './products/files';
 import productsImages from './products/images';
@@ -14,7 +16,9 @@ export const files = {
     images: categoriesImages,
   },
   orders: {
-    files: ordersFiles,
+    transferReceipts: ordersTransferReceipts,
+    invoices: ordersInvoices,
+    signedInvoices: ordersSignedInvoices,
   },
   products: {
     images: productsImages,
