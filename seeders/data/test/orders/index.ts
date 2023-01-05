@@ -7,6 +7,14 @@ const orders = developOrders.map((order) => ({
     key: replaceTest(order.payment.key),
     url: replaceTest(order.payment.url),
   },
+  invoice: order.invoice && {
+    key: replaceTest(order.invoice.key),
+    url: replaceTest(order.invoice.url),
+  },
+  signedInvoice: order.signedInvoice && {
+    key: replaceTest(order.signedInvoice.key),
+    url: replaceTest(order.signedInvoice.url),
+  },
 }));
 
 export default orders;

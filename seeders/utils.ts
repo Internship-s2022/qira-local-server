@@ -121,10 +121,11 @@ export const replaceUat = (value: string) => {
 };
 
 export const getFileNames = <T>(data: T[], field: keyof T) => {
-  return data
+  const fileNames = data
     .map((item) => {
       const value = item[field] as { key?: string };
-      return value.key?.split('/')[2] || '';
+      return value?.key?.split('/')[2] || '';
     })
-    .filter((item) => item);
+    .filter((file) => !!file);
+  return [...new Set(fileNames)];
 };
