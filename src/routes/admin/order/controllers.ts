@@ -204,6 +204,7 @@ export const rejectOrder = async (req: Request, res: Response) => {
         SubCodes.CANNOT_UPDATE_STOCK,
       );
     }
+    await session.commitTransaction();
     return res.status(200).json({
       message: `Order rejected successfully ${req.params.id}.`,
       data: order,
