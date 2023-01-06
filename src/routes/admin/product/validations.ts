@@ -64,7 +64,7 @@ export const updateProductSchema = Joi.object({
   name: Joi.string()
     .min(3)
     .max(50)
-    .regex(/^([A-zÀ-ú]+\s)*[A-zÀ-ú]+$/)
+    .regex(/^([A-zÀ-úñ0-9+-]+\s)*[ñA-zÀ-ú0-9+-]+$/)
     .messages({
       'string.min': 'Invalid name, it must contain at least 3 characters.',
       'string.max': 'Invalid name, it must not contain more than 50 characters.',
@@ -74,13 +74,15 @@ export const updateProductSchema = Joi.object({
   description: Joi.string()
     .allow('')
     .min(3)
-    .regex(/^[ A-zÀ-ú0-9\W]*$/)
+    .regex(/^[ A-zÀ-ú+-0-9\W]*$/)
     .messages({
       'string.min': 'Invalid description, it must contain at least 3 characters.',
       'string.pattern.base': 'Invalid description, it must contain only letters or numbers.',
     }),
-  price: Joi.number().positive().precision(2).messages({
+  price: Joi.number().positive().min(0).max(999999999).precision(2).messages({
     'number.positive': 'Invalid price, it must be positive.',
+    'number.min': 'Invalid price, it must be greater than 0.',
+    'number.max': 'Invalid price, it must be less than 1000000000',
     'number.precision': 'Invalid price, it allows maximum of 2 decimals numbers.',
     'any.required': 'Product price is a required field.',
   }),
@@ -98,7 +100,7 @@ export const updateProductSchema = Joi.object({
   }),
   brand: Joi.string()
     .min(2)
-    .regex(/^([A-zÀ-ú]+\s)*[A-zÀ-ú]+$/)
+    .regex(/^([A-zÀ-úñ]+\s)*[A-zÀ-úñ]+$/)
     .messages({
       'string.min': 'Invalid brand, it must contain at least 2 characters.',
       'string.pattern.base': 'Invalid brand, it must contain only letters or numbers.',
