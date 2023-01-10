@@ -92,10 +92,14 @@ export const createOrder = async (req: Request, res: Response) => {
 
     const result = await newOrder.save({ session });
     if (result) {
-      const promises = req.body.products.map((product: OrderProduct) => {
+      const promises = req.body.products.map(async (product: OrderProduct) => {
+        const productMongo = await Product.findById(product.product._id);
+        if (!productMongo) {
+          throw new CustomError(500, 'Could not update the product stock');
+        }
         return Product.findOneAndUpdate(
           { _id: product.product._id, logicDelete: false },
-          { stock: product.product.stock - product.quantity },
+          { stock: productMongo.stock - product.quantity },
           { new: true },
         )
           .populate('category')
