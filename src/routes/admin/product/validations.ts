@@ -22,7 +22,7 @@ export const productSchema = Joi.object({
       'string.min': 'Invalid description, it must contain at least 3 characters.',
       'string.pattern.base': 'Invalid description, it must contain only letters or numbers.',
     }),
-  price: Joi.number().positive().precision(2).required().messages({
+  price: Joi.number().positive().min(0).max(99999999999).precision(2).required().messages({
     'number.positive': 'Invalid price, it must be positive.',
     'number.precision': 'Invalid price, it allows maximum of 2 decimals numbers.',
     'any.required': 'Product price is a required field.',
@@ -79,7 +79,7 @@ export const updateProductSchema = Joi.object({
       'string.min': 'Invalid description, it must contain at least 3 characters.',
       'string.pattern.base': 'Invalid description, it must contain only letters or numbers.',
     }),
-  price: Joi.number().positive().min(0).max(999999999).precision(2).messages({
+  price: Joi.number().positive().min(0).max(99999999999).precision(2).messages({
     'number.positive': 'Invalid price, it must be positive.',
     'number.min': 'Invalid price, it must be greater than 0.',
     'number.max': 'Invalid price, it must be less than 1000000000',

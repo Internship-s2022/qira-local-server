@@ -123,7 +123,7 @@ export const updateClientSchema = Joi.object({
     }),
   address: Joi.object({
     province: Joi.string()
-      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
+      .regex(/^([A-zÀ-úñ]+\s)*[A-zÀ-úñ]+$/)
       .min(3)
       .optional()
       .messages({
