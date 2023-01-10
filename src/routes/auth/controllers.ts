@@ -45,7 +45,7 @@ export const getUser = async (req: RequestWithFirebase, res: Response) => {
 };
 
 export const createClient = async (req: Request<any, any, IClient>, res: Response) => {
-  const client = new Client(req.body);
+  const client = new Client({ ...req.body, email: req.body.email.toLowerCase() });
   const result = await client.save();
 
   if (!result) {
