@@ -73,7 +73,7 @@ export const clientSchema = Joi.object({
       }),
   }),
   phoneNumber: Joi.string()
-    .regex(/^[0-9\-+]{10,13}$/)
+    .regex(/^[0-9\-+]{9,13}$/)
     .required()
     .messages({
       'string.pattern.base':
