@@ -27,7 +27,7 @@ export const orderSchema = Joi.object({
           .min(3)
           .max(50)
           .required()
-          .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
+          .regex(/^([A-zÀ-úñ]+\s)*[A-zÀ-úñ]+$/)
           .messages({
             'string.min': 'Invalid name, it must contain at least 3 characters.',
             'string.max': 'Invalid name, it must not contain more than 50 characters.',
@@ -38,7 +38,7 @@ export const orderSchema = Joi.object({
           .min(3)
           .max(50)
           .required()
-          .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
+          .regex(/^([A-zÀ-úñ]+\s)*[A-zÀ-úñ]+$/)
           .messages({
             'string.min': 'Invalid last name, it must contain at least 3 characters.',
             'string.max': 'Invalid last name, it must not contain more than 50 characters.',

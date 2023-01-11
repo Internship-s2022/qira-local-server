@@ -4,7 +4,7 @@ import { IvaCondition } from 'src/interfaces';
 
 export const clientSchema = Joi.object({
   businessName: Joi.string()
-    .regex(/^([0-9]*)(\s?[A-zÀ-ú]+)(\s[0-9A-zÀ-ú]+)*\s?$/)
+    .regex(/^([0-9]*)(\s?[A-zÀ-úñ]+)(\s[0-9A-zÀ-úñ]+)*\s?$/)
     .min(3)
     .max(50)
     .trim()
@@ -37,7 +37,7 @@ export const clientSchema = Joi.object({
     }),
   address: Joi.object({
     province: Joi.string()
-      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
+      .regex(/^([A-zÀ-úñ]+\s)*[A-zÀ-úñ]+$/)
       .min(3)
       .required()
       .messages({
@@ -45,10 +45,15 @@ export const clientSchema = Joi.object({
         'any.required': 'Province is a required field.',
         'string.pattern.base': 'Invalid Province, it must contain only letters.',
       }),
-    city: Joi.string().min(3).required().messages({
-      'string.min': 'Invalid City, it must contain at least 3 characters.',
-      'any.required': 'City is a required field.',
-    }),
+    city: Joi.string()
+      .regex(/^([0-9A-zÀ-úñ]+\s)?([0-9A-zÀ-úñ]+\s*)*$/)
+      .min(3)
+      .required()
+      .messages({
+        'string.min': 'Invalid City, it must contain at least 3 characters.',
+        'any.required': 'City is a required field.',
+        'string.pattern.base': 'Invalid City, it must contain only letters or numbers.',
+      }),
     zipCode: Joi.string()
       .regex(/^[0-9\-+]{4}$/)
       .required()
@@ -58,7 +63,7 @@ export const clientSchema = Joi.object({
         'any.required': 'Zip code is a required field.',
       }),
     street: Joi.string()
-      .regex(/^([0-9]*)(\s?[A-zÀ-ú]+)(\s[0-9A-zÀ-ú]+)*\s?$/)
+      .regex(/^([0-9]*)(\s?[A-zÀ-úñ]+)(\s[0-9A-zÀ-úñ]+)*\s?$/)
       .min(3)
       .required()
       .messages({
@@ -68,7 +73,7 @@ export const clientSchema = Joi.object({
       }),
   }),
   phoneNumber: Joi.string()
-    .regex(/^[0-9\-+]{10,13}$/)
+    .regex(/^[0-9\-+]{9,13}$/)
     .required()
     .messages({
       'string.pattern.base':
@@ -118,7 +123,7 @@ export const updateClientSchema = Joi.object({
     }),
   address: Joi.object({
     province: Joi.string()
-      .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
+      .regex(/^([A-zÀ-úñ]+\s)*[A-zÀ-úñ]+$/)
       .min(3)
       .optional()
       .messages({
