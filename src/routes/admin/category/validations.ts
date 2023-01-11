@@ -3,12 +3,12 @@ import Joi from 'joi';
 export const categorySchema = Joi.object({
   name: Joi.string()
     .min(3)
-    .max(50)
+    .max(30)
     .required()
-    .regex(/^([A-zÀ-ú]+\s)*[A-zÀ-ú\s?]+$/)
+    .regex(/^([A-zÀ-úñ]+\s)*[A-zÀ-úñ]+$/)
     .messages({
       'string.min': 'Invalid name, it must contain at least 3 characters.',
-      'string.max': 'Invalid name, it must not contain more than 50 characters.',
+      'string.max': 'Invalid name, it must not contain more than 30 characters.',
       'string.pattern.base': 'Invalid name, it must contain only letters.',
       'any.required': 'Category name is a required field.',
     }),
@@ -19,7 +19,7 @@ export const categorySchema = Joi.object({
     isNew: Joi.boolean().required(),
   }).required(),
   url: Joi.string()
-    .regex(/^([a-z-]*)$/)
+    .regex(/^([a-z-]*[a-z]+)$/)
     .required()
     .messages({
       'string.pattern.base': 'Invalid url, it must contain only lower case and -.',
@@ -31,7 +31,7 @@ export const updateCategorySchema = Joi.object({
   name: Joi.string()
     .min(3)
     .max(50)
-    .regex(/^([A-zÀ-ú]+\s)*[A-zÀ-ú\s?]+$/)
+    .regex(/^([A-zÀ-úñ]+\s)*[A-zÀ-úñ]+$/)
     .messages({
       'string.min': 'Invalid name, it must contain at least 3 characters.',
       'string.max': 'Invalid name, it must not contain more than 50 characters.',
@@ -44,7 +44,7 @@ export const updateCategorySchema = Joi.object({
     isNew: Joi.boolean().required(),
   }),
   url: Joi.string()
-    .regex(/^([a-z-]*)$/)
+    .regex(/^([a-z-]*[a-z]+)$/)
     .messages({
       'string.pattern.base': 'Invalid url, it must contain only lower case and -.',
       'any.required': 'Url is a required field.',
