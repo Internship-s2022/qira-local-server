@@ -202,7 +202,7 @@ const products: any[] = [
     },
     technicalFile: {
       key: 'develop/products-technical-file/herbicidas-durango.pdf',
-      url: 'https://qira-local.s3.amazonaws.com/develop/herbicidas-durango.pdf',
+      url: 'https://qira-local.s3.amazonaws.com/develop/products-technical-file/herbicidas-durango.pdf',
     },
     brand: 'Fusion',
     category: new mongoose.Types.ObjectId('63617504bc1a382119d49e4b'),

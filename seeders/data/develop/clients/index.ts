@@ -77,7 +77,7 @@ const clients: any = [
   },
   {
     _id: new mongoose.Types.ObjectId('636d11d68a2997f1b06fd387'),
-    businessName: 'Intrepid Travel',
+    businessName: 'Intrepid Travel (NO MODIFICAR)',
     cuit: '27401205727',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
     address: {
@@ -95,7 +95,7 @@ const clients: any = [
   },
   {
     _id: new mongoose.Types.ObjectId('62891944b389642a7f13ca05'),
-    businessName: 'Defendify',
+    businessName: 'Defendify (NO MODIFICAR)',
     cuit: '20543762535',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
     address: {
@@ -224,7 +224,7 @@ const clients: any = [
   //DISABLED
   {
     _id: new mongoose.Types.ObjectId('633db2570b76198b1fb9e916'),
-    businessName: '9Yards Media',
+    businessName: '9Yards Media (NO MODIFICAR)',
     cuit: '27401205723',
     ivaCondition: 'RESPONSABLE_INSCRIPTO',
     address: {
@@ -255,7 +255,7 @@ const clients: any = [
     email: 'iara.criscenti@gmail.com',
     isActive: false,
     logicDelete: false,
-    firebaseUid: 'fmhF69Km2dNL2pXCysrDELR7zrw3',
+    firebaseUid: 'fmhF69Km2dNL2pXCysrDELR7zre2',
     approved: true,
   },
   {
